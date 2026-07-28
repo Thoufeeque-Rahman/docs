@@ -18,7 +18,7 @@
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://festie.app/login"
+      "href": "https://admin.festie.app"
     }
   },
   "styling": {
