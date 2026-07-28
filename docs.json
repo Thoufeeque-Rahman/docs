@@ -1,54 +1,28 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mintlify Starter Kit",
+  "name": "Festie",
+  "description": "Documentation for setting up and running festivals with Festie.",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#ff4e47",
+    "light": "#f7ca59",
+    "dark": "#2c75bb"
   },
   "favicon": "/favicon.svg",
-  "navigation": {
-    "pages": [
-      {
-        "group": "Getting Started",
-        "pages": [
-          "index",
-          "quickstart"
-        ]
-      }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
   "logo": {
     "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "dark": "/logo/dark.svg",
+    "href": "https://docs.festie.app"
   },
   "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://app.mintlify.com"
+      "href": "https://festie.app/login"
     }
+  },
+  "styling": {
+    "eyebrows": "breadcrumbs"
   },
   "contextual": {
     "options": [
@@ -62,11 +36,134 @@
       "vscode"
     ]
   },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
-    }
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Start",
+        "icon": "play",
+        "groups": [
+          {
+            "group": "Start",
+            "pages": [
+              "index",
+              "quickstart",
+              "getting-started/sign-in-and-account",
+              "getting-started/create-your-first-festival",
+              "getting-started/navigation-map"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Admin guide",
+        "icon": "settings",
+        "groups": [
+          {
+            "group": "Setup",
+            "pages": [
+              "admin/dashboard",
+              "admin/categories-and-teams",
+              "admin/position-and-grade-criteria",
+              "admin/candidate-chest-number-rules",
+              "admin/users-and-roles"
+            ]
+          },
+          {
+            "group": "Candidates and programmes",
+            "pages": [
+              "admin/candidates",
+              "admin/import-candidates",
+              "admin/sections",
+              "admin/programmes",
+              "admin/import-programmes",
+              "admin/programme-collections",
+              "admin/curbs"
+            ]
+          },
+          {
+            "group": "Run the event",
+            "pages": [
+              "admin/open-registration",
+              "admin/registrations",
+              "admin/topic-registration",
+              "admin/judgement-sheets-and-call-letters",
+              "admin/schedules",
+              "admin/schedule-conflicts"
+            ]
+          },
+          {
+            "group": "Results and billing",
+            "pages": [
+              "admin/results-entry",
+              "admin/result-release",
+              "admin/point-adjustments",
+              "admin/toppers",
+              "admin/reports",
+              "admin/billing"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Team manager",
+        "icon": "users",
+        "groups": [
+          {
+            "group": "Team manager",
+            "pages": [
+              "team-manager/overview",
+              "team-manager/register-candidates",
+              "team-manager/group-registration",
+              "team-manager/topic-registration",
+              "team-manager/appeals-and-notifications"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Judge guide",
+        "icon": "clipboard-check",
+        "groups": [
+          {
+            "group": "Judge guide",
+            "pages": [
+              "judge/overview",
+              "judge/programmes",
+              "judge/score-entry"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Media & website",
+        "icon": "image",
+        "groups": [
+          {
+            "group": "Media & website",
+            "pages": [
+              "media/content-files",
+              "media/templates",
+              "media/public-website",
+              "media/gallery-and-downloads"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Reference",
+        "icon": "book-open",
+        "groups": [
+          {
+            "group": "Reference",
+            "pages": [
+              "reference/roles-and-access",
+              "reference/reports-list",
+              "reference/app-route-map",
+              "reference/glossary"
+            ]
+          }
+        ]
+      }
+    ]
   }
 }
