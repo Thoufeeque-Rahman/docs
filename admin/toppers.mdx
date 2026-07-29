@@ -5,6 +5,32 @@ description: "Review team and candidate toppers."
 
 Toppers show leaders based on published or total result data.
 
+## Topper placeholders
+
+A topper placeholder is a saved leaderboard block in a subfest. It defines what
+kind of topper list Festie should prepare or show, such as top candidates, top
+teams, or top sections.
+
+The placeholder is the configuration. Ranking entries are the actual rows inside
+that placeholder, such as first place, second place, points, programme count,
+candidate, team, section, or category details.
+
+Use topper placeholders when you want the same leaderboard to be regenerated,
+reviewed, filtered, or connected to public website sections without rebuilding
+the leaderboard setup each time.
+
+## Ranking entries
+
+Ranking entries are generated or maintained under a topper placeholder. They
+represent the current standings for that placeholder. For example, a Top
+Candidates placeholder can contain candidate rows with rank, points, programme
+count, and category context.
+
+If a topper placeholder has no ranking entries yet, it means the leaderboard
+block exists but Festie has no rows to show for it. This can happen before
+results are entered, before results are published, or before toppers are
+regenerated.
+
 ## Prerequisites
 
 - Results are entered.
