@@ -1,35 +1,48 @@
 ---
-title: "Import candidates"
-description: "Import candidates from Excel and fix rows during preview."
+title: "Import Candidates"
+description: "Bulk import candidates using Excel and manage duplicates."
 ---
 
-Use import when you have many candidates to add.
+If you have a large number of candidates to add, adding them one-by-one can be tedious. Festie provides a bulk import option using Excel.
 
 ## Prerequisites
 
-- Categories and teams already exist.
-- Your candidate data is ready in a spreadsheet.
+- Categories and Teams must already exist in Festie.
+- Your candidate data is organized in a spreadsheet.
 
-Open `Subfest > Candidate`, then choose the import option.
+Navigate to `Subfest > Candidates` and click the **Import** button.
+
+---
+
+## Import Configuration Options
+
+Before uploading your file, Festie gives you two important options:
+
+1. **Override Existing:** 
+   Check this box if you are re-uploading data to fix mistakes. If a Chest Number in your Excel file matches a candidate already in the system, Festie will update (override) their existing profile with the new data from the spreadsheet instead of creating a duplicate. This is extremely useful if you realize you assigned students to the wrong team and want to quickly fix it via Excel.
+   
+2. **Auto Generate Chest Number:**
+   If you haven't assigned chest numbers in your Excel file, check this box. Festie will automatically generate and assign chest numbers to the imported candidates based on your system rules.
+
+---
+
+## The Import Process
 
 <Steps>
-  <Step title="Download the sample file">
-    Download the example Excel file from the import page.
+  <Step title="Download the Sample Excel">
+    Download the provided sample Excel file from the import page. This file contains the exact column structure Festie needs.
   </Step>
-  <Step title="Fill the spreadsheet">
-    Add candidate names, teams, categories, and other required fields.
+  <Step title="Prepare Your Data">
+    Fill the sample spreadsheet with your candidates' names, teams, categories, and other details. Save the file.
   </Step>
-  <Step title="Upload the file">
-    Upload the completed Excel file.
+  <Step title="Upload the File">
+    Drag and drop your completed Excel file into the import area.
   </Step>
-  <Step title="Preview the import">
-    Review the imported rows. Fix any mistakes directly in the preview instead of editing the Excel file again.
+  <Step title="Preview and Edit">
+    Once uploaded, you will see a preview of all the candidates to be imported. 
+    You can directly edit any mistakes, add new rows, or delete rows right from this preview screen without needing to go back to Excel.
   </Step>
-  <Step title="Save the import">
-    Save the preview and review how many rows succeeded or failed.
+  <Step title="Save the Import">
+    Click **Save**. A confirmation message will show that the candidates were successfully added, and they will now appear in your Candidates list.
   </Step>
 </Steps>
-
-<Warning>
-  Do not skip the preview. It is the best place to catch wrong teams, categories, or duplicate details before saving.
-</Warning>

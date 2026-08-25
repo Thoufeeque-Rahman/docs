@@ -1,35 +1,77 @@
 ---
-title: "Schedules"
-description: "Schedule programmes with calendar or table view."
+title: "Scheduling & Auto-Scheduling"
+description: "Assign times, venues, and judges manually or use AI Auto-Scheduling."
 ---
 
-Use scheduling to assign programmes to times, venues, and judges.
+Festie provides a powerful scheduling interface to organize when and where your programmes happen, and who will judge them. You can do this manually or let our AI handle it.
 
 ## Prerequisites
 
 - Programmes are created.
-- Venues and judges are available.
+- You have added your Venues and Judges in the Schedule settings.
 
-Open `Subfest > Schedule`.
+Navigate to `Subfest > Schedule`.
+
+---
+
+## 1. Manual Scheduling Views
+
+You have three main views to manually build your schedule:
+
+### Calendar View
+This is a standard calendar interface.
+- **Drag and Drop:** Grab an unscheduled programme and drop it onto a time slot.
+- **Adjust Duration:** Click and drag the bottom of the programme block to extend or reduce its duration.
+- **Edit Details:** Click a scheduled programme to assign the Venue and Judges.
+
+### Column View
+This view shows each day as a separate column.
+- **Insert Breaks:** You can click the `+` button to quickly insert a Lunch Break or Tea Break between programmes.
+- **Adjust Times:** You can tweak times and see how it pushes the rest of the day's schedule down.
+
+### Table View
+If you prefer a spreadsheet-like experience, the Table view lets you rapidly type in the Start Time, Duration, Venue, and Judges row by row.
+
+---
+
+## 2. Assigning Judges (Lead & Substitute)
+
+When you assign judges to a programme, you can give them specific roles:
+- **Normal Judge:** A standard evaluator.
+- **Lead Judge:** If there is a tie in scores, the system will prioritize the marks given by the Lead Judge to break the tie.
+- **Substitute Judge:** A backup judge assigned just in case the primary judge cannot make it. If the primary judge is absent, the Admin can quickly promote the Substitute to a Normal Judge.
+
+---
+
+## 3. Conflict Checker
+
+When scheduling manually, it's easy to accidentally schedule the same student in two different venues at the exact same time. 
+To prevent this, go to `Registrations > Conflict Checker`. Select any two programmes, and the system will warn you if the exact same candidate or judge is booked for both simultaneously.
+
+---
+
+## 4. Auto-Scheduling (AI Beta)
+
+If you don't want to schedule manually, you can use Festie's AI Auto-Scheduler.
 
 <Steps>
-  <Step title="Add judges and venues">
-    Use `Subfest > Schedule > Judges` and `Subfest > Schedule > Venues` to add or review resources.
+  <Step title="Start Auto-Scheduler">
+    Click the **Auto Schedule** button. Select whether you want to schedule all unprogrammed events or just specific selected ones.
   </Step>
-  <Step title="Use calendar view">
-    Drag a programme onto the calendar at the correct date and time.
+  <Step title="Set Global Times">
+    - Define the default duration for a programme (e.g., 30 mins).
+    - Define the gap between programmes (e.g., 10 mins).
+    - Define your global breaks (e.g., Lunch from 1:00 PM to 2:00 PM).
   </Step>
-  <Step title="Adjust duration">
-    Drag the programme block to change its time range.
+  <Step title="Set Daily Working Hours">
+    Tell the AI when the festival starts and ends each day (e.g., 9:00 AM to 10:00 PM) and select which Venues are available.
   </Step>
-  <Step title="Edit details directly">
-    Change start time, end time, venue, or judge from the schedule item.
+  <Step title="Add Custom Rules">
+    You can tell the AI specific rules, for example:
+    - *Duration Rule:* "All Group programmes must be 45 minutes long."
+    - *Venue Rule:* "All Senior Category programmes MUST happen at Stage A."
   </Step>
-  <Step title="Use table view when faster">
-    Switch to table view to enter time, venue, and judge values in rows.
+  <Step title="Generate">
+    Provide any custom text instructions to the AI if needed, and let it generate a complete conflict-free schedule for you!
   </Step>
 </Steps>
-
-<Note>
-  The schedule route is `/:festivalSubdomain/:subFestSlug/schedule`.
-</Note>

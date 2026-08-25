@@ -1,35 +1,59 @@
 ---
-title: "Users and roles"
-description: "Add team managers and assign them to teams."
+title: "Users & Roles"
+description: "Manage who has access to your festival, create custom roles, and assign team managers."
 ---
 
-Use users and roles to let team managers register their own participants.
+You can delegate festival management by adding other users and assigning them specific roles, like Team Managers, Judges, or Volunteers. 
 
 ## Prerequisites
 
-- The user has already created a Festie account.
-- Teams are configured.
+- The user you want to invite must have already created a Festie account using their email address.
+- If you are adding a Team Manager, your Teams must already be created.
 
-Open `Subfest > Users`.
+Navigate to `Festival > Users` (or from the dashboard sidebar). You will see three main sections: **Festival Owners**, **Roles**, and **Users**.
+
+---
+
+## 1. Festival Owners
+If you created the festival, you are the primary owner. If you want to give another person full administrative ownership:
+1. Click **Add Owner**.
+2. Enter their registered Festie email address.
+3. Once added, they will appear as a "Shared Owner" and have the exact same full access as you do.
+
+---
+
+## 2. Managing Roles & Custom Roles
+Festie comes with several default roles: *Admin*, *Team Manager*, *Judge*, *Media*, and *Volunteer*. 
+
+If you need a specific type of access, you can create a **Custom Role**.
+For example, if you want a volunteer whose ONLY job is to manage Candidate data:
+1. Go to the **Roles** tab and click **Create Role**.
+2. Name it (e.g., `Candidate Volunteer`).
+3. Under permissions, grant *Read* and *Write* access strictly to the `Candidates` module, and leave everything else blank.
+4. Save the role. Users assigned this role will not be able to see or edit anything other than Candidates.
+
+---
+
+## 3. Adding Users & Team Managers
+To invite people to help run the festival, go to the **Users** tab (you can also access this via `Settings > Users`).
 
 <Steps>
-  <Step title="Ask the user to create an account">
-    Tell the team manager to sign in or create an account using the email you will add.
+  <Step title="Add User">
+    Click **Add User** and enter their registered email address.
   </Step>
-  <Step title="Add the user">
-    Click **Add user** and enter the email address.
+  <Step title="Select the Role">
+    Choose the role they should have (e.g., *Team Manager*).
   </Step>
-  <Step title="Select the role">
-    Choose the team manager role.
+  <Step title="Select the Team (For Team Managers)">
+    If you selected *Team Manager*, a new option will appear asking which team they manage. Select their specific team (e.g., *Green Team*).
   </Step>
-  <Step title="Choose the team">
-    Select the team this manager should control.
-  </Step>
-  <Step title="Grant access">
-    Save the user access.
+  <Step title="Grant Access">
+    Click **Add Access**. The user will now have permission.
   </Step>
 </Steps>
 
-<Note>
-  Team managers can view their team details, register candidates, view results, and manage the areas allowed for their role.
-</Note>
+## The Team Manager Dashboard Experience
+
+When a user assigned as a **Team Manager** logs into Festie, they will see a completely different, restricted dashboard compared to an Admin.
+- They will only see options for Candidate Registration, Topic Registration, Substitutions, and Appeals.
+- They will **only** see the data and candidates belonging to their specific assigned team (e.g., Green Team). They cannot view or manage candidates from other teams.

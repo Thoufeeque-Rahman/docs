@@ -1,33 +1,30 @@
 ---
-title: "Results entry"
-description: "Enter positions, grades, or scores for programmes."
+title: "Results Entry"
+description: "Enter positions and grades for programmes manually or via judge scores."
 ---
 
-Result entry records the outcome of each programme.
+Festie supports three types of result entry: **Manual Result**, **Manual Score**, and **Online Judgement**. 
 
-## Prerequisites
+## 1. Manual Result (Fastest)
+Use this if your judges have already calculated everything on paper, and you just need to enter who came 1st, 2nd, and 3rd.
 
-- Programmes have registrations.
-- The programme judgement type is configured.
-- Position and grade criteria are ready if used.
+1. Navigate to `Subfest > Results`.
+2. Select a programme and ensure its judgement type is set to **Manual Result**.
+3. You will see a list of registered candidates.
+4. Simply select the Position (e.g., First) and Grade (e.g., A Grade) for the winning candidates.
+5. Click **Save Result**.
 
-Open `Subfest > Results`.
+## 2. Manual Score (Calculated)
+Use this if you want the system to calculate the final positions based on raw scores given by multiple judges.
 
-<Steps>
-  <Step title="Open a programme">
-    Select a programme marked as not entered or needing result entry.
-  </Step>
-  <Step title="Enter result values">
-    For manual result, select positions and grades. For manual score, enter the score values required by the programme.
-  </Step>
-  <Step title="Review calculated points">
-    Check the automatically calculated points before saving.
-  </Step>
-  <Step title="Save results">
-    Save the result entry.
-  </Step>
-</Steps>
+1. Navigate to `Subfest > Results`.
+2. Select a programme and change its judgement type to **Manual Score**.
+3. Click **Manage Judges** and add your judges (e.g., Judge A, Judge B, Judge C).
+4. Enter the maximum possible score for each judge (e.g., Out of 10 or 20).
+5. For each candidate, enter the raw score given by each judge.
+6. Click **Save Changes** and then click **Generate Result**.
+7. Festie will automatically calculate the totals and assign 1st, 2nd, and 3rd positions!
 
 <Note>
-  Saving results does not automatically publish them to the public website. Use result release when ready.
+  Saving a result does **not** automatically publish it to the public website. You must use the Result Release feature to make it public.
 </Note>

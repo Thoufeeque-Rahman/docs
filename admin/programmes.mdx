@@ -1,41 +1,51 @@
 ---
-title: "Programmes"
-description: "Create individual and group programmes with scoring and registration settings."
+title: "Programmes & Settings"
+description: "Create and configure individual or group programmes (competitions) with detailed rules."
 ---
 
-Programmes are the competitions inside a subfest.
+Programmes represent the actual competitions happening in your festival (e.g., Essay Writing, 100m Dash). Because every competition has unique rules, Festie provides extensive settings to configure them.
 
 ## Prerequisites
 
-- Categories, criteria, teams, and candidates are prepared.
-- You know whether each programme is individual or group.
+- Categories and Teams are set up.
+- You know the specific rules for the competition (limits, scoring, team participation).
 
-Open `Subfest > Programme`.
+Navigate to `Subfest > Programmes` to view, add, or import your programmes.
 
-<Steps>
-  <Step title="Create a programme">
-    Click the create programme option.
-  </Step>
-  <Step title="Add basic details">
-    Enter the programme code, name, type, category, and description.
-  </Step>
-  <Step title="Choose judgement type">
-    Select manual result, manual score, or online judgement.
-  </Step>
-  <Step title="Set registration details">
-    Choose whether registration opens now or later. Configure substitutions and participation limits.
-  </Step>
-  <Step title="Configure participation limits">
-    For individual programmes, set participants per team. For group programmes, set groups per team and members per group.
-  </Step>
-  <Step title="Configure score settings">
-    Enable or disable position and grade scoring for the programme.
-  </Step>
-  <Step title="Save the programme">
-    Create the programme and confirm it appears in the programme list.
-  </Step>
-</Steps>
+---
 
-<Note>
-  Manual result means admins enter ranks. Manual score means admins enter judge scores. Online judgement means judges enter scores from their judge panel.
-</Note>
+## Adding a Programme Manually
+
+Click the **Add Programme** button. You will go through several configuration tabs:
+
+### 1. Basic Details
+- **Programme Code:** A unique identifier for the programme. For example, a Junior Song might be `JN-01` or `F01`.
+- **Programme Name:** The official name of the item.
+- **Programme Type:** Choose **Individual** (candidates participate alone) or **Group** (candidates participate as a team of 3, 4, etc.).
+- **Judgement Type:** How will the results be recorded?
+  - *Manual Result:* Admins directly input who came 1st, 2nd, 3rd.
+  - *Manual Score:* Admins input the raw scores given by the judges on paper, and the system calculates the result.
+  - *Online Judgement:* Judges use a separate online portal to enter scores directly on their phones.
+- **Category:** The category this programme belongs to.
+- **Collections & Skills:** Group the programme into Collections (like "Stage" or "Off-stage") and tag it with Skills (like "Language" or "Athletics") for deep analytics later.
+- **Concept Note:** A brief explanation of what the programme is about.
+
+### 2. Registration Settings
+- **Open Registration:** Choose if registration is open immediately.
+- **Topic Registration:** Enable this if candidates must register a specific topic (e.g., Speech Topic) prior to the event.
+- **Substitution Rules:** Define if team managers are allowed to swap candidates later due to medical or other reasons.
+
+### 3. Participant Settings (Curbs & Limits)
+- **Min/Max Limits:** Set the minimum and maximum number of candidates/groups a team can field for this programme. For no limit, leave them as `0`.
+- **Team Eligibility:** By default, "All Teams can participate" is checked. If this is a restricted event, uncheck it and specify which teams are allowed.
+- **Category Eligibility:** By default, only candidates from the selected Category can participate. For "General" events where anyone can join, uncheck this box and specify the allowed categories.
+
+### 4. Score Settings
+- Enable or disable **Position Criteria** and **Grade Criteria** based on whether this event awards them.
+- **Point Percentages:** You can control how many points are actually awarded. If a 1st place gives 10 points, but you want the candidate to receive 0 points (perhaps it's a fun event), you can set the *Candidate Point Percentage* to `0%`. You can adjust this for both Candidate and Team percentages independently.
+
+### 5. Call Letter Settings
+- **Generation Mode:** Choose whether the system should generate call letters using Alphabets (A, B, C) or Numbers (1, 2, 3).
+- **Custom Order:** For certain sports or track events, you may need teams to perform in a specific order (e.g., Alpha Team first, Blue Team second). You can manually set the team appearance order here.
+
+Click **Save** once you've configured the settings. The programme will appear in your list.
