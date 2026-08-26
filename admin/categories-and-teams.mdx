@@ -1,47 +1,71 @@
 ---
-title: "Categories and teams"
-description: "Set participant categories and team details before adding candidates."
+title: "Categories and Teams"
+description: "Configure participant categories (age/level groups) and manage competing teams."
 ---
 
-Categories group candidates by level. Teams group candidates for registrations, scoring, and reports.
+Before you add candidates, you must define the Categories they belong to (such as Sub Junior or Senior) and the Teams they represent (like Green House or Blue House).
 
 ## Prerequisites
 
-- You have admin access to the subfest.
-- You know the categories and teams used in your festival.
+- You have admin access to the festival.
+- You have accessed the Dashboard.
 
-## Categories
+---
 
-Open the category setup area from the dashboard task or the relevant settings area.
+## Managing Categories
+
+Categories group candidates by their age or educational level. To manage categories, click on the **Category** option from the dashboard tasks or use the search (`Ctrl + K`).
 
 <Steps>
-  <Step title="Review default categories">
-    Check the categories created with the madrasah setup.
+  <Step title="Review Default Categories">
+    By default, Festie creates four categories for you: *Sub Junior*, *Junior*, *Senior*, and *Higher Secondary*.
   </Step>
-  <Step title="Rename a category">
-    Edit any default category, such as renaming `Sub Junior` to `Bidaya`.
+  <Step title="Edit or Delete">
+    Click on any category to edit its name or description. For example, you can rename "Junior" to "Junior Girls" if you are separating by gender. You can also delete unused categories.
   </Step>
-  <Step title="Add missing categories">
-    Add each extra category your festival needs.
+  <Step title="Advanced Settings (Points)">
+    In the category edit page, you will see **Advanced Settings** for *Candidate Max Point* and *Team Max Point*. 
+    
+    By default, these are set to 100. For normal festivals, you can ignore this and leave it at 100. 
+    However, if candidates in the Senior category can only participate in 5 items (max 50 points) while Junior candidates can participate in 10 items (max 100 points), setting the correct `Candidate Max Point` ensures the system calculates the "Toppers" fairly based on percentages.
+  </Step>
+  <Step title="Create a New Category">
+    To add a new category, use the **Template** option. You can select an existing category (like Junior) as a base template, rename it, and click **Create Category**.
   </Step>
 </Steps>
 
-## Teams
+---
 
-Open the team setup area from the dashboard task or `Subfest > Candidate > Teams`.
+## Managing Teams
+
+Teams group candidates for registrations, overall scoring, and reports. Navigate to the **Teams** section from the dashboard or search bar.
 
 <Steps>
-  <Step title="Review existing teams">
-    Check the default teams such as Yellow or Green.
+  <Step title="Review Default Teams">
+    By default, Festie creates four teams: *Yellow House*, *Green House*, *Blue House*, and *Red House*.
   </Step>
-  <Step title="Edit team details">
-    Update the team name, color, logo, and related details.
+  <Step title="Edit Team Details">
+    Click on a team to edit it. You can configure:
+    - **Team Name:** The official name (e.g., "Green Team").
+    - **Display Name:** A shorter name shown publicly on the website (e.g., just "Green").
+    - **Color Code:** Choose a specific color variant to represent the team.
+    - **Logo:** Upload a team logo file from your device.
+    - **Motto:** Enter the team's slogan, if any.
   </Step>
-  <Step title="Create new teams">
-    Add all teams before candidate registration starts.
+  <Step title="Category Participation Rules">
+    By default, the **"Participates in all categories"** option is checked. Leave this checked for normal festivals.
+    
+    However, if a team only competes in specific categories (e.g., they only have candidates for Junior Boys but not Seniors), uncheck this box and select the specific categories they are active in.
+  </Step>
+  <Step title="Import Teams (Bulk Upload)">
+    If you have a large festival with many teams, you can bulk import them instead of adding them one by one.
+    1. Click the **Import** button.
+    2. Download the **Sample Excel** file.
+    3. Fill the Excel file with your team data and save it.
+    4. Drag and drop the Excel file into Festie, preview the data, make any necessary adjustments, and click **Save**.
   </Step>
 </Steps>
 
 <Note>
-  Team colors and logos help admins and team managers identify registrations and results faster.
+  Assigning distinct colors, short display names, and logos helps admins, judges, and the public identify team standings and results much faster.
 </Note>

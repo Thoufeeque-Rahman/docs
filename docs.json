@@ -37,129 +37,265 @@
     ]
   },
   "navigation": {
-    "tabs": [
+    "versions": [
       {
-        "tab": "Start",
-        "icon": "play",
-        "groups": [
+        "version": "English",
+        "tabs": [
           {
-            "group": "Start",
-            "pages": [
-              "index",
-              "quickstart",
-              "getting-started/sign-in-and-account",
-              "getting-started/create-your-first-festival",
-              "getting-started/navigation-map"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Admin guide",
-        "icon": "settings",
-        "groups": [
-          {
-            "group": "Setup",
-            "pages": [
-              "admin/dashboard",
-              "admin/categories-and-teams",
-              "admin/position-and-grade-criteria",
-              "admin/candidate-chest-number-rules",
-              "admin/users-and-roles"
+            "tab": "Start",
+            "icon": "play",
+            "groups": [
+              {
+                "group": "Start",
+                "pages": [
+                  "index",
+                  "quickstart",
+                  "getting-started/sign-in-and-account",
+                  "getting-started/create-your-first-festival",
+                  "getting-started/navigation-map"
+                ]
+              }
             ]
           },
           {
-            "group": "Candidates and programmes",
-            "pages": [
-              "admin/candidates",
-              "admin/import-candidates",
-              "admin/sections",
-              "admin/programmes",
-              "admin/import-programmes",
-              "admin/programme-collections",
-              "admin/curbs"
+            "tab": "Admin guide",
+            "icon": "settings",
+            "groups": [
+              {
+                "group": "Setup",
+                "pages": [
+                  "admin/dashboard",
+                  "admin/categories-and-teams",
+                  "admin/position-and-grade-criteria",
+                  "admin/candidate-chest-number-rules",
+                  "admin/users-and-roles"
+                ]
+              },
+              {
+                "group": "Candidates and programmes",
+                "pages": [
+                  "admin/candidates",
+                  "admin/import-candidates",
+                  "admin/sections",
+                  "admin/programmes",
+                  "admin/import-programmes",
+                  "admin/programme-collections",
+                  "admin/curbs"
+                ]
+              },
+              {
+                "group": "Run the event",
+                "pages": [
+                  "admin/open-registration",
+                  "admin/registrations",
+                  "admin/topic-registration",
+                  "admin/judgement-sheets-and-call-letters",
+                  "admin/schedules",
+                  "admin/schedule-conflicts"
+                ]
+              },
+              {
+                "group": "Results and billing",
+                "pages": [
+                  "admin/results-entry",
+                  "admin/result-release",
+                  "admin/point-adjustments",
+                  "admin/toppers",
+                  "admin/reports",
+                  "admin/billing"
+                ]
+              }
             ]
           },
           {
-            "group": "Run the event",
-            "pages": [
-              "admin/open-registration",
-              "admin/registrations",
-              "admin/topic-registration",
-              "admin/judgement-sheets-and-call-letters",
-              "admin/schedules",
-              "admin/schedule-conflicts"
+            "tab": "Team manager",
+            "icon": "users",
+            "groups": [
+              {
+                "group": "Team manager",
+                "pages": [
+                  "team-manager/overview",
+                  "team-manager/register-candidates",
+                  "team-manager/group-registration",
+                  "team-manager/topic-registration",
+                  "team-manager/appeals-and-notifications"
+                ]
+              }
             ]
           },
           {
-            "group": "Results and billing",
-            "pages": [
-              "admin/results-entry",
-              "admin/result-release",
-              "admin/point-adjustments",
-              "admin/toppers",
-              "admin/reports",
-              "admin/billing"
+            "tab": "Judge guide",
+            "icon": "clipboard-check",
+            "groups": [
+              {
+                "group": "Judge guide",
+                "pages": [
+                  "judge/overview",
+                  "judge/programmes",
+                  "judge/score-entry"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Media & website",
+            "icon": "image",
+            "groups": [
+              {
+                "group": "Media & website",
+                "pages": [
+                  "media/content-files",
+                  "media/templates",
+                  "media/public-website",
+                  "media/gallery-and-downloads"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Reference",
+            "icon": "book-open",
+            "groups": [
+              {
+                "group": "Reference",
+                "pages": [
+                  "reference/roles-and-access",
+                  "reference/reports-list",
+                  "reference/app-route-map",
+                  "reference/glossary"
+                ]
+              }
             ]
           }
         ]
       },
       {
-        "tab": "Team manager",
-        "icon": "users",
-        "groups": [
+        "version": "Malayalam",
+        "tabs": [
           {
-            "group": "Team manager",
-            "pages": [
-              "team-manager/overview",
-              "team-manager/register-candidates",
-              "team-manager/group-registration",
-              "team-manager/topic-registration",
-              "team-manager/appeals-and-notifications"
+            "tab": "Start",
+            "icon": "play",
+            "groups": [
+              {
+                "group": "Start",
+                "pages": [
+                  "ml/index",
+                  "ml/quickstart",
+                  "ml/getting-started/sign-in-and-account",
+                  "ml/getting-started/create-your-first-festival",
+                  "ml/getting-started/navigation-map"
+                ]
+              }
             ]
-          }
-        ]
-      },
-      {
-        "tab": "Judge guide",
-        "icon": "clipboard-check",
-        "groups": [
+          },
           {
-            "group": "Judge guide",
-            "pages": [
-              "judge/overview",
-              "judge/programmes",
-              "judge/score-entry"
+            "tab": "Admin guide",
+            "icon": "settings",
+            "groups": [
+              {
+                "group": "Setup",
+                "pages": [
+                  "ml/admin/dashboard",
+                  "ml/admin/categories-and-teams",
+                  "ml/admin/position-and-grade-criteria",
+                  "ml/admin/candidate-chest-number-rules",
+                  "ml/admin/users-and-roles"
+                ]
+              },
+              {
+                "group": "Candidates and programmes",
+                "pages": [
+                  "ml/admin/candidates",
+                  "ml/admin/import-candidates",
+                  "ml/admin/sections",
+                  "ml/admin/programmes",
+                  "ml/admin/import-programmes",
+                  "ml/admin/programme-collections",
+                  "ml/admin/curbs"
+                ]
+              },
+              {
+                "group": "Run the event",
+                "pages": [
+                  "ml/admin/open-registration",
+                  "ml/admin/registrations",
+                  "ml/admin/topic-registration",
+                  "ml/admin/judgement-sheets-and-call-letters",
+                  "ml/admin/schedules",
+                  "ml/admin/schedule-conflicts"
+                ]
+              },
+              {
+                "group": "Results and billing",
+                "pages": [
+                  "ml/admin/results-entry",
+                  "ml/admin/result-release",
+                  "ml/admin/point-adjustments",
+                  "ml/admin/toppers",
+                  "ml/admin/reports",
+                  "ml/admin/billing"
+                ]
+              }
             ]
-          }
-        ]
-      },
-      {
-        "tab": "Media & website",
-        "icon": "image",
-        "groups": [
+          },
           {
-            "group": "Media & website",
-            "pages": [
-              "media/content-files",
-              "media/templates",
-              "media/public-website",
-              "media/gallery-and-downloads"
+            "tab": "Team manager",
+            "icon": "users",
+            "groups": [
+              {
+                "group": "Team manager",
+                "pages": [
+                  "ml/team-manager/overview",
+                  "ml/team-manager/register-candidates",
+                  "ml/team-manager/group-registration",
+                  "ml/team-manager/topic-registration",
+                  "ml/team-manager/appeals-and-notifications"
+                ]
+              }
             ]
-          }
-        ]
-      },
-      {
-        "tab": "Reference",
-        "icon": "book-open",
-        "groups": [
+          },
           {
-            "group": "Reference",
-            "pages": [
-              "reference/roles-and-access",
-              "reference/reports-list",
-              "reference/app-route-map",
-              "reference/glossary"
+            "tab": "Judge guide",
+            "icon": "clipboard-check",
+            "groups": [
+              {
+                "group": "Judge guide",
+                "pages": [
+                  "ml/judge/overview",
+                  "ml/judge/programmes",
+                  "ml/judge/score-entry"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Media & website",
+            "icon": "image",
+            "groups": [
+              {
+                "group": "Media & website",
+                "pages": [
+                  "ml/media/content-files",
+                  "ml/media/templates",
+                  "ml/media/public-website",
+                  "ml/media/gallery-and-downloads"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Reference",
+            "icon": "book-open",
+            "groups": [
+              {
+                "group": "Reference",
+                "pages": [
+                  "ml/reference/roles-and-access",
+                  "ml/reference/reports-list",
+                  "ml/reference/app-route-map",
+                  "ml/reference/glossary"
+                ]
+              }
             ]
           }
         ]

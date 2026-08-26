@@ -1,50 +1,41 @@
 ---
-title: "Position and grade criteria"
-description: "Configure points for positions and grades."
+title: "Position & Grade Criteria"
+description: "Configure how many points candidates earn for winning or getting grades."
 ---
 
-Criteria control how points are calculated for programmes.
+Every festival has its own point system. Festie allows you to define exactly how many points a First Place, Second Place, or an A-Grade is worth, and to set up different rules for individual vs group programmes.
 
-## Prerequisites
+Navigate to `Settings > Criteria`.
 
-- You have admin access.
-- You know the point system used by your festival.
-
-## Position criteria
-
-Position criteria define points for ranks such as first, second, third, or fourth.
+## 1. Position Criteria
+Position criteria define the points awarded for securing a rank (1st, 2nd, 3rd, etc.).
 
 <Steps>
-  <Step title="Open criteria setup">
-    Open the criteria area from the dashboard setup task.
+  <Step title="Default Criteria">
+    You will see a default set (e.g., `Podium 5-3-1`, which gives 5 points to 1st, 3 to 2nd, and 1 to 3rd).
   </Step>
-  <Step title="Edit a criterion">
-    Update the name and each rank's points. For example, use 5 points for first, 3 for second, and 1 for third.
+  <Step title="Create New Rules">
+    If group programmes give more points (e.g., 15 for 1st, 10 for 2nd), click to add a new Position Criterion. Name it `Group Podium 15-10-8` and assign the respective points to Rank 1, Rank 2, etc.
   </Step>
-  <Step title="Add another rank">
-    Add fourth place or any other rank if your festival uses it.
-  </Step>
-  <Step title="Set the default">
-    Mark the criterion as default when it should apply to new programmes.
+  <Step title="Set a Global Default">
+    Click the "Set as Default" button on your most common rule (usually the individual one). When you create a new programme, it will automatically use this default rule unless you manually change it in the programme's settings.
   </Step>
 </Steps>
 
-## Grade criteria
-
-Grade criteria define points and percentage thresholds for grades.
+## 2. Grade Criteria & Percentages
+Grade criteria define the points awarded for achieving an A, B, or C grade. More importantly, **they control how the system auto-calculates grades**.
 
 <Steps>
-  <Step title="Open grade criteria">
-    Go to the grade criteria area.
+  <Step title="Define Grade Points">
+    Set how many points an A Grade is worth (e.g., 5 points).
   </Step>
-  <Step title="Set grade points">
-    Add the points each grade should award.
+  <Step title="Set Percentage Thresholds">
+    You must define the percentage required to achieve the grade. For example:
+    - **A Grade:** 70% to 100%
+    - **B Grade:** 60% to 69%
+    - **C Grade:** 50% to 59%
   </Step>
-  <Step title="Set percentage thresholds">
-    Enter the percentage required for each grade.
+  <Step title="How it Works with Scores">
+    When you use **Manual Score** entry, the system adds up the marks from all the judges. It then calculates the percentage of the total possible score. Finally, it looks at your Grade Criteria and **automatically assigns the correct grade** to the candidate!
   </Step>
 </Steps>
-
-<Note>
-  Programmes can enable or disable position and grade scoring in their score settings.
-</Note>

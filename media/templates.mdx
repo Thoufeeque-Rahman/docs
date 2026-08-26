@@ -1,32 +1,38 @@
 ---
-title: "Templates"
-description: "Create sheets, posters, and certificates for downloads and reports."
+title: "Customizing Templates"
+description: "Design custom certificates, ID cards, judgement sheets, and posters."
 ---
 
-Templates control generated documents such as judgement sheets, participant lists, posters, and certificates.
+You can fully customize the look and feel of the documents Festie generates to match your festival's branding.
 
-## Prerequisites
+Navigate to `Subfest > Templates`. 
 
-- You have admin or media access.
-- You know the document layout your festival needs.
+You will find four categories of templates: **Certificates**, **Sheets**, **Posters**, and **ID Cards**.
 
-Open `Subfest > Templates`.
+---
 
-<Steps>
-  <Step title="Choose template type">
-    Select a sheet, poster, certificate, or another available template type.
-  </Step>
-  <Step title="Create a custom template">
-    Use the template editor to design the layout.
-  </Step>
-  <Step title="Save the template">
-    Save the template so it can be used in programme downloads and reports.
-  </Step>
-  <Step title="Use the template">
-    Select it when downloading sheets, reports, certificates, or related documents.
-  </Step>
-</Steps>
+## Editing Existing Templates
 
-<Note>
-  The source transcript says template editing needs a separate detailed walkthrough. Use this page as the setup overview.
-</Note>
+Festie provides default templates that you can easily tweak:
+1. Open a template (e.g., *Certificate of Merit*).
+2. **Backgrounds & Colors:** You can upload a completely new background image, change the background color, and adjust opacity.
+3. **Logos:** You don't need to manually place your logo on every template; the system will automatically inject your festival's logo when generating the document.
+4. **Text & Content:** You can edit the static text on the template.
+
+<Warning>
+  You will see "Variables" in the text like `$1`, `$2`, or `$3`. **Do not delete or change these variables.** The system uses them to inject the actual candidate names, chest numbers, and programme names when the document is generated.
+</Warning>
+
+### Poster Ad Spaces
+If you are generating promotional Posters for your programmes, the templates often include designated "Ad Spaces" at the bottom. You can upload sponsor logos or banners into these specific dimensions.
+
+---
+
+## Creating a Custom Template
+
+If you want a completely unique design from scratch:
+1. Click **New Template** and choose **Custom Template**.
+2. Give it a name and select the paper size (e.g., ID Card Size).
+3. Upload your custom background image.
+4. Drag and drop data fields (like Candidate Name, Team, QR code) wherever you want them to appear over your background.
+5. Save the template. It will now be available as an option whenever you download ID cards or certificates!

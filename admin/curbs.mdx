@@ -1,38 +1,49 @@
 ---
-title: "Curbs"
-description: "Limit how many programmes candidates can join by category and collection."
+title: "Curbs (Limits)"
+description: "Define participation limits for candidates to ensure fair competition rules."
 ---
 
-Curbs define participation limits. For example, you can limit how many Bidaya category stage programmes one candidate can join.
+Curbs allow you to define strict participation rules for your festival. For example, you might have a rule that a single candidate can only participate in a maximum of 3 programmes, or that they can only choose 1 language song out of 3 options.
 
 ## Prerequisites
 
-- Categories are ready.
-- Programme collections are ready if the curb applies to a collection.
+- Categories and Programmes are fully set up.
+- If your limits apply to a specific group of programmes (like "Stage" events), the Programme Collection must be created first.
 
-Open `Subfest > Programme > Curbs`.
+Navigate to `Subfest > Programmes > Curbs`.
+
+## Creating a Curb Rule
+
+Click the **Create Curb** button to add a new limit.
 
 <Steps>
-  <Step title="Create a curb">
-    Add a name, such as `Bidaya stage limit`.
+  <Step title="Name and Description">
+    Give the curb a descriptive name, such as `Max 3 Stage Programmes` or `Junior Candidate Limit`.
   </Step>
-  <Step title="Choose candidate category">
-    Select the candidate category the curb applies to.
+  <Step title="Applicable Categories">
+    Select which candidate categories this rule applies to. 
+    - If the rule only applies to *Juniors*, select only Junior. 
+    - If the rule applies to everyone, select all categories (Junior, Senior, Higher Secondary, etc.).
   </Step>
-  <Step title="Choose programme category">
-    Select the programme category the limit applies to.
+  <Step title="Target Options (Candidates or Teams)">
+    Choose whether this limit applies to individual **Candidates** or to the **Team** as a whole.
+    - Set the **Minimum** (e.g., `1`) and **Maximum** (e.g., `3`). 
+    - *Note: A maximum value of `0` means unlimited.*
   </Step>
-  <Step title="Choose a collection if needed">
-    Select a collection such as `Stage` if the limit applies only to that programme group.
+  <Step title="Mandatory Curb">
+    Check the **Mandatory** box if this rule must be strictly enforced during registration. If checked, the system will prevent team managers from adding candidates who exceed the limit.
   </Step>
-  <Step title="Set min and max values">
-    Enter the minimum and maximum allowed programmes.
+  <Step title="Scope Type (What programmes does this limit?)">
+    You have a few ways to target the limit:
+    
+    1. **Use Filters (All Matching Programmes):** This is the most common. You can limit based on:
+       - *Programme Category:* (e.g., limit only applies to Junior programmes).
+       - *Collections:* (e.g., select the `Stage` collection to limit them to 3 Stage events only).
+       - *Programme Type:* (e.g., select `Individual` if the limit doesn't apply to group events).
+    
+    2. **Pick Specific Programmes:** Use this for very specific choices. For example, if you have *Malayalam Song*, *English Song*, and *Arabic Song*, and a student is only allowed to pick 1 out of the 3. You can select "Pick Specific Programmes", choose those 3 exact songs, and set the Max limit to 1.
   </Step>
-  <Step title="Save the curb">
-    Create the curb and use reports later to review compliance.
+  <Step title="Save">
+    Click **Save** to enforce the curb immediately across the registration system.
   </Step>
 </Steps>
-
-<Note>
-  In the transcript source, a maximum value of `0` means unlimited.
-</Note>
