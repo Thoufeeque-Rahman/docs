@@ -1,0 +1,92 @@
+---
+title: "മത്സര ഫലങ്ങൾ (Results)"
+description: "പ്രഖ്യാപിച്ച മത്സര ഫലങ്ങൾ, സ്ഥാനങ്ങൾ, ഗ്രേഡുകൾ, പോയിന്റുകൾ എന്നിവ ലഭിക്കാൻ."
+---
+
+പൂർത്തിയായ മത്സരങ്ങളുടെ ഒഫീഷ്യൽ റിസൾട്ടുകൾ, വിജയികൾ (1st, 2nd, 3rd സ്ഥാനക്കാർ), അവർ നേടിയ ഗ്രേഡുകൾ (A, B, C), ടീമുകൾക്ക് ലഭിച്ച പോയിന്റുകൾ എന്നിവ തത്സമയം ലഭിക്കുന്നതിനുള്ള API-കൾ.
+
+## ഒരു പ്രോഗ്രാമിന്റെ റിസൾട്ട്
+
+പ്രോഗ്രാം കോഡോ ഐഡിയോ നൽകി പ്രസ്തുത മത്സരത്തിന്റെ ഫലം എടുക്കുക:
+
+```http
+GET /public-api/v1/programme-result
+```
+
+### Query Parameters
+
+| Parameter | Type | നിർബന്ധമാണോ | വിവരണം |
+| :--- | :--- | :--- | :--- |
+| `programCode` | `string` | നിർബന്ധം* | പ്രോഗ്രാം കോഡ് (ഉദാ: `LIT-01`). |
+| `subFestSlug` | `string` | നിർബന്ധം* | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
+| `subFestProgramId` | `UUID` | നിർബന്ധം* | അല്ലെങ്കിൽ സബ് ഫെസ്റ്റ് പ്രോഗ്രാം ഐഡി. |
+
+### ഉദാഹരണം
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/programme-result?programCode=LIT-01&subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Response ഉദാഹരണം
+
+```json
+{
+  "programme": {
+    "id": "2d3e4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a",
+    "programCode": "LIT-01",
+    "name": "English Elocution",
+    "category": {
+      "name": "Senior"
+    }
+  },
+  "results": [
+    {
+      "position": "FIRST",
+      "grade": "A",
+      "points": 10,
+      "candidate": {
+        "chestNo": "104",
+        "name": "Aisha Rahman",
+        "team": {
+          "name": "Red House",
+          "colorCode": "#EF4444"
+        }
+      }
+    },
+    {
+      "position": "SECOND",
+      "grade": "A",
+      "points": 7,
+      "candidate": {
+        "chestNo": "112",
+        "name": "Rahul Verma",
+        "team": {
+          "name": "Blue House",
+          "colorCode": "#3B82F6"
+        }
+      }
+    }
+  ]
+}
+```
+
+---
+
+## ഒന്നിൽക്കൂടുതൽ പ്രോഗ്രാമുകളുടെ റിസൾട്ടുകൾ
+
+ഒന്നിലധികം പ്രോഗ്രാമുകളുടെ റിസൾട്ടുകൾ ഒരുമിച്ച് ലിസ്റ്റ് ചെയ്യാൻ:
+
+```http
+GET /public-api/v1/programme-results
+```
+
+`GET /public-api/v1/programmes` എന്നതിൽ ലഭ്യമായ അതേ ഫിൽട്ടറുകൾ ഇതിലും ഉപയോഗിക്കാം.
+
+### ഉദാഹരണം
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/programme-results?subFestSlug=arts-2026&page=1&limit=10" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+

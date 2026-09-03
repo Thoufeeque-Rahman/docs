@@ -1,0 +1,144 @@
+---
+title: "SubFests & Metadata Filters"
+description: "Retrieve sub-festivals, levels, and aggregated metadata filter options for building UI dropdowns."
+---
+
+Festivals in Festie can organize events into sub-festivals (such as Seniors, Juniors, Sahityotsav, or SportFest). Use these endpoints to discover available subfests and fetch global dropdown filter options.
+
+## List SubFests
+
+Retrieve active sub-festivals associated with your festival.
+
+```http
+GET /public-api/v1/subfests
+```
+
+### Query Parameters
+
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `search` | `string` | — | Filter subfests by name or slug. |
+| `levelId` | `UUID` | — | Filter subfests belonging to a specific festival hierarchy level. |
+| `status` | `string` | `ACTIVE` | Filter status (`ACTIVE`). |
+| `page` | `integer` | `1` | Page number for pagination. |
+| `limit` | `integer` | `20` | Number of items per page (max `20`). |
+| `sortBy` | `string` | `name` | Sort field: `name`, `slug`, `status`. |
+| `sortOrder` | `string` | `ASC` | Sort direction: `ASC` or `DESC`. |
+
+### Example Request
+
+<CodeGroup>
+```bash cURL
+curl -X GET "https://api.festie.app/public-api/v1/subfests?page=1&limit=10" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+```typescript TypeScript
+const response = await fetch(
+  "https://api.festie.app/public-api/v1/subfests?page=1&limit=10",
+  {
+    headers: { "X-API-Key": process.env.FESTIE_API_KEY! },
+  }
+);
+const result = await response.json();
+```
+</CodeGroup>
+
+### Example Response
+
+```json
+{
+  "data": [
+    {
+      "id": "e3b0c442-98fc-1c14-9af0-2a3b957977b2",
+      "name": "Sahityotsav 2026",
+      "slug": "sahityotsav-2026",
+      "timeZone": "Asia/Kolkata",
+      "status": "ACTIVE",
+      "level": {
+        "id": "7b0efd24-d2e8-466a-bc91-381c85354921",
+        "name": "Campus Level",
+        "levelOrder": 1
+      },
+      "parentSubFest": null
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 10,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+```
+
+---
+
+## Get Filter Metadata
+
+Fetch aggregated metadata for building search filters and dropdown controls in your application, including categories, teams, and venues.
+
+```http
+GET /public-api/v1/filters
+```
+
+### Query Parameters
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `subFestId` | `UUID` | *(Optional)* Target a specific subfest. |
+| `subFestSlug` | `string` | *(Optional)* Target a specific subfest by its URL slug. |
+
+### Example Request
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/filters?subFestSlug=sahityotsav-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Example Response
+
+```json
+{
+  "subFests": [
+    {
+      "id": "e3b0c442-98fc-1c14-9af0-2a3b957977b2",
+      "name": "Sahityotsav 2026",
+      "slug": "sahityotsav-2026",
+      "timeZone": "Asia/Kolkata",
+      "settings": {
+        "teamsEnabled": true
+      }
+    }
+  ],
+  "categories": [
+    {
+      "id": "c1f3a241-1122-4a0e-897b-cf10972b2571",
+      "name": "Junior",
+      "subFestId": "e3b0c442-98fc-1c14-9af0-2a3b957977b2"
+    },
+    {
+      "id": "d2f4b352-2233-4b1f-908c-df21083c3682",
+      "name": "Senior",
+      "subFestId": "e3b0c442-98fc-1c14-9af0-2a3b957977b2"
+    }
+  ],
+  "teams": [
+    {
+      "id": "8e371309-80b6-4074-a69c-f090d8102a24",
+      "name": "Red House",
+      "displayName": "Ruby Phoenix",
+      "subFestId": "e3b0c442-98fc-1c14-9af0-2a3b957977b2"
+    }
+  ],
+  "venues": [
+    {
+      "id": "4a15ef40-349c-48c1-8408-5452d001fe31",
+      "name": "Main Auditorium",
+      "code": "AUD-1"
+    }
+  ],
+  "selectedSubFestId": "e3b0c442-98fc-1c14-9af0-2a3b957977b2"
+}
+```
+

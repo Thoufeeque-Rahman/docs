@@ -1,0 +1,202 @@
+---
+title: "Candidates (Participants)"
+description: "Search candidates, inspect individual candidate profiles, registrations, and point summaries."
+---
+
+Candidates are the registered students or participants competing in your festival. Festie provides comprehensive candidate endpoints with support for chest number pattern lookups, team/category filtering, registration histories, and scored results.
+
+## List Candidates
+
+Search and filter candidates across a sub-festival.
+
+```http
+GET /public-api/v1/candidates
+```
+
+### Query Parameters
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `subFestId` | `UUID` | *(Required if no slug)* Sub-festival identifier. |
+| `subFestSlug` | `string` | *(Required if no ID)* Sub-festival URL slug. |
+| `search` | `string` | Search candidate name, chest number, or admission number. |
+| `categoryIds` | `string` | Comma-separated list of category UUIDs. |
+| `teamIds` | `string` | Comma-separated list of team UUIDs. |
+| `gender` | `string` | Filter by gender: `MALE`, `FEMALE`, `OTHER`. |
+| `chestNoPattern` | `string` | Filter by chest number prefix or pattern (e.g. `J-10*`). |
+| `admNoPattern` | `string` | Filter by student admission number pattern. |
+| `hasAvatar` | `boolean` | Filter candidates who have uploaded profile photos. |
+| `hasRegistration` | `boolean` | Filter candidates registered for at least one programme. |
+| `page` | `integer` | Page number (default `1`). |
+| `limit` | `integer` | Page limit (max `20`). |
+
+### Example Request
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/candidates?subFestSlug=arts-2026&search=Aisha&page=1&limit=10" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Example Response
+
+```json
+{
+  "data": [
+    {
+      "id": "1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
+      "chestNo": "104",
+      "admissionNo": "ADM-2024-089",
+      "candidate": {
+        "id": "cand-01",
+        "name": "Aisha Rahman",
+        "gender": "FEMALE",
+        "avatarUrl": "https://assets.festie.app/avatars/aisha.jpg"
+      },
+      "category": {
+        "id": "c1f3a241-1122-4a0e-897b-cf10972b2571",
+        "name": "Senior"
+      },
+      "team": {
+        "id": "8e371309-80b6-4074-a69c-f090d8102a24",
+        "name": "Red House",
+        "displayName": "Ruby Phoenix"
+      }
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 10,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+```
+
+---
+
+## Get Candidate Detail
+
+Retrieve comprehensive biographical and enrolment details for a specific candidate.
+
+```http
+GET /public-api/v1/candidate-detail
+```
+
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `subFestCandidateId` | `UUID` | Yes | The unique SubFest Candidate identifier. |
+| `subFestId` | `UUID` | Optional | Sub-festival identifier. |
+| `subFestSlug` | `string` | Optional | Sub-festival URL slug. |
+
+### Example Request
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/candidate-detail?subFestCandidateId=1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+---
+
+## Get Candidate Registrations
+
+List all programmes that a candidate is currently registered to participate in.
+
+```http
+GET /public-api/v1/candidate-registrations
+```
+
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `subFestCandidateId` | `UUID` | Yes | SubFest candidate identifier. |
+| `page` | `integer` | No | Pagination page (default: `1`). |
+| `limit` | `integer` | No | Items per page (max: `20`). |
+
+### Example Response
+
+```json
+{
+  "data": [
+    {
+      "id": "reg-991",
+      "program": {
+        "id": "prog-101",
+        "name": "Classical Dance",
+        "programCode": "DAN-01",
+        "status": "SCHEDULED"
+      },
+      "registrationType": "SINGLE",
+      "registeredAt": "2026-09-01T10:00:00.000Z"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 20,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+```
+
+---
+
+## Get Candidate Results
+
+Look up a candidate's published scorecards, awarded positions, grades, and total contributed points using their chest number or candidate ID.
+
+```http
+GET /public-api/v1/candidate-result
+```
+
+### Query Parameters
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `chestNo` | `string` | The participant's assigned chest number (e.g. `104`). |
+| `subFestCandidateId` | `UUID` | Alternative: look up by candidate UUID. |
+| `subFestSlug` | `string` | *(Recommended)* Sub-festival slug. |
+
+### Example Request
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/candidate-result?chestNo=104&subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Example Response
+
+```json
+{
+  "candidate": {
+    "name": "Aisha Rahman",
+    "chestNo": "104",
+    "team": {
+      "name": "Red House"
+    },
+    "category": {
+      "name": "Senior"
+    }
+  },
+  "totalPoints": 15,
+  "results": [
+    {
+      "programmeName": "English Elocution",
+      "programCode": "ENG-01",
+      "position": "FIRST",
+      "grade": "A",
+      "points": 10
+    },
+    {
+      "programmeName": "Extempore",
+      "programCode": "ENG-03",
+      "position": "SECOND",
+      "grade": "A",
+      "points": 5
+    }
+  ]
+}
+```
+

@@ -1,0 +1,142 @@
+---
+title: "പ്രോഗ്രാമുകളും ഷെഡ്യൂളുകളും"
+description: "മത്സര ഇനങ്ങൾ, വിശദാംശങ്ങൾ, വേദി ടൈംടേബിളുകൾ എന്നിവ ലഭിക്കാനുള്ള API-കൾ."
+---
+
+ഫെസ്റ്റിവലിലെ വിവിധ മത്സര ഇനങ്ങൾ (പ്രസംഗം, കഥാരചന, ഗ്രൂപ്പ് സോങ് മുതലായവ), അവ നടക്കുന്ന വേദികൾ, സമയക്രമം എന്നിവ ഈ എൻഡ്പോയിന്റുകൾ വഴി ലഭിക്കും.
+
+## പ്രോഗ്രാമുകളുടെ ലിസ്റ്റ്
+
+വിവിധ ഫിൽട്ടറുകൾ ഉപയോഗിച്ച് മത്സര ഇനങ്ങൾ കണ്ടെത്തുക.
+
+```http
+GET /public-api/v1/programmes
+```
+
+### Query Parameters
+
+| Parameter | Type | വിവരണം |
+| :--- | :--- | :--- |
+| `subFestSlug` | `string` | *(നിർബന്ധം)* സബ് ഫെസ്റ്റ് സ്ലഗ്. |
+| `search` | `string` | പ്രോഗ്രാം പേരോ കോഡോ തിരയാൻ. |
+| `categoryIds` | `string` | കാറ്റഗറി ഐഡികൾ. |
+| `venues` | `string` | വേദി ഐഡികൾ. |
+| `status` | `string` | സ്റ്റാറ്റസ്: `SCHEDULED`, `ONGOING`, `RESULTS_PUBLISHED` തുടങ്ങിയവ. |
+| `programType` | `string` | മത്സര തരം: `SINGLE`, `GROUP`, `COMBINED`. |
+| `hasSchedule` | `boolean` | സ്റ്റേജ് ഷെഡ്യൂൾ ചെയ്തിട്ടുള്ളവ മാത്രം. |
+| `hasResults` | `boolean` | റിസൾട്ട് നൽകിയിട്ടുള്ളവ മാത്രം. |
+| `page` | `integer` | പേജ് നമ്പർ. |
+| `limit` | `integer` | പേജ് ലിമിറ്റ് (പരമാവധി `20`). |
+
+### ഉദാഹരണം
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/programmes?subFestSlug=arts-2026&status=RESULTS_PUBLISHED&limit=10" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Response ഉദാഹരണം
+
+```json
+{
+  "data": [
+    {
+      "id": "2d3e4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a",
+      "programCode": "LIT-01",
+      "programType": "SINGLE",
+      "status": "RESULTS_PUBLISHED",
+      "program": {
+        "name": "English Elocution"
+      },
+      "category": {
+        "id": "cat-senior",
+        "name": "Senior"
+      },
+      "schedule": {
+        "scheduledAt": "2026-09-04T09:30:00.000Z",
+        "venue": {
+          "name": "Main Auditorium",
+          "code": "AUD-1"
+        }
+      }
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 10,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+```
+
+---
+
+## പ്രോഗ്രാം വിവരങ്ങൾ (Detail)
+
+ഒരു പ്രത്യേക പ്രോഗ്രാമിന്റെ മുഴുവൻ വിവരങ്ങൾ ഐഡി ഉപയോഗിച്ച് എടുക്കാൻ:
+
+```http
+GET /public-api/v1/programme-detail
+```
+
+Query: `subFestProgramId=<uuid>`
+
+---
+
+## സ്റ്റേജ് ഷെഡ്യൂളുകൾ (Schedules)
+
+ഓരോ വേദികളിലും എപ്പോഴൊക്കെയാണ് മത്സരങ്ങൾ നടക്കുന്നത് എന്ന് അറിയാൻ ഈ API ഉപയോഗിക്കാം. ഡിജിറ്റൽ ഡിസ്പ്ലേകൾക്കും ടൈംടേബിൾ സ്ക്രീനുകൾക്കും ഇത് അനുയോജ്യമാണ്.
+
+```http
+GET /public-api/v1/schedules
+```
+
+### Query Parameters
+
+| Parameter | Type | വിവരണം |
+| :--- | :--- | :--- |
+| `subFestSlug` | `string` | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
+| `venueId` | `UUID` | നിർദ്ദിഷ്ട വേദി പ്രകാരം ഫിൽട്ടർ ചെയ്യാൻ. |
+| `scheduledAtFrom` | `ISO Date` | ഈ സമയത്തിന് ശേഷം ആരംഭിക്കുന്നവ. |
+| `scheduledAtTo` | `ISO Date` | ഈ സമയത്തിന് മുൻപ് അവസാനിക്കുന്നവ. |
+| `page` | `integer` | പേജ് നമ്പർ. |
+| `limit` | `integer` | പരമാവധി എണ്ണം (`20`). |
+
+### ഉദാഹരണം
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/schedules?subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Response ഉദാഹരണം
+
+```json
+{
+  "data": [
+    {
+      "id": "sch-01",
+      "scheduledAt": "2026-09-04T09:30:00.000Z",
+      "venue": {
+        "name": "Stage 1 - Tagore Hall",
+        "code": "STG-1"
+      },
+      "subFestProgram": {
+        "programCode": "LIT-01",
+        "status": "SCHEDULED",
+        "program": {
+          "name": "English Elocution"
+        }
+      }
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 20,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+```
+

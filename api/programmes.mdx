@@ -1,0 +1,165 @@
+---
+title: "Programmes & Schedules"
+description: "Query competition programmes, individual programme details, and venue stage timetables."
+---
+
+Programmes represent the competitive events in a festival (e.g. Essay Writing, Classical Dance, Group Song). Schedules define where and when each programme takes place across event venues.
+
+## List Programmes
+
+Retrieve programmes configured in a subfest with rich filtering capabilities.
+
+```http
+GET /public-api/v1/programmes
+```
+
+### Query Parameters
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `subFestId` | `UUID` | *(Required if no slug)* Sub-festival identifier. |
+| `subFestSlug` | `string` | *(Required if no ID)* Sub-festival URL slug. |
+| `search` | `string` | Search programme name or programme code. |
+| `categoryIds` | `string` | Comma-separated list of Category UUIDs. |
+| `venues` | `string` | Comma-separated list of Venue UUIDs. |
+| `status` | `string` | Filter status: `DRAFT`, `REGISTRATION_OPEN`, `SCHEDULED`, `ONGOING`, `JUDGEMENT_COMPLETED`, `RESULTS_ENTERED`, `RESULTS_PUBLISHED`. |
+| `programType` | `string` | Type of programme: `SINGLE`, `GROUP`, `COMBINED`. |
+| `programCodePattern` | `string` | Filter by code pattern (e.g. `OFF-*` or `ON-*`). |
+| `collectionId` | `UUID` | Filter programmes in a specific collection. |
+| `hasSchedule` | `boolean` | Only programmes that have been scheduled on stage. |
+| `hasResults` | `boolean` | Only programmes with entered or published results. |
+| `page` | `integer` | Page number (default: `1`). |
+| `limit` | `integer` | Items per page (max: `20`). |
+
+### Example Request
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/programmes?subFestSlug=arts-2026&status=RESULTS_PUBLISHED&limit=10" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Example Response
+
+```json
+{
+  "data": [
+    {
+      "id": "2d3e4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a",
+      "programCode": "LIT-01",
+      "programType": "SINGLE",
+      "status": "RESULTS_PUBLISHED",
+      "program": {
+        "name": "English Elocution",
+        "description": "Topic given 10 minutes prior"
+      },
+      "category": {
+        "id": "cat-senior",
+        "name": "Senior"
+      },
+      "schedule": {
+        "id": "sch-01",
+        "scheduledAt": "2026-09-04T09:30:00.000Z",
+        "venue": {
+          "id": "ven-01",
+          "name": "Main Auditorium",
+          "code": "AUD-1"
+        }
+      }
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 10,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+```
+
+---
+
+## Get Programme Detail
+
+Fetch complete metadata for an individual programme.
+
+```http
+GET /public-api/v1/programme-detail
+```
+
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `subFestProgramId` | `UUID` | Yes | Unique SubFest Programme identifier. |
+| `subFestId` | `UUID` | Optional | Sub-festival identifier. |
+| `subFestSlug` | `string` | Optional | Sub-festival URL slug. |
+
+### Example Request
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/programme-detail?subFestProgramId=2d3e4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+---
+
+## List Schedules
+
+Query stage timelines and schedules across venues. Ideal for driving digital signage, LED stage walls, or timetable viewers.
+
+```http
+GET /public-api/v1/schedules
+```
+
+### Query Parameters
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `subFestId` | `UUID` | *(Required if no slug)* Sub-festival identifier. |
+| `subFestSlug` | `string` | *(Required if no ID)* Sub-festival slug. |
+| `venueId` | `UUID` | Filter by specific stage or venue. |
+| `subFestProgramId` | `UUID` | Filter schedule for a specific programme. |
+| `scheduledAtFrom` | `ISO Date` | Filter events starting on or after timestamp. |
+| `scheduledAtTo` | `ISO Date` | Filter events starting on or before timestamp. |
+| `page` | `integer` | Page number (default: `1`). |
+| `limit` | `integer` | Items per page (max: `20`). |
+
+### Example Request
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/schedules?subFestSlug=arts-2026&scheduledAtFrom=2026-09-04T00:00:00.000Z" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Example Response
+
+```json
+{
+  "data": [
+    {
+      "id": "sch-01",
+      "scheduledAt": "2026-09-04T09:30:00.000Z",
+      "venue": {
+        "id": "ven-01",
+        "name": "Stage 1 - Tagore Hall",
+        "code": "STG-1"
+      },
+      "subFestProgram": {
+        "id": "2d3e4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a",
+        "programCode": "LIT-01",
+        "status": "SCHEDULED",
+        "program": {
+          "name": "English Elocution"
+        }
+      }
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 20,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+```
+

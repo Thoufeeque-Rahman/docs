@@ -59,7 +59,7 @@
           },
           {
             "tab": "Admin guide",
-            "icon": "settings",
+            "icon": "gear",
             "groups": [
               {
                 "group": "Setup",
@@ -166,6 +166,46 @@
                 ]
               }
             ]
+          },
+          {
+            "tab": "Developer API",
+            "icon": "code",
+            "groups": [
+              {
+                "group": "Getting Started",
+                "pages": [
+                  "api/overview",
+                  "api/authentication"
+                ]
+              },
+              {
+                "group": "Festival & Structure",
+                "pages": [
+                  "api/subfests",
+                  "api/categories-and-teams"
+                ]
+              },
+              {
+                "group": "Participants & Events",
+                "pages": [
+                  "api/candidates",
+                  "api/programmes"
+                ]
+              },
+              {
+                "group": "Results & Standings",
+                "pages": [
+                  "api/results",
+                  "api/toppers-and-summary"
+                ]
+              },
+              {
+                "group": "Media & Downloads",
+                "pages": [
+                  "api/media-and-downloads"
+                ]
+              }
+            ]
           }
         ]
       },
@@ -190,7 +230,7 @@
           },
           {
             "tab": "Admin guide",
-            "icon": "settings",
+            "icon": "gear",
             "groups": [
               {
                 "group": "Setup",
@@ -294,6 +334,46 @@
                   "ml/reference/reports-list",
                   "ml/reference/app-route-map",
                   "ml/reference/glossary"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Developer API",
+            "icon": "code",
+            "groups": [
+              {
+                "group": "Getting Started",
+                "pages": [
+                  "ml/api/overview",
+                  "ml/api/authentication"
+                ]
+              },
+              {
+                "group": "Festival & Structure",
+                "pages": [
+                  "ml/api/subfests",
+                  "ml/api/categories-and-teams"
+                ]
+              },
+              {
+                "group": "Participants & Events",
+                "pages": [
+                  "ml/api/candidates",
+                  "ml/api/programmes"
+                ]
+              },
+              {
+                "group": "Results & Standings",
+                "pages": [
+                  "ml/api/results",
+                  "ml/api/toppers-and-summary"
+                ]
+              },
+              {
+                "group": "Media & Downloads",
+                "pages": [
+                  "ml/api/media-and-downloads"
                 ]
               }
             ]

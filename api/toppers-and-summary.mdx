@@ -1,0 +1,160 @@
+---
+title: "Summary & Toppers"
+description: "Fetch overall festival leaderboards, team point totals, counts, and individual champions."
+---
+
+These endpoints provide high-level festival statistics, real-time team point leaderboards, and individual topper standings (such as Kalathilakam, Kalaprathibha, or category toppers).
+
+## Festival Summary & Team Leaderboard
+
+Retrieve an aggregated overview of the festival including live team scores, rank standings, and event counters.
+
+```http
+GET /public-api/v1/summary
+```
+
+### Query Parameters
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `subFestId` | `UUID` | Optional: limit summary to a specific sub-festival. |
+| `subFestSlug` | `string` | Optional: limit summary by sub-festival slug. |
+
+### Example Request
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/summary?subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Example Response
+
+```json
+{
+  "festival": {
+    "id": "fest-01",
+    "name": "State Arts Festival 2026",
+    "motto": "Igniting Talents",
+    "subdomain": "statearts2026"
+  },
+  "stats": {
+    "subFestCount": 1,
+    "totalProgrammes": 64,
+    "publishedProgrammes": 28,
+    "candidateCount": 450,
+    "galleryImageCount": 120,
+    "newsCount": 8
+  },
+  "teams": [
+    {
+      "rank": 1,
+      "team": {
+        "id": "8e371309-80b6-4074-a69c-f090d8102a24",
+        "name": "Red House",
+        "displayName": "Ruby Phoenix",
+        "colorCode": "#EF4444"
+      },
+      "totalPoints": 245
+    },
+    {
+      "rank": 2,
+      "team": {
+        "id": "9f482410-91c7-5185-b7ad-0101e9213b35",
+        "name": "Blue House",
+        "displayName": "Sapphire Dragons",
+        "colorCode": "#3B82F6"
+      },
+      "totalPoints": 220
+    }
+  ]
+}
+```
+
+---
+
+## Get Topper Entries
+
+Retrieve top-performing candidates or teams assigned to title placeholders (e.g. Festival Champion, Best Actor, Category Toppers).
+
+```http
+GET /public-api/v1/toppers
+```
+
+### Query Parameters
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `topperPlaceholderId` | `UUID` | Filter entries by specific title placeholder. |
+| `subFestSlug` | `string` | Sub-festival slug. |
+| `page` | `integer` | Page number. |
+| `limit` | `integer` | Items per page (max: `20`). |
+
+### Example Request
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/toppers?subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Example Response
+
+```json
+{
+  "data": [
+    {
+      "id": "top-01",
+      "rank": 1,
+      "points": 35,
+      "candidate": {
+        "name": "Aisha Rahman",
+        "chestNo": "104",
+        "avatarUrl": "https://assets.festie.app/avatars/aisha.jpg",
+        "team": {
+          "name": "Red House"
+        }
+      },
+      "placeholder": {
+        "name": "Kalaprathibha (Overall Individual Champion)"
+      }
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 20,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+```
+
+---
+
+## List Topper Placeholders
+
+Query the configured topper award titles and categories.
+
+```http
+GET /public-api/v1/topper-placeholders
+```
+
+### Query Parameters
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `isPublished` | `boolean` | Filter published titles (`true`). |
+| `entityType` | `string` | Target entity: `CANDIDATE` or `TEAM`. |
+| `scopeType` | `string` | Title scope: `FESTIVAL`, `SUBFEST`, or `CATEGORY`. |
+| `page` | `integer` | Page number. |
+| `limit` | `integer` | Items per page (max: `20`). |
+
+---
+
+## Page Toppers
+
+Retrieve topper data configured for specific website layouts or custom display pages:
+
+```http
+GET /public-api/v1/topper-pages
+GET /public-api/v1/page-toppers
+```
+

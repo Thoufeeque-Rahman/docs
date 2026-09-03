@@ -1,0 +1,130 @@
+---
+title: "SubFests & ഫിൽട്ടറുകൾ"
+description: "ഫെസ്റ്റിവലിലെ സബ് ഫെസ്റ്റുകൾ, ലെവലുകൾ, ആപ്പിലെ ഡ്രോപ്‌ഡൗൺ ഫിൽട്ടർ വിവരങ്ങൾ എന്നിവ എടുക്കുന്ന വിധം."
+---
+
+Festie-യിൽ ഒരു ഫെസ്റ്റിവലിന് കീഴിൽ ഒന്നിൽക്കൂടുതൽ സബ് ഫെസ്റ്റുകൾ (ഉദാ: ജൂനിയർ, സീനിയർ, ആർട്സ്, സ്പോർട്സ്) ഉണ്ടാകാം. ലഭ്യമായ സബ് ഫെസ്റ്റുകൾ കണ്ടെത്താനും, നിങ്ങളുടെ ആപ്പുകളിലെ ഡ്രോപ്ഡൗൺ ഫിൽട്ടറുകൾ സെറ്റ് ചെയ്യാനും ഈ API-കൾ ഉപയോഗിക്കാം.
+
+## സബ് ഫെസ്റ്റുകളുടെ ലിസ്റ്റ്
+
+നിങ്ങളുടെ ഫെസ്റ്റിവലിലുള്ള ആക്ടീവ് ആയ സബ് ഫെസ്റ്റുകളുടെ വിവരങ്ങൾ എടുക്കുക.
+
+```http
+GET /public-api/v1/subfests
+```
+
+### Query Parameters
+
+| Parameter | Type | Default | വിവരണം |
+| :--- | :--- | :--- | :--- |
+| `search` | `string` | — | പേരോ സ്ലഗ്ഗോ (slug) ഉപയോഗിച്ച് തിരയാൻ. |
+| `levelId` | `UUID` | — | നിർദ്ദിഷ്ട ലെവലിലുള്ള സബ് ഫെസ്റ്റുകൾ ഫിൽട്ടർ ചെയ്യാൻ. |
+| `status` | `string` | `ACTIVE` | സ്റ്റാറ്റസ് പ്രകാരം ഫിൽട്ടർ ചെയ്യാൻ. |
+| `page` | `integer` | `1` | പേജ് നമ്പർ. |
+| `limit` | `integer` | `20` | ഒരു പേജിൽ പരമാവധി എത്രയെണ്ണം (പരമാവധി `20`). |
+
+### ഉദാഹരണം
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/subfests?page=1&limit=10" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Response ഉദാഹരണം
+
+```json
+{
+  "data": [
+    {
+      "id": "e3b0c442-98fc-1c14-9af0-2a3b957977b2",
+      "name": "സാഹിത്യോത്സവ് 2026",
+      "slug": "sahityotsav-2026",
+      "timeZone": "Asia/Kolkata",
+      "status": "ACTIVE",
+      "level": {
+        "id": "7b0efd24-d2e8-466a-bc91-381c85354921",
+        "name": "Campus Level",
+        "levelOrder": 1
+      },
+      "parentSubFest": null
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 10,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+```
+
+---
+
+## Filter വിവരങ്ങൾ ലഭിക്കാൻ
+
+നിങ്ങളുടെ ആപ്പിലോ വെബ്സൈറ്റിലോ കാറ്റഗറികൾ, ടീമുകൾ, വേദികൾ (venues) എന്നിവയുടെ ഡ്രോപ്ഡൗൺ ലിസ്റ്റ് ഉണ്ടാക്കാൻ ആവശ്യമായ വിവരങ്ങൾ ഒരൊറ്റ കോളിൽ ലഭിക്കാൻ ഇത് ഉപയോഗിക്കാം.
+
+```http
+GET /public-api/v1/filters
+```
+
+### Query Parameters
+
+| Parameter | Type | വിവരണം |
+| :--- | :--- | :--- |
+| `subFestId` | `UUID` | നിർദ്ദിഷ്ട സബ് ഫെസ്റ്റ് ഐഡി. |
+| `subFestSlug` | `string` | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
+
+### ഉദാഹരണം
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/filters?subFestSlug=sahityotsav-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Response ഉദാഹരണം
+
+```json
+{
+  "subFests": [
+    {
+      "id": "e3b0c442-98fc-1c14-9af0-2a3b957977b2",
+      "name": "സാഹിത്യോത്സവ് 2026",
+      "slug": "sahityotsav-2026",
+      "timeZone": "Asia/Kolkata",
+      "settings": {
+        "teamsEnabled": true
+      }
+    }
+  ],
+  "categories": [
+    {
+      "id": "c1f3a241-1122-4a0e-897b-cf10972b2571",
+      "name": "Junior",
+      "subFestId": "e3b0c442-98fc-1c14-9af0-2a3b957977b2"
+    },
+    {
+      "id": "d2f4b352-2233-4b1f-908c-df21083c3682",
+      "name": "Senior",
+      "subFestId": "e3b0c442-98fc-1c14-9af0-2a3b957977b2"
+    }
+  ],
+  "teams": [
+    {
+      "id": "8e371309-80b6-4074-a69c-f090d8102a24",
+      "name": "Red House",
+      "displayName": "Ruby Phoenix",
+      "subFestId": "e3b0c442-98fc-1c14-9af0-2a3b957977b2"
+    }
+  ],
+  "venues": [
+    {
+      "id": "4a15ef40-349c-48c1-8408-5452d001fe31",
+      "name": "Main Stage",
+      "code": "STG-1"
+    }
+  ],
+  "selectedSubFestId": "e3b0c442-98fc-1c14-9af0-2a3b957977b2"
+}
+```
+

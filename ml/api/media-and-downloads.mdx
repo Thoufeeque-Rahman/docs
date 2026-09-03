@@ -1,0 +1,152 @@
+---
+title: "വാർത്തകൾ, ഗ്യാലറി & ഫയലുകൾ"
+description: "ഫെസ്റ്റിവൽ വാർത്തകൾ, ഫോട്ടോ ഗ്യാലറി ആൽബങ്ങൾ, ഡൗൺലോഡ് ചെയ്യാവുന്ന ഫയലുകൾ എന്നിവ ലഭിക്കാൻ."
+---
+
+ഫെസ്റ്റിവൽ അറിയിപ്പുകൾ, പ്രസ് റിലീസുകൾ, ഒഫീഷ്യൽ ഫോട്ടോകൾ, മത്സര നിയമാവലികൾ അല്ലെങ്കിൽ സർക്കുലറുകൾ എന്നിവ നിങ്ങളുടെ ആപ്പിൽ നേരിട്ട് ഉൾപ്പെടുത്താൻ ഈ API-കൾ ഉപയോഗിക്കാം.
+
+## വാർത്തകളും അറിയിപ്പുകളും (News)
+
+പബ്ലിഷ് ചെയ്ത വാർത്തകൾ ലഭിക്കാൻ:
+
+```http
+GET /public-api/v1/news
+```
+
+### Query Parameters
+
+| Parameter | Type | വിവരണം |
+| :--- | :--- | :--- |
+| `search` | `string` | വാർത്താ തലക്കെട്ടോ ഉള്ളടക്കമോ തിരയാൻ. |
+| `tags` | `string` | ടാഗുകൾ (കോമ ഇട്ട് നൽകാം). |
+| `hasThumbnail` | `boolean` | തമ്പ്‌നെയിൽ ഉള്ള വാർത്തകൾ മാത്രം. |
+| `page` | `integer` | പേജ് നമ്പർ. |
+| `limit` | `integer` | പരമാവധി എണ്ണം (`20`). |
+
+### ഉദാഹരണം
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/news?page=1&limit=5" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Response ഉദാഹരണം
+
+```json
+{
+  "data": [
+    {
+      "id": "7c1b5204-631d-400a-85d1-d24296ce3001",
+      "title": "ഉദ്ഘാടന ചടങ്ങുകൾ സമാപിച്ചു",
+      "slug": "inaugural-ceremony-highlights",
+      "snippet": "വർണ്ണാഭമായ പരിപാടികളോടെ കലോത്സവത്തിന് തിരിതെളിഞ്ഞു...",
+      "thumbnailUrl": "https://assets.festie.app/news/inauguration-thumb.jpg",
+      "publishedAt": "2026-09-03T10:00:00.000Z",
+      "tags": ["Official", "Opening"]
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 5,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+```
+
+---
+
+## വാർത്തയുടെ മുഴുവൻ വിവരങ്ങൾ (News Detail)
+
+ഒരു പ്രത്യേക വാർത്തയുടെ മുഴുവൻ ഉള്ളടക്കം ഐഡി ഉപയോഗിച്ച് എടുക്കാൻ:
+
+```http
+GET /public-api/v1/news/:newsId
+```
+
+---
+
+## ഫോട്ടോ ഗ്യാലറി (Gallery)
+
+ഫെസ്റ്റിവൽ ഫോട്ടോകളും ആൽബങ്ങളും ലഭിക്കാൻ:
+
+```http
+GET /public-api/v1/gallery
+```
+
+### Query Parameters
+
+| Parameter | Type | വിവരണം |
+| :--- | :--- | :--- |
+| `albumId` | `UUID` | നിർദ്ദിഷ്ട ആൽബത്തിലെ ഫോട്ടോകൾ. |
+| `subFestProgramId` | `UUID` | ഒരു പ്രോഗ്രാമുമായി ബന്ധപ്പെട്ട ഫോട്ടോകൾ. |
+| `categoryId` | `UUID` | കാറ്റഗറി പ്രകാരം. |
+| `page` | `integer` | പേജ് നമ്പർ. |
+| `limit` | `integer` | പേജ് ലിമിറ്റ് (`20`). |
+
+### Response ഉദാഹരണം
+
+```json
+{
+  "data": [
+    {
+      "id": "gal-01",
+      "title": "സ്റ്റേജ് 1 - നാടോടി നൃത്തം",
+      "imageUrl": "https://assets.festie.app/gallery/folk-dance-01.jpg",
+      "album": {
+        "id": "alb-01",
+        "name": "ഒന്നാം ദിന ചിത്രങ്ങൾ"
+      }
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 20,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+```
+
+---
+
+## ഫയൽ ഡൗൺലോഡുകൾ (Downloads)
+
+നിയമാവലി ബുക്ക്‌ലെറ്റ്, സ്കോറിംഗ് മാനുവലുകൾ, ഫോമുകൾ എന്നിവ ലഭിക്കാൻ:
+
+```http
+GET /public-api/v1/downloads
+```
+
+### Query Parameters
+
+| Parameter | Type | വിവരണം |
+| :--- | :--- | :--- |
+| `search` | `string` | ഫയലിന്റെ പേര് തിരയാൻ. |
+| `category` | `string` | ഫയൽ കാറ്റഗറി (ഉദാ: `Guidelines`). |
+| `page` | `integer` | പേജ് നമ്പർ. |
+| `limit` | `integer` | പേജ് ലിമിറ്റ് (`20`). |
+
+### Response ഉദാഹരണം
+
+```json
+{
+  "data": [
+    {
+      "id": "dl-01",
+      "title": "കലോത്സവ നിയമാവലി ബുക്ക്‌ലെറ്റ്",
+      "category": "Guidelines",
+      "fileUrl": "https://assets.festie.app/downloads/rules-booklet.pdf",
+      "fileSize": 1048576,
+      "mimeType": "application/pdf"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 20,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+```
+
