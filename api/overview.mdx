@@ -1,0 +1,126 @@
+---
+title: "Developer API Overview"
+description: "Learn how to use the Festie Public REST API to integrate festival data into your own applications, websites, and displays."
+---
+
+Festie provides a developer-friendly REST API (`/public-api/v1`) that enables you to retrieve real-time festival schedules, candidate lists, team standings, published results, photo galleries, and news updates directly into your custom applications, mobile apps, stage displays, and websites.
+
+## Base URL
+
+All developer public API requests are served over HTTPS from your Festie API domain:
+
+```bash
+https://api.festie.app/public-api/v1
+```
+
+If you are running a self-hosted instance or custom environment, replace `api.festie.app` with your deployed API domain.
+
+## Core Concepts
+
+<CardGroup cols={2}>
+  <Card title="API Key Authentication" icon="key">
+    Authenticate every request by passing your API key in the `X-API-Key` HTTP request header.
+  </Card>
+  <Card title="Server-Side Only" icon="server">
+    Calls must strictly originate from your secure backend server. Client-side browser calls (direct HTML or frontend JavaScript) are prohibited.
+  </Card>
+  <Card title="SubFest Scoping" icon="layer-group">
+    Festivals can contain one or more sub-festivals (such as Arts, Sports, or Campus levels). Scope data queries by providing `subFestId` or `subFestSlug`.
+  </Card>
+  <Card title="Pagination & Limits" icon="list">
+    Lists support pagination with `page` and `limit` query parameters. For optimal performance, the maximum page limit is capped at `20` records.
+  </Card>
+</CardGroup>
+
+<Warning>
+  **Important Security Policy: Server-Side Calls Only**
+
+  Direct API requests from frontend browser code (e.g. client-side JavaScript in `<script>` tags, inline HTML, or static browser applications) are **strictly not permitted**.
+
+  - Exposing your `X-API-Key` in client-side HTML or browser code leaks full control over your festival API quota.
+  - You must make all API requests from your own backend server, Node.js service, Next.js / Remix / Nuxt server route, or serverless function.
+  - Your backend then securely serves sanitized data to your frontend templates or mobile applications.
+</Warning>
+
+## Quick Setup Guide
+
+To get started with the Festie Developer API:
+
+<Steps>
+  <Step title="Enable Developer API in Festival Settings">
+    Log in to the Festie admin portal, go to `Festival > Settings > API Keys`. Verify that your current subscription includes the Developer API feature.
+  </Step>
+  <Step title="Generate an API Key">
+    Click **Create API Key**, specify a descriptive label (such as `Backend-Server` or `Results-Sync-Cron`), and save the generated key securely.
+  </Step>
+  <Step title="Set Up Your Server Environment">
+    Add `FESTIE_API_KEY` to your backend server's environment variables (`.env`). Never commit this key to version control or expose it to client-side bundles.
+  </Step>
+  <Step title="Fetch Festival Data from Your Backend">
+    Make server-side HTTP GET requests passing the `X-API-Key` header and optionally specify `subFestId` or `subFestSlug`.
+  </Step>
+</Steps>
+
+## SubFest Scoping
+
+Endpoints that return festival-level resources (such as `/subfests`, `/news`, and `/summary`) return data across the festival or can optionally be scoped. Endpoints that deal with competition data (such as `/categories`, `/teams`, `/candidates`, `/programmes`, and `/programme-results`) require a subfest target:
+
+- **Query Parameter:** Pass `subFestId=<uuid>` or `subFestSlug=<slug>` in the query string.
+- **Header:** Alternatively, provide the festival's active custom domain or subdomain in the `Host` header.
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/teams?subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+## Pagination
+
+List endpoints accept standard pagination parameters:
+
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `page` | `integer` | `1` | The 1-based page number to retrieve. Must be $\ge 1$. |
+| `limit` | `integer` | `20` | The number of records per page. Maximum allowed is `20`. |
+| `sortBy` | `string` | varies | Field name to sort results by (e.g. `name`, `displayOrder`). |
+| `sortOrder` | `string` | `ASC` | Sort direction: `ASC` (ascending) or `DESC` (descending). |
+
+### Standard Response Envelope
+
+List endpoints return data inside a uniform JSON response structure containing `data` and `meta`:
+
+```json
+{
+  "data": [
+    {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "name": "Elocution English",
+      "programCode": "ENG-01"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 20,
+    "total": 48,
+    "totalPages": 3
+  }
+}
+```
+
+## HTTP Status Codes
+
+Festie Public API uses standard HTTP response codes to communicate success and failure:
+
+| Code | Status | Meaning |
+| :--- | :--- | :--- |
+| `200` | OK | The request succeeded and returns the requested payload. |
+| `400` | Bad Request | Missing required parameter (e.g. `subFestId` missing) or invalid parameter format. |
+| `401` | Unauthorized | Missing `X-API-Key` header, inactive API key, or expired key. |
+| `403` | Forbidden | Quota exceeded or festival subscription lacks the public API feature. |
+| `404` | Not Found | The requested candidate, programme, news item, or subfest was not found. |
+| `429` | Too Many Requests | Rate limit exceeded (per-minute requests threshold reached). |
+| `503` | Service Unavailable | Quota tracking service temporarily unavailable. |
+
+<Tip>
+  Next, check out [Authentication & Rate Limits](/api/authentication) to learn how to create your API key and handle rate limit headers.
+</Tip>
+

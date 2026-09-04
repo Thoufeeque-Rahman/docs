@@ -1,0 +1,129 @@
+---
+title: "Categories & Teams"
+description: "Fetch competition categories, age brackets, participating teams, and house colors."
+---
+
+Categories divide festival participants into age or grade groups (e.g. Sub Junior, Junior, General). Teams represent participating houses, clubs, or institutions.
+
+## List Categories
+
+Retrieve categories defined within a specific sub-festival.
+
+```http
+GET /public-api/v1/categories
+```
+
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `subFestId` | `UUID` | Optional* | Target sub-festival ID (*required if not passing `subFestSlug`). |
+| `subFestSlug` | `string` | Optional* | Target sub-festival URL slug. |
+| `search` | `string` | No | Case-insensitive search across category name and description. |
+| `page` | `integer` | No | Page number (default: `1`). |
+| `limit` | `integer` | No | Items per page (default: `20`, max: `20`). |
+| `sortBy` | `string` | No | Sort field: `displayOrder`, `name`. |
+| `sortOrder` | `string` | No | Direction: `ASC` or `DESC`. |
+
+### Example Request
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/categories?subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Example Response
+
+```json
+{
+  "data": [
+    {
+      "id": "c1f3a241-1122-4a0e-897b-cf10972b2571",
+      "name": "Junior",
+      "description": "Grade 5 to Grade 7",
+      "displayOrder": 1
+    },
+    {
+      "id": "d2f4b352-2233-4b1f-908c-df21083c3682",
+      "name": "Senior",
+      "description": "Grade 8 to Grade 10",
+      "displayOrder": 2
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 20,
+    "total": 2,
+    "totalPages": 1
+  }
+}
+```
+
+---
+
+## List Teams
+
+Retrieve participating teams, houses, or departments in the subfest.
+
+```http
+GET /public-api/v1/teams
+```
+
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `subFestId` | `UUID` | Optional* | Sub-festival identifier. |
+| `subFestSlug` | `string` | Optional* | Sub-festival URL slug. |
+| `search` | `string` | No | Search term matching team name or display name. |
+| `colorCode` | `string` | No | Filter by assigned hex color code (e.g. `#EF4444`). |
+| `hasCandidates` | `boolean` | No | Filter teams that have registered candidates (`true` or `false`). |
+| `page` | `integer` | No | Page number (default: `1`). |
+| `limit` | `integer` | No | Items per page (max `20`). |
+| `sortBy` | `string` | No | Sort field: `displayOrder`, `name`. |
+| `sortOrder` | `string` | No | Direction: `ASC` or `DESC`. |
+
+### Example Request
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/teams?subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Example Response
+
+```json
+{
+  "data": [
+    {
+      "id": "8e371309-80b6-4074-a69c-f090d8102a24",
+      "name": "Red House",
+      "displayName": "Ruby Phoenix",
+      "colorCode": "#EF4444",
+      "displayOrder": 1,
+      "logoUrl": "https://assets.festie.app/logos/red-house.png",
+      "_count": {
+        "subFestCandidates": 42
+      }
+    },
+    {
+      "id": "9f482410-91c7-5185-b7ad-0101e9213b35",
+      "name": "Blue House",
+      "displayName": "Sapphire Dragons",
+      "colorCode": "#3B82F6",
+      "displayOrder": 2,
+      "logoUrl": "https://assets.festie.app/logos/blue-house.png",
+      "_count": {
+        "subFestCandidates": 39
+      }
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 20,
+    "total": 2,
+    "totalPages": 1
+  }
+}
+```
+

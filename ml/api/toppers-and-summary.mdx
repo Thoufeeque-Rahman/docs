@@ -1,0 +1,132 @@
+---
+title: "പോയിന്റ് നിലയും ടോപ്പർമാരും (Summary & Toppers)"
+description: "ഫെസ്റ്റിവലിലെ ആകെ സ്റ്റാറ്റസ്, ടീമുകളുടെ പോയിന്റ് നില, വ്യക്തിഗത ചാമ്പ്യന്മാർ എന്നിവ ലഭിക്കാൻ."
+---
+
+ഫെസ്റ്റിവലിലെ തത്സമയ ടീം പോയിന്റ് നില (Leaderboard), മത്സരങ്ങളുടെ ആകെ കണക്കുകൾ, കലാപ്രതിഭ/കലാതിലകം അല്ലെങ്കിൽ വ്യക്തിഗത ചാമ്പ്യന്മാർ (Toppers) എന്നിവ ഈ API-കൾ വഴി ലഭിക്കും.
+
+## ഫെസ്റ്റിവൽ സമറിയും ടീം ലീഡർബോർഡും
+
+ടീമുകൾ നേടിയ ആകെ പോയിന്റുകൾ, സ്ഥാനങ്ങൾ (Ranks), പൂർത്തിയായ മത്സരങ്ങളുടെ എണ്ണം എന്നിവ അറിയാൻ:
+
+```http
+GET /public-api/v1/summary
+```
+
+### Query Parameters
+
+| Parameter | Type | വിവരണം |
+| :--- | :--- | :--- |
+| `subFestSlug` | `string` | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
+| `subFestId` | `UUID` | സബ് ഫെസ്റ്റ് ഐഡി. |
+
+### ഉദാഹരണം
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/summary?subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Response ഉദാഹരണം
+
+```json
+{
+  "festival": {
+    "id": "fest-01",
+    "name": "State Arts Festival 2026",
+    "motto": "Igniting Talents",
+    "subdomain": "statearts2026"
+  },
+  "stats": {
+    "subFestCount": 1,
+    "totalProgrammes": 64,
+    "publishedProgrammes": 28,
+    "candidateCount": 450,
+    "galleryImageCount": 120,
+    "newsCount": 8
+  },
+  "teams": [
+    {
+      "rank": 1,
+      "team": {
+        "id": "8e371309-80b6-4074-a69c-f090d8102a24",
+        "name": "Red House",
+        "displayName": "Ruby Phoenix",
+        "colorCode": "#EF4444"
+      },
+      "totalPoints": 245
+    },
+    {
+      "rank": 2,
+      "team": {
+        "id": "9f482410-91c7-5185-b7ad-0101e9213b35",
+        "name": "Blue House",
+        "displayName": "Sapphire Dragons",
+        "colorCode": "#3B82F6"
+      },
+      "totalPoints": 220
+    }
+  ]
+}
+```
+
+---
+
+## വ്യക്തിഗത ടോപ്പർമാർ (Toppers)
+
+കലാപ്രതിഭ, കലാതിലകം, കാറ്റഗറി ചാമ്പ്യന്മാർ തുടങ്ങിയ ടോപ്പർമാരുടെ വിവരങ്ങൾ ലഭിക്കാൻ:
+
+```http
+GET /public-api/v1/toppers
+```
+
+### Query Parameters
+
+| Parameter | Type | വിവരണം |
+| :--- | :--- | :--- |
+| `subFestSlug` | `string` | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
+| `topperPlaceholderId` | `UUID` | നിർദ്ദിഷ്ട ടൈറ്റിൽ ഐഡി. |
+| `page` | `integer` | പേജ് നമ്പർ. |
+| `limit` | `integer` | പരമാവധി എണ്ണം (`20`). |
+
+### Response ഉദാഹരണം
+
+```json
+{
+  "data": [
+    {
+      "id": "top-01",
+      "rank": 1,
+      "points": 35,
+      "candidate": {
+        "name": "Aisha Rahman",
+        "chestNo": "104",
+        "avatarUrl": "https://assets.festie.app/avatars/aisha.jpg",
+        "team": {
+          "name": "Red House"
+        }
+      },
+      "placeholder": {
+        "name": "കലാപ്രതിഭ (Overall Individual Champion)"
+      }
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 20,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+```
+
+---
+
+## ടോപ്പർ കാറ്റഗറികൾ (Placeholders)
+
+സിസ്റ്റത്തിൽ സെറ്റ് ചെയ്തിട്ടുള്ള ടോപ്പർ കാറ്റഗറികൾ കാണാൻ:
+
+```http
+GET /public-api/v1/topper-placeholders
+```
+

@@ -1,0 +1,153 @@
+---
+title: "മത്സരാർത്ഥികൾ (Candidates)"
+description: "പങ്കെടുക്കുന്ന കുട്ടികളുടെ ലിസ്റ്റ്, പ്രൊഫൈൽ, രജിസ്ട്രേഷനുകൾ, നെഞ്ച് നമ്പർ പ്രകാരമുള്ള റിസൾട്ടുകൾ എന്നിവ എടുക്കാൻ."
+---
+
+ഫെസ്റ്റിവലിൽ രജിസ്റ്റർ ചെയ്തിട്ടുള്ള മത്സരാർത്ഥികളുടെ വിവരങ്ങൾ തിരയാനും, അവരുടെ നെഞ്ച് നമ്പർ (chest number) ഉപയോഗിച്ച് അവർ പങ്കെടുത്ത ഇനങ്ങളും നേടിയ മാർക്കുകളും കണ്ടെത്താനും ഈ എൻഡ്പോയിന്റുകൾ സഹായിക്കുന്നു.
+
+## മത്സരാർത്ഥികളുടെ ലിസ്റ്റ്
+
+വിവിധ ഫിൽട്ടറുകൾ ഉപയോഗിച്ച് മത്സരാർത്ഥികളെ കണ്ടെത്തുക.
+
+```http
+GET /public-api/v1/candidates
+```
+
+### Query Parameters
+
+| Parameter | Type | വിവരണം |
+| :--- | :--- | :--- |
+| `subFestSlug` | `string` | *(നിർബന്ധം)* സബ് ഫെസ്റ്റ് സ്ലഗ്. |
+| `search` | `string` | കുട്ടിയുടെ പേര്, നെഞ്ച് നമ്പർ, അഡ്മിഷൻ നമ്പർ എന്നിവ തിരയാൻ. |
+| `categoryIds` | `string` | കാറ്റഗറി ഐഡികൾ (കോമ ഇട്ട് നൽകാം). |
+| `teamIds` | `string` | ടീം ഐഡികൾ. |
+| `gender` | `string` | ജെൻഡർ: `MALE`, `FEMALE`, `OTHER`. |
+| `chestNoPattern` | `string` | നെഞ്ച് നമ്പർ പാറ്റേൺ (ഉദാ: `10*`). |
+| `hasRegistration` | `boolean` | ഏതെങ്കിലും പ്രോഗ്രാമിൽ രജിസ്റ്റർ ചെയ്തിട്ടുള്ളവർ മാത്രം. |
+| `page` | `integer` | പേജ് നമ്പർ. |
+| `limit` | `integer` | പേജ് ലിമിറ്റ് (പരമാവധി `20`). |
+
+### ഉദാഹരണം
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/candidates?subFestSlug=arts-2026&search=Aisha&page=1&limit=10" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Response ഉദാഹരണം
+
+```json
+{
+  "data": [
+    {
+      "id": "1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
+      "chestNo": "104",
+      "admissionNo": "ADM-2024-089",
+      "candidate": {
+        "id": "cand-01",
+        "name": "Aisha Rahman",
+        "gender": "FEMALE",
+        "avatarUrl": "https://assets.festie.app/avatars/aisha.jpg"
+      },
+      "category": {
+        "id": "c1f3a241-1122-4a0e-897b-cf10972b2571",
+        "name": "Senior"
+      },
+      "team": {
+        "id": "8e371309-80b6-4074-a69c-f090d8102a24",
+        "name": "Red House"
+      }
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 10,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+```
+
+---
+
+## മത്സരാർത്ഥിയുടെ മുഴുവൻ വിവരങ്ങൾ
+
+ഒരു കുട്ടിയുടെ ഐഡി നൽകി അവരുടെ കൂടുതൽ പ്രൊഫൈൽ വിവരങ്ങൾ ലഭിക്കാൻ:
+
+```http
+GET /public-api/v1/candidate-detail
+```
+
+Query: `subFestCandidateId=<uuid>`
+
+---
+
+## രജിസ്റ്റർ ചെയ്ത ഇനങ്ങൾ (Registrations)
+
+ഒരു കുട്ടി ഏതൊക്കെ പ്രോഗ്രാമുകളിലാണ് പങ്കെടുക്കുന്നത് എന്ന് അറിയാൻ:
+
+```http
+GET /public-api/v1/candidate-registrations
+```
+
+Query: `subFestCandidateId=<uuid>`
+
+---
+
+## നെഞ്ച് നമ്പർ പ്രകാരമുള്ള റിസൾട്ടുകൾ
+
+ഒരു കുട്ടിയുടെ ചെസ്റ്റ് നമ്പറോ ഐഡിയോ നൽകി, അവർ നേടിയ സ്ഥാനങ്ങൾ (1st, 2nd, 3rd), ഗ്രേഡുകൾ, ആകെ പോയിന്റുകൾ എന്നിവ ഒറ്റയടിക്ക് ലഭിക്കാൻ:
+
+```http
+GET /public-api/v1/candidate-result
+```
+
+### Query Parameters
+
+| Parameter | Type | വിവരണം |
+| :--- | :--- | :--- |
+| `chestNo` | `string` | കുട്ടിയുടെ നെഞ്ച് നമ്പർ (ഉദാ: `104`). |
+| `subFestCandidateId` | `UUID` | അല്ലെങ്കിൽ കുട്ടിയുടെ സിസ്റ്റം ഐഡി. |
+| `subFestSlug` | `string` | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
+
+### ഉദാഹരണം
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/candidate-result?chestNo=104&subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Response ഉദാഹരണം
+
+```json
+{
+  "candidate": {
+    "name": "Aisha Rahman",
+    "chestNo": "104",
+    "team": {
+      "name": "Red House"
+    },
+    "category": {
+      "name": "Senior"
+    }
+  },
+  "totalPoints": 15,
+  "results": [
+    {
+      "programmeName": "English Elocution",
+      "programCode": "ENG-01",
+      "position": "FIRST",
+      "grade": "A",
+      "points": 10
+    },
+    {
+      "programmeName": "Extempore",
+      "programCode": "ENG-03",
+      "position": "SECOND",
+      "grade": "A",
+      "points": 5
+    }
+  ]
+}
+```
+

@@ -1,0 +1,108 @@
+---
+title: "Programme Results"
+description: "Fetch published competition results, ranks, grades, and awarded points."
+---
+
+Festie provides real-time result endpoints for querying official scores, winner rankings (1st, 2nd, 3rd), grades (A, B, C), and team point allocations.
+
+## Get Programme Result
+
+Retrieve published results for an individual programme by passing its programme code or ID.
+
+```http
+GET /public-api/v1/programme-result
+```
+
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `programCode` | `string` | Optional* | Programme code (e.g. `LIT-01`). |
+| `subFestProgramId` | `UUID` | Optional* | SubFest programme UUID. |
+| `subFestSlug` | `string` | Optional* | Sub-festival URL slug (*required if passing `programCode`). |
+| `subFestId` | `UUID` | Optional | Sub-festival UUID. |
+
+### Example Request
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/programme-result?programCode=LIT-01&subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Example Response
+
+```json
+{
+  "programme": {
+    "id": "2d3e4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a",
+    "programCode": "LIT-01",
+    "name": "English Elocution",
+    "category": {
+      "name": "Senior"
+    }
+  },
+  "results": [
+    {
+      "position": "FIRST",
+      "grade": "A",
+      "points": 10,
+      "candidate": {
+        "chestNo": "104",
+        "name": "Aisha Rahman",
+        "team": {
+          "name": "Red House",
+          "colorCode": "#EF4444"
+        }
+      }
+    },
+    {
+      "position": "SECOND",
+      "grade": "A",
+      "points": 7,
+      "candidate": {
+        "chestNo": "112",
+        "name": "Rahul Verma",
+        "team": {
+          "name": "Blue House",
+          "colorCode": "#3B82F6"
+        }
+      }
+    },
+    {
+      "position": "THIRD",
+      "grade": "B",
+      "points": 3,
+      "candidate": {
+        "chestNo": "108",
+        "name": "Fathima Noor",
+        "team": {
+          "name": "Green House",
+          "colorCode": "#10B981"
+        }
+      }
+    }
+  ]
+}
+```
+
+---
+
+## List Multiple Programme Results
+
+Retrieve results for multiple programmes with pagination and filters.
+
+```http
+GET /public-api/v1/programme-results
+```
+
+### Query Parameters
+
+Supports all filters available in `GET /public-api/v1/programmes` (such as `categoryIds`, `venues`, `search`, `page`, `limit`).
+
+### Example Request
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/programme-results?subFestSlug=arts-2026&page=1&limit=10" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+

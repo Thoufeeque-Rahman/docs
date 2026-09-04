@@ -1,0 +1,114 @@
+---
+title: "Categories & ടീമുകൾ"
+description: "മത്സര വിഭാഗങ്ങൾ (Categories), പങ്കെടുക്കുന്ന ടീമുകൾ, ടീം കളറുകൾ എന്നിവ ലഭിക്കാനുള്ള API-കൾ."
+---
+
+കുട്ടികളെ പ്രായത്തിനെയോ ക്ലാസിനെയോ അടിസ്ഥാനമാക്കി തരംതിരിക്കുന്നതിനാണ് Categories (ഉദാ: Sub Junior, Junior, Senior) ഉപയോഗിക്കുന്നത്. മത്സരങ്ങളിൽ പങ്കെടുക്കുന്ന ഹൗസുകൾ, ഗ്രൂപ്പുകൾ, ഡിപ്പാർട്ട്‌മെന്റുകൾ എന്നിവയാണ് Teams.
+
+## കാറ്റഗറികളുടെ ലിസ്റ്റ്
+
+ഒരു സബ് ഫെസ്റ്റിലുള്ള മുഴുവൻ കാറ്റഗറികളും ലഭിക്കാൻ:
+
+```http
+GET /public-api/v1/categories
+```
+
+### Query Parameters
+
+| Parameter | Type | നിർബന്ധമാണോ | വിവരണം |
+| :--- | :--- | :--- | :--- |
+| `subFestId` | `UUID` | നിർബന്ധം* | സബ് ഫെസ്റ്റ് ഐഡി (*slug നൽകിയിട്ടില്ലെങ്കിൽ). |
+| `subFestSlug` | `string` | നിർബന്ധം* | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
+| `search` | `string` | അല്ല | പേര് തിരയാൻ. |
+| `page` | `integer` | അല്ല | പേജ് നമ്പർ (ഡിഫോൾട്ട്: `1`). |
+| `limit` | `integer` | അല്ല | ഒരു പേജിൽ എത്രയെണ്ണം (പരമാവധി: `20`). |
+
+### ഉദാഹരണം
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/categories?subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Response ഉദാഹരണം
+
+```json
+{
+  "data": [
+    {
+      "id": "c1f3a241-1122-4a0e-897b-cf10972b2571",
+      "name": "Junior",
+      "description": "5 മുതൽ 7 വരെ ക്ലാസുകൾ",
+      "displayOrder": 1
+    },
+    {
+      "id": "d2f4b352-2233-4b1f-908c-df21083c3682",
+      "name": "Senior",
+      "description": "8 മുതൽ 10 വരെ ക്ലാസുകൾ",
+      "displayOrder": 2
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 20,
+    "total": 2,
+    "totalPages": 1
+  }
+}
+```
+
+---
+
+## ടീമുകളുടെ ലിസ്റ്റ്
+
+ഫെസ്റ്റിവലിൽ പങ്കെടുക്കുന്ന ടീമുകൾ, അവരുടെ കളർ കോഡുകൾ, കുട്ടികളുടെ എണ്ണം എന്നിവ അറിയാൻ:
+
+```http
+GET /public-api/v1/teams
+```
+
+### Query Parameters
+
+| Parameter | Type | വിവരണം |
+| :--- | :--- | :--- |
+| `subFestSlug` | `string` | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
+| `subFestId` | `UUID` | സബ് ഫെസ്റ്റ് ഐഡി. |
+| `search` | `string` | ടീമിന്റെ പേര് തിരയാൻ. |
+| `colorCode` | `string` | കളർ കോഡ് പ്രകാരം ഫിൽട്ടർ ചെയ്യാൻ (ഉദാ: `#EF4444`). |
+| `hasCandidates` | `boolean` | കുട്ടികൾ രജിസ്റ്റർ ചെയ്തിട്ടുള്ള ടീമുകൾ മാത്രം കാണിക്കാൻ. |
+| `page` | `integer` | പേജ് നമ്പർ. |
+| `limit` | `integer` | പേജ് ലിമിറ്റ് (പരമാവധി `20`). |
+
+### ഉദാഹരണം
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/teams?subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Response ഉദാഹരണം
+
+```json
+{
+  "data": [
+    {
+      "id": "8e371309-80b6-4074-a69c-f090d8102a24",
+      "name": "Red House",
+      "displayName": "Ruby Phoenix",
+      "colorCode": "#EF4444",
+      "displayOrder": 1,
+      "logoUrl": "https://assets.festie.app/logos/red-house.png",
+      "_count": {
+        "subFestCandidates": 42
+      }
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 20,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+```
+

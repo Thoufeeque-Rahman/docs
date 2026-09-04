@@ -1,0 +1,159 @@
+---
+title: "Media, News & Downloads"
+description: "Retrieve festival news bulletins, photo gallery albums, and downloadable documents."
+---
+
+Festie provides public media endpoints to integrate press bulletins, event photographs, and official rulebooks or circulars directly into your application.
+
+## List News & Announcements
+
+Retrieve published news bulletins, press notes, and festival announcements.
+
+```http
+GET /public-api/v1/news
+```
+
+### Query Parameters
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `search` | `string` | Search within news title or content. |
+| `tags` | `string` | Filter by tags (comma-separated). |
+| `hasThumbnail` | `boolean` | Only news with a thumbnail image. |
+| `page` | `integer` | Page number. |
+| `limit` | `integer` | Items per page (max: `20`). |
+
+### Example Request
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/news?page=1&limit=5" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Example Response
+
+```json
+{
+  "data": [
+    {
+      "id": "7c1b5204-631d-400a-85d1-d24296ce3001",
+      "title": "Inaugural Ceremony Highlights",
+      "slug": "inaugural-ceremony-highlights",
+      "snippet": "The grand festival was officially flagged off by dignitaries today...",
+      "thumbnailUrl": "https://assets.festie.app/news/inauguration-thumb.jpg",
+      "publishedAt": "2026-09-03T10:00:00.000Z",
+      "tags": ["Opening", "Official"]
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 5,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+```
+
+---
+
+## Get News Detail
+
+Retrieve the full content of a specific news article by its ID.
+
+```http
+GET /public-api/v1/news/:newsId
+```
+
+### Example Request
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/news/7c1b5204-631d-400a-85d1-d24296ce3001" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+---
+
+## Photo Gallery
+
+Retrieve official photographs, album collections, and event coverage.
+
+```http
+GET /public-api/v1/gallery
+```
+
+### Query Parameters
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `albumId` | `UUID` | Filter photos belonging to a specific album. |
+| `subFestProgramId` | `UUID` | Filter photos captured during a specific programme. |
+| `categoryId` | `UUID` | Filter photos by participant category. |
+| `page` | `integer` | Page number (default: `1`). |
+| `limit` | `integer` | Items per page (max: `20`). |
+
+### Example Response
+
+```json
+{
+  "data": [
+    {
+      "id": "gal-01",
+      "title": "Stage 1 Folk Dance Performances",
+      "imageUrl": "https://assets.festie.app/gallery/folk-dance-01.jpg",
+      "album": {
+        "id": "alb-01",
+        "name": "Day 1 Stage Highlights"
+      }
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 20,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+```
+
+---
+
+## Public Downloads
+
+Fetch official downloadable files such as programme guidelines, scoring manuals, entry forms, or certificates.
+
+```http
+GET /public-api/v1/downloads
+```
+
+### Query Parameters
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `search` | `string` | Search file title or description. |
+| `category` | `string` | Filter by document category (e.g. `Guidelines`, `Schedule`). |
+| `page` | `integer` | Page number. |
+| `limit` | `integer` | Items per page (max: `20`). |
+
+### Example Response
+
+```json
+{
+  "data": [
+    {
+      "id": "dl-01",
+      "title": "Official Rules & Regulations Booklet",
+      "category": "Guidelines",
+      "fileUrl": "https://assets.festie.app/downloads/rules-booklet.pdf",
+      "fileSize": 1048576,
+      "mimeType": "application/pdf"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 20,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+```
+
