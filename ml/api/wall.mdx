@@ -1,0 +1,202 @@
+---
+title: "തത്സമയ വാൾ & സ്ക്രീൻ ഡിസ്പ്ലേകൾ (Live Wall)"
+description: "ഓഡിറ്റോറിയം പ്രൊജക്ടറുകൾ, സ്റ്റേജ് LED വാളുകൾ, ടിവി ഡിസ്പ്ലേകൾ എന്നിവയിലേക്ക് തത്സമയ റിസൾട്ടുകളും പോയിന്റ് നിലകളും കാണിക്കാൻ."
+---
+
+ഫെസ്റ്റിവൽ വേദിയിൽ സ്ഥാപിച്ചിട്ടുള്ള വലിയ എൽ.ഇ.ഡി വാളുകളിലോ, ഓഡിറ്റോറിയം പ്രൊജക്ടറുകളിലോ, ടിവി സ്ക്രീനുകളിലോ തത്സമയം റിസൾട്ടുകളും ടീം പോയിന്റുകളും പ്രദർശിപ്പിക്കാൻ ഉപയോഗിക്കുന്ന സംവിധാനമാണ് **Live Wall**. 
+
+ഇതിലൂടെ ടീമുകളുടെ പോയിന്റ് നിലകൾ (Leaderboard), മത്സരങ്ങളിൽ വിജയിച്ചവരുടെ വിവരങ്ങൾ (1st, 2nd, 3rd സ്ഥാനക്കാർ), കലാപ്രതിഭ/കലാതിലകം അല്ലെങ്കിൽ വ്യക്തിഗത ചാമ്പ്യന്മാർ, സ്റ്റേജ് സമയക്രമങ്ങൾ, ഇടവേളകളിലെ ഫോട്ടോ സ്ലൈഡ്‌ഷോകൾ എന്നിവ തുടർച്ചയായി കാണിക്കാൻ സാധിക്കും.
+
+<Warning>
+  **സെർവർ സൈഡ് കോളിംഗ് നയം**
+
+  മറ്റ് Festie Developer API-കൾ പോലെത്തന്നെ, **നിങ്ങളുടെ ബ്രൗസർ HTML-ൽ നിന്നോ ക്ലയന്റ് സൈഡ് കോഡിൽ നിന്നോ നേരിട്ട് ഈ API വിളിക്കാൻ പാടില്ല**. 
+  ഇത് നിങ്ങളുടെ രഹസ്യ `X-API-Key` പരസ്യമാക്കാൻ ഇടയാക്കും. എപ്പോഴും നിങ്ങളുടെ സ്വന്തം Backend സെർവർ വഴി ഡാറ്റ എടുത്ത് നിങ്ങളുടെ ഡിസ്പ്ലേ ആപ്പിലേക്ക് നൽകുക.
+</Warning>
+
+---
+
+## ഒരൊറ്റ Wall Data API (`/wall`)
+
+സ്റ്റേജ് വാൾ ഡിസ്പ്ലേകൾക്കായി ആവശ്യമായ മുഴുവൻ വിവരങ്ങളും ഒരൊറ്റ നെറ്റ്‌വർക്ക് കോളിൽ ലഭ്യമാക്കാൻ Festie ഒരു പ്രത്യേക എൻഡ്പോയിന്റ് നൽകുന്നുണ്ട്:
+
+```http
+GET /public-api/v1/wall
+```
+
+### Query Parameters
+
+| Parameter | Type | വിവരണം |
+| :--- | :--- | :--- |
+| `subFestSlug` | `string` | *(ശുപാർശ ചെയ്യുന്നു)* സബ് ഫെസ്റ്റ് സ്ലഗ് (ഉദാ: `arts-2026`). |
+| `subFestId` | `UUID` | സബ് ഫെസ്റ്റ് സിസ്റ്റം ഐഡി. |
+
+### റിക്വസ്റ്റ് ഉദാഹരണം
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/wall?subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Response ഉദാഹരണം
+
+```json
+{
+  "festival": {
+    "id": "fest-01",
+    "name": "State Arts Festival 2026",
+    "motto": "Igniting Talents",
+    "subdomain": "statearts2026",
+    "logoUrl": "https://assets.festie.app/logos/statearts.png"
+  },
+  "counts": {
+    "subFests": 1,
+    "programmesTotal": 64,
+    "programmesPublished": 28,
+    "programmesRemainingToPublish": 36,
+    "candidates": 450,
+    "galleryImages": 120,
+    "news": 8
+  },
+  "toppers": [
+    {
+      "placeholder": {
+        "label": "കലാപ്രതിഭ (Overall Individual Champion)",
+        "entityType": "CANDIDATE"
+      },
+      "entries": [
+        {
+          "rank": 1,
+          "points": 35,
+          "candidate": {
+            "name": "Aisha Rahman",
+            "chestNo": "104",
+            "avatarUrl": "https://assets.festie.app/avatars/aisha.jpg"
+          },
+          "team": {
+            "name": "Red House",
+            "colorCode": "#EF4444"
+          }
+        }
+      ]
+    }
+  ],
+  "recentResults": [
+    {
+      "id": "prog-01",
+      "programCode": "LIT-01",
+      "program": {
+        "name": "English Elocution"
+      },
+      "category": {
+        "name": "Senior"
+      },
+      "results": [
+        {
+          "position": "FIRST",
+          "grade": "A",
+          "points": 10,
+          "candidate": {
+            "name": "Aisha Rahman",
+            "chestNo": "104",
+            "team": {
+              "name": "Red House"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "schedules": [
+    {
+      "scheduledAt": "2026-09-04T10:00:00.000Z",
+      "venue": {
+        "name": "Stage 1 - Tagore Hall"
+      },
+      "subFestProgram": {
+        "programCode": "DAN-01",
+        "program": {
+          "name": "Classical Dance"
+        }
+      }
+    }
+  ],
+  "gallery": [
+    {
+      "id": "img-01",
+      "imageUrl": "https://assets.festie.app/gallery/stage-01.jpg",
+      "caption": "Day 1 Inaugural Ceremony"
+    }
+  ]
+}
+```
+
+---
+
+## ഘടകങ്ങൾ വെവ്വേറെ എടുക്കാനുള്ള API-കൾ
+
+നിങ്ങൾക്ക് വാളിലെ ഓരോ ഭാഗവും വെവ്വേറെ വിളിക്കണമെങ്കിൽ താഴെ പറയുന്ന API-കൾ ഉപയോഗിക്കാം:
+
+### 1. ടീം ലീഡർബോർഡും പോയിന്റ് നിലയും
+ടീമുകളുടെ റാങ്കുകൾ, ആകെ പോയിന്റുകൾ, ഹൗസ് കളർ കോഡുകൾ എന്നിവ ലഭിക്കാൻ:
+```http
+GET /public-api/v1/summary?subFestSlug=arts-2026
+```
+
+### 2. പുതിയ റിസൾട്ടുകൾ (Rolling Results)
+ഏറ്റവും ഒടുവിൽ പ്രഖ്യാപിച്ച മത്സര ഫലങ്ങളും വിജയികളും മാർക്കുകളും കാണിക്കാൻ:
+```http
+GET /public-api/v1/programme-results?subFestSlug=arts-2026&limit=10
+```
+
+### 3. വ്യക്തിഗത ചാമ്പ്യന്മാർ & ടോപ്പർമാർ
+കലാപ്രതിഭ, കലാതിലകം, കാറ്റഗറി ചാമ്പ്യന്മാർ എന്നിവരെ ലഭിക്കാൻ:
+```http
+GET /public-api/v1/toppers?subFestSlug=arts-2026
+GET /public-api/v1/page-toppers?subFestSlug=arts-2026
+```
+
+### 4. സ്റ്റേജ് സമയക്രമം (Now & Next)
+ഇപ്പോൾ വേദിയിൽ നടക്കുന്നതും അടുത്തതായി വരാനിരിക്കുന്നതുമായ പരിപാടികൾ കാണിക്കാൻ:
+```http
+GET /public-api/v1/schedules?subFestSlug=arts-2026&scheduledAtFrom=2026-09-04T00:00:00.000Z
+```
+
+### 5. ഫോട്ടോ സ്ലൈഡ്‌ഷോകൾ
+ഇടവേള സമയങ്ങളിൽ സ്ക്രീനിൽ ഫെസ്റ്റിവൽ ചിത്രങ്ങൾ സ്ലൈഡ്‌ഷോ ആയി കാണിക്കാൻ:
+```http
+GET /public-api/v1/gallery?subFestSlug=arts-2026&limit=20
+```
+
+---
+
+## റിയൽ-ടൈം Screen Studio സ്ട്രീമിംഗ് (SSE)
+
+Festie-യിലെ Screen Studio ഫീച്ചർ ഉപയോഗിക്കുന്ന വേദികളിൽ ലൈവ് ഇവന്റുകൾ തത്സമയം സ്ട്രീം ചെയ്യാൻ Server-Sent Events (SSE) ഉപയോഗിക്കാം:
+
+```http
+GET /screen/:screenId/stream
+```
+
+- അഡ്മിൻ കൺസോളിൽ നിന്ന് സീൻ മാറുമ്പോഴോ ലൈവ് അറിയിപ്പുകൾ നൽകുമ്പോഴോ ഉടൻ തന്നെ `screen-event` വഴി സന്ദേശം ലഭിക്കും.
+- കണക്ഷൻ സജീവമായി നിലനിർത്താൻ ഓരോ 25 സെക്കൻഡിലും `heartbeat` ലഭിക്കും.
+
+---
+
+## വാൾ ഡിസ്പ്ലേ മികച്ചതാക്കാൻ ചില നിർദ്ദേശങ്ങൾ
+
+<CardGroup cols={2}>
+  <Card title="റിഫ്രഷ് സമയം" icon="clock">
+    ഓരോ **15 മുതൽ 30 സെക്കൻഡിലും** മാത്രം പുതിയ വിവരങ്ങൾക്കായി API കോൾ ചെയ്യുക. ഇത് ക്വാട്ട തീരാതിരിക്കാൻ സഹായിക്കും.
+  </Card>
+  <Card title="സെർവർ കാഷിംഗ്" icon="database">
+    ഒന്നിൽ കൂടുതൽ സ്ക്രീനുകളുണ്ടെങ്കിൽ നിങ്ങളുടെ സെർവറിൽ **10-15 സെക്കൻഡ് കാഷ് (Cache)** ചെയ്ത് ഡാറ്റ നൽകുക.
+  </Card>
+  <Card title="ഓഫ്‌ലൈൻ ബാക്കപ്പ്" icon="wifi">
+    നെറ്റ്‌വർക്ക് പോയാലും സ്ക്രീൻ ഓഫാകാതിരിക്കാൻ അവസാനമായി ലഭിച്ച വിവരങ്ങൾ ലോക്കലായി സൂക്ഷിക്കുക.
+  </Card>
+  <Card title="ഡിസ്പ്ലേ സൈക്കിൾ" icon="wand-magic-sparkles">
+    റിസൾട്ടുകൾ (30s), ടീം ലീഡർബോർഡ് (20s), ഫോട്ടോകൾ (15s) എന്നിങ്ങനെ മാറി മാറി കാണിക്കുന്നത് കാണികൾക്ക് കൂടുതൽ ആകർഷകമായിരിക്കും.
+  </Card>
+</CardGroup>
+

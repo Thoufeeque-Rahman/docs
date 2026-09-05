@@ -196,7 +196,8 @@
                 "group": "Results & Standings",
                 "pages": [
                   "api/results",
-                  "api/toppers-and-summary"
+                  "api/toppers-and-summary",
+                  "api/wall"
                 ]
               },
               {
@@ -367,7 +368,8 @@
                 "group": "Results & Standings",
                 "pages": [
                   "ml/api/results",
-                  "ml/api/toppers-and-summary"
+                  "ml/api/toppers-and-summary",
+                  "ml/api/wall"
                 ]
               },
               {

@@ -1,0 +1,216 @@
+---
+title: "Live Wall & Screen Displays"
+description: "Power stage LED walls, auditorium projectors, and digital signage with real-time festival results, leaderboards, and schedules."
+---
+
+In Festie, the **Live Wall** is a high-visibility, real-time display designed for large auditorium projectors, stage LED boards, and venue TVs. It provides a continuously rolling stream of live festival updates—including team points leaderboards, winning results, category toppers (Kalaprathibha, Kalathilakam), stage timetables, and intermission photo galleries.
+
+<Warning>
+  **Server-Side Calling Policy**
+
+  As with all Festie Developer APIs, **do not make calls directly from client-side browser HTML or frontend `<script>` tags**, as this leaks your `X-API-Key`.
+  Always fetch wall data via your backend service (Node.js, Next.js server route, Python, etc.) and stream or serve the sanitized data to your display screens.
+</Warning>
+
+---
+
+## Consolidated Wall Data API
+
+Festie provides a single, high-performance aggregated endpoint to fetch all live data needed to render a stage wall in a single network request.
+
+```http
+GET /public-api/v1/wall
+```
+
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `subFestSlug` | `string` | Optional* | Sub-festival URL slug (e.g. `arts-2026`). |
+| `subFestId` | `UUID` | Optional* | Target sub-festival identifier. |
+
+*Recommended to provide `subFestSlug` to target a specific subfest.
+
+### Example Request
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/wall?subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Example Response
+
+```json
+{
+  "festival": {
+    "id": "fest-01",
+    "name": "State Arts Festival 2026",
+    "motto": "Igniting Talents",
+    "subdomain": "statearts2026",
+    "logoUrl": "https://assets.festie.app/logos/statearts.png"
+  },
+  "counts": {
+    "subFests": 1,
+    "programmesTotal": 64,
+    "programmesPublished": 28,
+    "programmesRemainingToPublish": 36,
+    "candidates": 450,
+    "galleryImages": 120,
+    "news": 8
+  },
+  "toppers": [
+    {
+      "placeholder": {
+        "label": "Overall Individual Champion (Kalaprathibha)",
+        "entityType": "CANDIDATE"
+      },
+      "entries": [
+        {
+          "rank": 1,
+          "points": 35,
+          "candidate": {
+            "name": "Aisha Rahman",
+            "chestNo": "104",
+            "avatarUrl": "https://assets.festie.app/avatars/aisha.jpg"
+          },
+          "team": {
+            "name": "Red House",
+            "colorCode": "#EF4444"
+          }
+        }
+      ]
+    }
+  ],
+  "recentResults": [
+    {
+      "id": "prog-01",
+      "programCode": "LIT-01",
+      "program": {
+        "name": "English Elocution"
+      },
+      "category": {
+        "name": "Senior"
+      },
+      "results": [
+        {
+          "position": "FIRST",
+          "grade": "A",
+          "points": 10,
+          "candidate": {
+            "name": "Aisha Rahman",
+            "chestNo": "104",
+            "team": {
+              "name": "Red House"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "schedules": [
+    {
+      "scheduledAt": "2026-09-04T10:00:00.000Z",
+      "venue": {
+        "name": "Stage 1 - Tagore Hall"
+      },
+      "subFestProgram": {
+        "programCode": "DAN-01",
+        "program": {
+          "name": "Classical Dance"
+        }
+      }
+    }
+  ],
+  "gallery": [
+    {
+      "id": "img-01",
+      "imageUrl": "https://assets.festie.app/gallery/stage-01.jpg",
+      "caption": "Day 1 Inaugural Ceremony"
+    }
+  ]
+}
+```
+
+---
+
+## Component APIs for Custom Wall Feeds
+
+If you prefer to poll or cache different display sections independently, you can use the granular component endpoints:
+
+### 1. Live Team Leaderboard & Counts
+Query overall festival progress, total points per team, house rankings, and color codes:
+```http
+GET /public-api/v1/summary?subFestSlug=arts-2026
+```
+
+### 2. Rolling Programme Results
+Fetch the latest published competition winners (1st, 2nd, 3rd, grades, and awarded points) to show on rolling tickers or result banners:
+```http
+GET /public-api/v1/programme-results?subFestSlug=arts-2026&limit=10
+```
+
+### 3. Top Individuals & Champions
+Fetch category champions, best performer awards, and leaderboard placeholders:
+```http
+GET /public-api/v1/toppers?subFestSlug=arts-2026
+GET /public-api/v1/page-toppers?subFestSlug=arts-2026
+```
+
+### 4. Stage Timetables (Now & Next)
+Show the active schedule, upcoming events, and stages:
+```http
+GET /public-api/v1/schedules?subFestSlug=arts-2026&scheduledAtFrom=2026-09-04T00:00:00.000Z
+```
+
+### 5. Intermission Photo Stream
+Retrieve high-resolution festival photographs for automatic slideshows during lunch or transition breaks:
+```http
+GET /public-api/v1/gallery?subFestSlug=arts-2026&limit=20
+```
+
+---
+
+## Real-Time Screen Studio Streaming (SSE)
+
+For advanced venues using Festie's Screen Studio, you can subscribe to live screen events via Server-Sent Events (SSE):
+
+```http
+GET /screen/:screenId/stream
+```
+
+- Returns a persistent SSE stream (`text/event-stream`).
+- Emits `screen-event` payloads whenever scene changes, ticker overlays, or live announcements are triggered by stage operators in the Festie admin console.
+- Emits periodic `heartbeat` pings every 25 seconds to maintain open connections through proxies and load balancers.
+
+```javascript Node.js / Browser SSE Example
+const eventSource = new EventSource("https://api.festie.app/screen/YOUR_SCREEN_ID/stream");
+
+eventSource.addEventListener("screen-event", (event) => {
+  const payload = JSON.parse(event.data);
+  console.log("New screen event triggered:", payload);
+});
+
+eventSource.addEventListener("heartbeat", () => {
+  // Connection healthy
+});
+```
+
+---
+
+## Wall Display Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Polling Interval" icon="clock">
+    Poll the `/public-api/v1/wall` endpoint every **15 to 30 seconds**. This ensures live result updates without overloading quotas.
+  </Card>
+  <Card title="Server Caching" icon="database">
+    Cache the response in your backend for **10 to 15 seconds** (e.g. Next.js ISR `revalidate: 15` or Redis) to serve multiple display screens simultaneously.
+  </Card>
+  <Card title="Smooth Transitions" icon="wand-magic-sparkles">
+    Cycle between Results Mode (30s), Team Standings (20s), and Photo Gallery (15s) for an engaging stage experience.
+  </Card>
+  <Card title="Offline Fallback" icon="wifi">
+    Cache the last known successful JSON payload locally in your display software so the screen continues displaying standings even during intermittent Wi-Fi drops.
+  </Card>
+</CardGroup>
+
