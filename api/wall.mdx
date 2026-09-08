@@ -42,66 +42,117 @@ curl -X GET "https://api.festie.app/public-api/v1/wall?subFestSlug=arts-2026" \
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "festival": {
-    "id": "fest-01",
-    "name": "State Arts Festival 2026",
+    "id": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "name": "Spring Festival 2026",
     "motto": "Igniting Talents",
-    "subdomain": "statearts2026",
-    "logoUrl": "https://assets.festie.app/logos/statearts.png"
+    "subdomain": "springfest",
+    "customDomain": null,
+    "description": "Annual Inter-School Arts & Cultural Festival",
+    "website": "https://springfest.example.com",
+    "country": "IN",
+    "logoUrl": "https://files.festie.app/files/demo/logo.png"
   },
   "counts": {
     "subFests": 1,
-    "programmesTotal": 64,
-    "programmesPublished": 28,
-    "programmesRemainingToPublish": 36,
-    "candidates": 450,
-    "galleryImages": 120,
-    "news": 8
+    "programmes": 45,
+    "programmesTotal": 120,
+    "programmesPublished": 45,
+    "programmesRemainingToPublish": 75,
+    "candidates": 350,
+    "galleryImages": 48,
+    "news": 6,
+    "downloads": 4
   },
   "toppers": [
     {
       "placeholder": {
+        "id": "cb8edb2d-9d63-40e5-b082-516d7cbce961",
         "label": "Overall Individual Champion (Kalaprathibha)",
-        "entityType": "CANDIDATE"
+        "entityType": "CANDIDATE",
+        "scopeType": "GLOBAL",
+        "displayTopN": 5
       },
       "entries": [
         {
+          "id": "a7b9c764-e979-48b1-85cf-2863492a4bd2",
           "rank": 1,
           "points": 35,
+          "programCount": 4,
           "candidate": {
+            "id": "daeb31eb-347f-4d33-bcc3-873eb1aad0ea",
             "name": "Aisha Rahman",
             "chestNo": "104",
-            "avatarUrl": "https://assets.festie.app/avatars/aisha.jpg"
+            "avatar": "https://files.festie.app/files/demo/avatars/aisha.png",
+            "category": {
+              "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
+              "name": "Senior"
+            },
+            "team": {
+              "id": "aac0a05a-9d89-45a7-a756-e12e527f6321",
+              "name": "Ruby Phoenix",
+              "displayName": "Ruby Phoenix",
+              "colorCode": "#EF4444"
+            }
           },
-          "team": {
-            "name": "Red House",
-            "colorCode": "#EF4444"
-          }
+          "team": null
         }
       ]
     }
   ],
   "recentResults": [
     {
-      "id": "prog-01",
-      "programCode": "LIT-01",
-      "program": {
-        "name": "English Elocution"
-      },
-      "category": {
-        "name": "Senior"
+      "programme": {
+        "id": "7cd5001f-7c38-4beb-bef4-1cfee131fcc2",
+        "status": "RESULTS_PUBLISHED",
+        "publishedAt": "2026-09-08T11:00:00.000Z",
+        "subFest": {
+          "id": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+          "name": "Spring Arts 2026",
+          "slug": "arts-2026"
+        },
+        "program": {
+          "id": "d83b746e-eddb-4637-aa02-4261a471fc51",
+          "code": "LIT-01",
+          "name": "English Elocution",
+          "description": "Topic given 10 minutes prior",
+          "programType": "SINGLE"
+        },
+        "category": {
+          "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
+          "name": "Senior"
+        }
       },
       "results": [
         {
+          "id": "c9600806-bbdc-4388-8d36-836f6ef1ccc8",
+          "participantName": "Aisha Rahman",
+          "participantType": "INDIVIDUAL",
           "position": "FIRST",
           "grade": "A",
-          "points": 10,
+          "totalPoints": 10,
+          "positionPoints": 10,
+          "gradePoints": 0,
           "candidate": {
+            "id": "daeb31eb-347f-4d33-bcc3-873eb1aad0ea",
             "name": "Aisha Rahman",
             "chestNo": "104",
-            "team": {
-              "name": "Red House"
-            }
+            "avatar": null
+          },
+          "team": {
+            "id": "aac0a05a-9d89-45a7-a756-e12e527f6321",
+            "name": "Ruby Phoenix",
+            "displayName": "Ruby Phoenix",
+            "colorCode": "#EF4444"
           }
         }
       ]
@@ -109,23 +160,37 @@ curl -X GET "https://api.festie.app/public-api/v1/wall?subFestSlug=arts-2026" \
   ],
   "schedules": [
     {
-      "scheduledAt": "2026-09-04T10:00:00.000Z",
+      "id": "eab1dcc2-6025-4fb9-a33a-c41b3e72f585",
+      "scheduledAt": "2026-09-08T14:30:00.000Z",
       "venue": {
-        "name": "Stage 1 - Tagore Hall"
+        "id": "761d61eb-2489-4a0d-9e6c-723e0af1c891",
+        "name": "Stage 1 - Main Auditorium"
       },
       "subFestProgram": {
-        "programCode": "DAN-01",
+        "id": "794339fe-d515-49eb-82fe-e211e837a2be",
+        "status": "SCHEDULED",
         "program": {
+          "id": "8048f308-c3f9-494b-8e7f-dca6ceffb8b1",
+          "code": "DAN-01",
           "name": "Classical Dance"
+        },
+        "category": {
+          "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
+          "name": "Senior"
         }
       }
     }
   ],
   "gallery": [
     {
-      "id": "img-01",
-      "imageUrl": "https://assets.festie.app/gallery/stage-01.jpg",
-      "caption": "Day 1 Inaugural Ceremony"
+      "id": "00469a02-1794-4326-a285-3d4cbc578986",
+      "title": "Stage 1 Inauguration",
+      "imageUrl": "https://files.festie.app/files/demo/gallery/photo1.jpg",
+      "thumbnailUrl": "https://files.festie.app/files/demo/gallery/photo1_thumb.jpg",
+      "album": {
+        "id": "810453bd-59ab-4a75-9752-fb8c0c191bd0",
+        "name": "Day 1 Highlights"
+      }
     }
   ]
 }
@@ -159,7 +224,7 @@ GET /public-api/v1/page-toppers?subFestSlug=arts-2026
 ### 4. Stage Timetables (Now & Next)
 Show the active schedule, upcoming events, and stages:
 ```http
-GET /public-api/v1/schedules?subFestSlug=arts-2026&scheduledAtFrom=2026-09-04T00:00:00.000Z
+GET /public-api/v1/schedules?subFestSlug=arts-2026&scheduledAtFrom=2026-09-08T00:00:00.000Z
 ```
 
 ### 5. Intermission Photo Stream
@@ -182,7 +247,7 @@ GET /screen/:screenId/stream
 - Emits `screen-event` payloads whenever scene changes, ticker overlays, or live announcements are triggered by stage operators in the Festie admin console.
 - Emits periodic `heartbeat` pings every 25 seconds to maintain open connections through proxies and load balancers.
 
-```javascript Node.js / Browser SSE Example
+```javascript Node.js / Server SSE Example
 const eventSource = new EventSource("https://api.festie.app/screen/YOUR_SCREEN_ID/stream");
 
 eventSource.addEventListener("screen-event", (event) => {
@@ -213,4 +278,3 @@ eventSource.addEventListener("heartbeat", () => {
     Cache the last known successful JSON payload locally in your display software so the screen continues displaying standings even during intermittent Wi-Fi drops.
   </Card>
 </CardGroup>
-

@@ -17,7 +17,7 @@ GET /public-api/v1/news
 
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
-| `search` | `string` | Search within news title or content. |
+| `search` | `string` | Search within news title or summary. |
 | `tags` | `string` | Filter by tags (comma-separated). |
 | `hasThumbnail` | `boolean` | Only news with a thumbnail image. |
 | `page` | `integer` | Page number. |
@@ -34,15 +34,24 @@ curl -X GET "https://api.festie.app/public-api/v1/news?page=1&limit=5" \
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "data": [
     {
-      "id": "7c1b5204-631d-400a-85d1-d24296ce3001",
-      "title": "Inaugural Ceremony Highlights",
-      "slug": "inaugural-ceremony-highlights",
-      "snippet": "The grand festival was officially flagged off by dignitaries today...",
-      "thumbnailUrl": "https://assets.festie.app/news/inauguration-thumb.jpg",
-      "publishedAt": "2026-09-03T10:00:00.000Z",
-      "tags": ["Opening", "Official"]
+      "id": "631d702b-4fed-4579-a80b-b23a7e38c46a",
+      "title": "Grand Inaugural Ceremony Flags Off Spring Fest 2026",
+      "summary": "The festival was officially flagged off by esteemed dignitaries amidst cultural festivities.",
+      "publishedAt": "2026-09-08T09:00:00.000Z",
+      "tags": ["Opening", "Official"],
+      "thumbnailUrl": "https://files.festie.app/files/demo/news/inauguration_thumb.jpg",
+      "featureImageUrl": "https://files.festie.app/files/demo/news/inauguration.jpg"
     }
   ],
   "meta": {
@@ -58,7 +67,7 @@ curl -X GET "https://api.festie.app/public-api/v1/news?page=1&limit=5" \
 
 ## Get News Detail
 
-Retrieve the full content of a specific news article by its ID.
+Retrieve full HTML content and details of a specific news bulletin.
 
 ```http
 GET /public-api/v1/news/:newsId
@@ -67,15 +76,46 @@ GET /public-api/v1/news/:newsId
 ### Example Request
 
 ```bash
-curl -X GET "https://api.festie.app/public-api/v1/news/7c1b5204-631d-400a-85d1-d24296ce3001" \
+curl -X GET "https://api.festie.app/public-api/v1/news/631d702b-4fed-4579-a80b-b23a7e38c46a" \
   -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Example Response
+
+```json
+{
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
+  "news": {
+    "id": "631d702b-4fed-4579-a80b-b23a7e38c46a",
+    "title": "Grand Inaugural Ceremony Flags Off Spring Fest 2026",
+    "summary": "The festival was officially flagged off by esteemed dignitaries amidst cultural festivities.",
+    "contentHtml": "<p>The grand festival was officially inaugurated with an extravagant cultural processional...</p>",
+    "publishedAt": "2026-09-08T09:00:00.000Z",
+    "tags": ["Opening", "Official"],
+    "subFest": {
+      "id": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+      "name": "Spring Arts 2026",
+      "slug": "arts-2026"
+    },
+    "thumbnailUrl": "https://files.festie.app/files/demo/news/inauguration_thumb.jpg",
+    "featureImageUrl": "https://files.festie.app/files/demo/news/inauguration.jpg"
+  }
+}
 ```
 
 ---
 
 ## Photo Gallery
 
-Retrieve official photographs, album collections, and event coverage.
+Retrieve official photographs and albums from the festival.
 
 ```http
 GET /public-api/v1/gallery
@@ -91,27 +131,59 @@ GET /public-api/v1/gallery
 | `page` | `integer` | Page number (default: `1`). |
 | `limit` | `integer` | Items per page (max: `20`). |
 
+### Example Request
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/gallery?limit=10" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
 ### Example Response
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "data": [
     {
-      "id": "gal-01",
+      "id": "00469a02-1794-4326-a285-3d4cbc578986",
       "title": "Stage 1 Folk Dance Performances",
-      "imageUrl": "https://assets.festie.app/gallery/folk-dance-01.jpg",
+      "description": "Captured during the opening day senior folk dance competition",
+      "albumId": "810453bd-59ab-4a75-9752-fb8c0c191bd0",
+      "orderIndex": 1,
+      "imageUrl": "https://files.festie.app/files/demo/gallery/dance.jpg",
+      "thumbnailUrl": "https://files.festie.app/files/demo/gallery/dance_thumb.jpg",
       "album": {
-        "id": "alb-01",
-        "name": "Day 1 Stage Highlights"
+        "id": "810453bd-59ab-4a75-9752-fb8c0c191bd0",
+        "name": "Day 1 Highlights"
+      },
+      "category": {
+        "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
+        "name": "Senior"
       }
     }
   ],
   "meta": {
     "page": 1,
-    "limit": 20,
+    "limit": 10,
     "total": 1,
     "totalPages": 1
-  }
+  },
+  "galleryAlbums": [
+    {
+      "id": "810453bd-59ab-4a75-9752-fb8c0c191bd0",
+      "name": "Day 1 Highlights",
+      "description": "Memorable stage moments from Day 1",
+      "coverImageUrl": "https://files.festie.app/files/demo/gallery/cover.jpg"
+    }
+  ]
 }
 ```
 
@@ -119,7 +191,7 @@ GET /public-api/v1/gallery
 
 ## Public Downloads
 
-Fetch official downloadable files such as programme guidelines, scoring manuals, entry forms, or certificates.
+Fetch official downloadable files such as programme guidelines, scoring criteria, schedules, or circulars.
 
 ```http
 GET /public-api/v1/downloads
@@ -134,26 +206,44 @@ GET /public-api/v1/downloads
 | `page` | `integer` | Page number. |
 | `limit` | `integer` | Items per page (max: `20`). |
 
+### Example Request
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/downloads?limit=10" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
 ### Example Response
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "data": [
     {
-      "id": "dl-01",
-      "title": "Official Rules & Regulations Booklet",
+      "id": "470b6bef-8503-4411-b717-442d0a2daee7",
+      "title": "Official Festival Rulebook & Code of Conduct",
+      "description": "Complete rules, time limits, and judge evaluation criteria",
       "category": "Guidelines",
-      "fileUrl": "https://assets.festie.app/downloads/rules-booklet.pdf",
+      "mimeType": "application/pdf",
       "fileSize": 1048576,
-      "mimeType": "application/pdf"
+      "fileType": "DOCUMENT",
+      "publishedAt": "2026-09-01T10:00:00.000Z",
+      "fileUrl": "https://files.festie.app/files/demo/downloads/rules.pdf"
     }
   ],
   "meta": {
     "page": 1,
-    "limit": 20,
+    "limit": 10,
     "total": 1,
     "totalPages": 1
   }
 }
 ```
-

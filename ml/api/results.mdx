@@ -1,13 +1,13 @@
 ---
 title: "മത്സര ഫലങ്ങൾ (Results)"
-description: "പ്രഖ്യാപിച്ച മത്സര ഫലങ്ങൾ, സ്ഥാനങ്ങൾ, ഗ്രേഡുകൾ, പോയിന്റുകൾ എന്നിവ ലഭിക്കാൻ."
+description: "പ്രഖ്യാപിച്ച മത്സര ഫലങ്ങൾ, സ്ഥാനങ്ങൾ, ഗ്രേഡുകൾ, പോയിന്റുകൾ എന്നിവ അറിയാൻ."
 ---
 
-പൂർത്തിയായ മത്സരങ്ങളുടെ ഒഫീഷ്യൽ റിസൾട്ടുകൾ, വിജയികൾ (1st, 2nd, 3rd സ്ഥാനക്കാർ), അവർ നേടിയ ഗ്രേഡുകൾ (A, B, C), ടീമുകൾക്ക് ലഭിച്ച പോയിന്റുകൾ എന്നിവ തത്സമയം ലഭിക്കുന്നതിനുള്ള API-കൾ.
+മത്സരങ്ങളുടെ ഔദ്യോഗിക സ്കോറുകൾ, വിജയികൾ (1st, 2nd, 3rd), ഗ്രേഡുകൾ (A, B, C), ടീം പോയിന്റുകൾ എന്നിവ തത്സമയം അറിയാൻ Festie റിസൾട്ട് API-കൾ ഉപയോഗിക്കാം.
 
-## ഒരു പ്രോഗ്രാമിന്റെ റിസൾട്ട്
+## പ്രോഗ്രാം റിസൾട്ട് (Get Programme Result)
 
-പ്രോഗ്രാം കോഡോ ഐഡിയോ നൽകി പ്രസ്തുത മത്സരത്തിന്റെ ഫലം എടുക്കുക:
+പ്രോഗ്രാം കോഡോ ഐഡിയോ നൽകി ഒരു പ്രത്യേക മത്സരത്തിന്റെ ഫലങ്ങൾ അറിയാൻ:
 
 ```http
 GET /public-api/v1/programme-result
@@ -17,9 +17,10 @@ GET /public-api/v1/programme-result
 
 | Parameter | Type | നിർബന്ധമാണോ | വിവരണം |
 | :--- | :--- | :--- | :--- |
-| `programCode` | `string` | നിർബന്ധം* | പ്രോഗ്രാം കോഡ് (ഉദാ: `LIT-01`). |
-| `subFestSlug` | `string` | നിർബന്ധം* | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
-| `subFestProgramId` | `UUID` | നിർബന്ധം* | അല്ലെങ്കിൽ സബ് ഫെസ്റ്റ് പ്രോഗ്രാം ഐഡി. |
+| `programCode` | `string` | അല്ല* | പ്രോഗ്രാം കോഡ് (ഉദാ: `LIT-01`). |
+| `subFestProgramId` | `UUID` | അല്ല* | SubFest പ്രോഗ്രാം ഐഡി. |
+| `subFestSlug` | `string` | അല്ല* | സബ് ഫെസ്റ്റ് സ്ലഗ് (*കോഡ് നൽകുമ്പോൾ നിർബന്ധം). |
+| `subFestId` | `UUID` | അല്ല | സബ് ഫെസ്റ്റ് ഐഡി. |
 
 ### ഉദാഹരണം
 
@@ -32,39 +33,81 @@ curl -X GET "https://api.festie.app/public-api/v1/programme-result?programCode=L
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "programme": {
-    "id": "2d3e4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a",
-    "programCode": "LIT-01",
-    "name": "English Elocution",
+    "id": "7cd5001f-7c38-4beb-bef4-1cfee131fcc2",
+    "status": "RESULTS_PUBLISHED",
+    "publishedAt": "2026-09-08T11:00:00.000Z",
+    "subFest": {
+      "id": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+      "name": "Spring Arts 2026",
+      "slug": "arts-2026"
+    },
+    "program": {
+      "id": "d83b746e-eddb-4637-aa02-4261a471fc51",
+      "code": "LIT-01",
+      "name": "English Elocution"
+    },
     "category": {
+      "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
       "name": "Senior"
     }
   },
   "results": [
     {
+      "id": "c9600806-bbdc-4388-8d36-836f6ef1ccc8",
+      "participantName": "Aisha Rahman",
+      "participantType": "INDIVIDUAL",
+      "topic": null,
       "position": "FIRST",
       "grade": "A",
-      "points": 10,
+      "totalPoints": 10,
+      "positionPoints": 10,
+      "gradePoints": 0,
+      "publishedAt": "2026-09-08T11:00:00.000Z",
+      "team": {
+        "id": "aac0a05a-9d89-45a7-a756-e12e527f6321",
+        "name": "Ruby Phoenix",
+        "displayName": "Ruby Phoenix",
+        "colorCode": "#EF4444"
+      },
       "candidate": {
-        "chestNo": "104",
+        "id": "daeb31eb-347f-4d33-bcc3-873eb1aad0ea",
         "name": "Aisha Rahman",
-        "team": {
-          "name": "Red House",
-          "colorCode": "#EF4444"
-        }
+        "chestNo": "104",
+        "avatar": null
       }
     },
     {
+      "id": "828620ac-1659-4291-9251-d1ce56ae0189",
+      "participantName": "Rahul Verma",
+      "participantType": "INDIVIDUAL",
+      "topic": null,
       "position": "SECOND",
       "grade": "A",
-      "points": 7,
+      "totalPoints": 7,
+      "positionPoints": 7,
+      "gradePoints": 0,
+      "publishedAt": "2026-09-08T11:00:00.000Z",
+      "team": {
+        "id": "96190757-caeb-4975-a5df-c3c56ea06573",
+        "name": "Sapphire Dragons",
+        "displayName": "Sapphire Dragons",
+        "colorCode": "#3B82F6"
+      },
       "candidate": {
-        "chestNo": "112",
+        "id": "32f38752-4682-441c-921c-3624f4901f00",
         "name": "Rahul Verma",
-        "team": {
-          "name": "Blue House",
-          "colorCode": "#3B82F6"
-        }
+        "chestNo": "112",
+        "avatar": null
       }
     }
   ]
@@ -73,15 +116,24 @@ curl -X GET "https://api.festie.app/public-api/v1/programme-result?programCode=L
 
 ---
 
-## ഒന്നിൽക്കൂടുതൽ പ്രോഗ്രാമുകളുടെ റിസൾട്ടുകൾ
+## ഒന്നിലധികം മത്സര ഫലങ്ങൾ (List Multiple Results)
 
-ഒന്നിലധികം പ്രോഗ്രാമുകളുടെ റിസൾട്ടുകൾ ഒരുമിച്ച് ലിസ്റ്റ് ചെയ്യാൻ:
+പ്രഖ്യാപിച്ച വിവിധ മത്സര ഫലങ്ങൾ പേജിനേഷൻ വഴി ഒരുമിച്ച് ലഭിക്കാൻ:
 
 ```http
 GET /public-api/v1/programme-results
 ```
 
-`GET /public-api/v1/programmes` എന്നതിൽ ലഭ്യമായ അതേ ഫിൽട്ടറുകൾ ഇതിലും ഉപയോഗിക്കാം.
+### Query Parameters
+
+| Parameter | Type | വിവരണം |
+| :--- | :--- | :--- |
+| `subFestId` | `UUID` | സബ് ഫെസ്റ്റ് ഐഡി (*സ്ലഗ് ഇല്ലെങ്കിൽ നിർബന്ധം). |
+| `subFestSlug` | `string` | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
+| `categoryIds` | `string` | കാറ്റഗറി ഐഡികൾ. |
+| `search` | `string` | മത്സരത്തിന്റെ പേര് അല്ലെങ്കിൽ കോഡ്. |
+| `page` | `integer` | പേജ് നമ്പർ (ഡിഫോൾട്ട്: `1`). |
+| `limit` | `integer` | ഓരോ പേജിലെയും എണ്ണം (പരമാവധി `20`). |
 
 ### ഉദാഹരണം
 
@@ -90,3 +142,73 @@ curl -X GET "https://api.festie.app/public-api/v1/programme-results?subFestSlug=
   -H "X-API-Key: YOUR_API_KEY"
 ```
 
+### Response ഉദാഹരണം
+
+```json
+{
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
+  "data": [
+    {
+      "programme": {
+        "id": "7cd5001f-7c38-4beb-bef4-1cfee131fcc2",
+        "status": "RESULTS_PUBLISHED",
+        "publishedAt": "2026-09-08T11:00:00.000Z",
+        "subFest": {
+          "id": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+          "name": "Spring Arts 2026",
+          "slug": "arts-2026"
+        },
+        "program": {
+          "id": "d83b746e-eddb-4637-aa02-4261a471fc51",
+          "code": "LIT-01",
+          "name": "English Elocution",
+          "programType": "SINGLE"
+        },
+        "category": {
+          "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
+          "name": "Senior"
+        }
+      },
+      "results": [
+        {
+          "id": "c9600806-bbdc-4388-8d36-836f6ef1ccc8",
+          "participantName": "Aisha Rahman",
+          "participantType": "INDIVIDUAL",
+          "position": "FIRST",
+          "grade": "A",
+          "totalPoints": 10,
+          "positionPoints": 10,
+          "gradePoints": 0,
+          "publishedAt": "2026-09-08T11:00:00.000Z",
+          "team": {
+            "id": "aac0a05a-9d89-45a7-a756-e12e527f6321",
+            "name": "Ruby Phoenix",
+            "displayName": "Ruby Phoenix",
+            "colorCode": "#EF4444"
+          },
+          "candidate": {
+            "id": "daeb31eb-347f-4d33-bcc3-873eb1aad0ea",
+            "name": "Aisha Rahman",
+            "chestNo": "104",
+            "avatar": null
+          }
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 10,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+```
