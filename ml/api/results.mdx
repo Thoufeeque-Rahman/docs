@@ -7,7 +7,7 @@ description: "പ്രഖ്യാപിച്ച മത്സര ഫലങ്�
 
 ## പ്രോഗ്രാം റിസൾട്ട് (Get Programme Result)
 
-പ്രോഗ്രാം കോഡോ ഐഡിയോ നൽകി ഒരു പ്രത്യേക മത്സരത്തിന്റെ ഫലങ്ങൾ അറിയാൻ:
+പ്രോഗ്രാം കോഡ് നൽകി ഒരു പ്രത്യേക മത്സരത്തിന്റെ ഫലങ്ങൾ അറിയാൻ:
 
 ```http
 GET /public-api/v1/programme-result
@@ -17,15 +17,14 @@ GET /public-api/v1/programme-result
 
 | Parameter | Type | നിർബന്ധമാണോ | വിവരണം |
 | :--- | :--- | :--- | :--- |
-| `programCode` | `string` | അല്ല* | പ്രോഗ്രാം കോഡ് (ഉദാ: `LIT-01`). |
-| `subFestProgramId` | `UUID` | അല്ല* | SubFest പ്രോഗ്രാം ഐഡി. |
-| `subFestSlug` | `string` | അല്ല* | സബ് ഫെസ്റ്റ് സ്ലഗ് (*കോഡ് നൽകുമ്പോൾ നിർബന്ധം). |
-| `subFestId` | `UUID` | അല്ല | സബ് ഫെസ്റ്റ് ഐഡി. |
+| `programCode` | `string` | നിർബന്ധം | പ്രോഗ്രാം കോഡ് (ഉദാ: `LIT-01`). |
+| `subFestSlug` | `string` | ഓപ്ഷണൽ | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
+| `subFestId` | `UUID` | ഓപ്ഷണൽ | സബ് ഫെസ്റ്റ് ഐഡി. |
 
 ### ഉദാഹരണം
 
 ```bash
-curl -X GET "https://api.festie.app/public-api/v1/programme-result?programCode=LIT-01&subFestSlug=arts-2026" \
+curl -X GET "https://api.festie.app/public-api/v1/programme-result?programCode=LIT-01" \
   -H "X-API-Key: YOUR_API_KEY"
 ```
 

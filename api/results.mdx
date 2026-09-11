@@ -7,7 +7,7 @@ Festie provides real-time result endpoints for querying official scores, winner 
 
 ## Get Programme Result
 
-Retrieve published results for an individual programme by passing its programme code or ID.
+Retrieve published results for an individual programme by passing its programme code.
 
 ```http
 GET /public-api/v1/programme-result
@@ -17,15 +17,14 @@ GET /public-api/v1/programme-result
 
 | Parameter | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| `programCode` | `string` | Optional* | Programme code (e.g. `LIT-01`). |
-| `subFestProgramId` | `UUID` | Optional* | SubFest programme UUID. |
-| `subFestSlug` | `string` | Optional* | Sub-festival URL slug (*required if passing `programCode`). |
+| `programCode` | `string` | Yes | Programme code (e.g. `LIT-01`). |
+| `subFestSlug` | `string` | Optional | Sub-festival URL slug. |
 | `subFestId` | `UUID` | Optional | Sub-festival UUID. |
 
 ### Example Request
 
 ```bash
-curl -X GET "https://api.festie.app/public-api/v1/programme-result?programCode=LIT-01&subFestSlug=arts-2026" \
+curl -X GET "https://api.festie.app/public-api/v1/programme-result?programCode=LIT-01" \
   -H "X-API-Key: YOUR_API_KEY"
 ```
 
