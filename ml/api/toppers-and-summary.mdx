@@ -1,13 +1,13 @@
 ---
 title: "പോയിന്റ് നിലയും ടോപ്പർമാരും (Summary & Toppers)"
-description: "ഫെസ്റ്റിവലിലെ ആകെ സ്റ്റാറ്റസ്, ടീമുകളുടെ പോയിന്റ് നില, വ്യക്തിഗത ചാമ്പ്യന്മാർ എന്നിവ ലഭിക്കാൻ."
+description: "ഫെസ്റ്റിവലിലെ ആകെ വിവരങ്ങൾ, കൗണ്ടുകൾ, സ്റ്റാറ്റിസ്റ്റിക്സ്, വ്യക്തിഗത/ടീം ടോപ്പർമാരുടെ വിവരങ്ങൾ എന്നിവ ലഭിക്കാൻ."
 ---
 
-ഫെസ്റ്റിവലിലെ തത്സമയ ടീം പോയിന്റ് നില (Leaderboard), മത്സരങ്ങളുടെ ആകെ കണക്കുകൾ, കലാപ്രതിഭ/കലാതിലകം അല്ലെങ്കിൽ വ്യക്തിഗത ചാമ്പ്യന്മാർ (Toppers) എന്നിവ ഈ API-കൾ വഴി ലഭിക്കും.
+ഫെസ്റ്റിവലിന്റെ ആകെ സ്റ്റാറ്റിസ്റ്റിക്സുകൾ (പ്രോഗ്രാമുകൾ, കുട്ടികൾ, ഗ്യാലറി മുതലായവയുടെ എണ്ണം), സെറ്റ് ചെയ്തിട്ടുള്ള ടോപ്പർ അവാർഡ് കാറ്റഗറികൾ, കലാപ്രതിഭ/കലാതിലകം അല്ലെങ്കിൽ ടീം ചാമ്പ്യന്മാരുടെ ലൈവ് പോയിന്റ് നില എന്നിവ ഈ API-കൾ വഴി ലഭിക്കും.
 
-## ഫെസ്റ്റിവൽ സമറിയും ടീം ലീഡർബോർഡും
+## ഫെസ്റ്റിവൽ സമറിയും കൗണ്ടുകളും (Summary)
 
-ടീമുകൾ നേടിയ ആകെ പോയിന്റുകൾ, സ്ഥാനങ്ങൾ (Ranks), പൂർത്തിയായ മത്സരങ്ങളുടെ എണ്ണം എന്നിവ അറിയാൻ:
+ഫെസ്റ്റിവലിന്റെ മെറ്റാഡാറ്റയും, മത്സരങ്ങളുടെയും രജിസ്ട്രേഷനുകളുടെയും തത്സമയ കൗണ്ടുകളും ലഭിക്കാൻ:
 
 ```http
 GET /public-api/v1/summary
@@ -15,10 +15,10 @@ GET /public-api/v1/summary
 
 ### Query Parameters
 
-| Parameter | Type | വിവരണം |
-| :--- | :--- | :--- |
-| `subFestSlug` | `string` | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
-| `subFestId` | `UUID` | സബ് ഫെസ്റ്റ് ഐഡി. |
+| Parameter | Type | നിർബന്ധമാണോ | വിവരണം |
+| :--- | :--- | :--- | :--- |
+| `subFestSlug` | `string` | അല്ല | ഒരു നിർദ്ദിഷ്ട സബ് ഫെസ്റ്റിവലിലെ വിവരങ്ങൾ മാത്രമായി ചുരുക്കാൻ. |
+| `subFestId` | `UUID` | അല്ല | സബ് ഫെസ്റ്റ് സിസ്റ്റം ഐഡി. |
 
 ### ഉദാഹരണം
 
@@ -31,50 +31,120 @@ curl -X GET "https://api.festie.app/public-api/v1/summary?subFestSlug=arts-2026"
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "festival": {
-    "id": "fest-01",
-    "name": "State Arts Festival 2026",
+    "id": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "name": "Spring Festival 2026",
     "motto": "Igniting Talents",
-    "subdomain": "statearts2026"
+    "subdomain": "springfest",
+    "customDomain": null,
+    "description": "വാർഷിക കലാ-സാംസ്കാരിക മത്സരങ്ങൾ",
+    "website": "https://springfest.example.com",
+    "country": "IN",
+    "logoUrl": "https://files.festie.app/files/demo/logo.png"
   },
-  "stats": {
-    "subFestCount": 1,
-    "totalProgrammes": 64,
-    "publishedProgrammes": 28,
-    "candidateCount": 450,
-    "galleryImageCount": 120,
-    "newsCount": 8
-  },
-  "teams": [
-    {
-      "rank": 1,
-      "team": {
-        "id": "8e371309-80b6-4074-a69c-f090d8102a24",
-        "name": "Red House",
-        "displayName": "Ruby Phoenix",
-        "colorCode": "#EF4444"
-      },
-      "totalPoints": 245
-    },
-    {
-      "rank": 2,
-      "team": {
-        "id": "9f482410-91c7-5185-b7ad-0101e9213b35",
-        "name": "Blue House",
-        "displayName": "Sapphire Dragons",
-        "colorCode": "#3B82F6"
-      },
-      "totalPoints": 220
-    }
-  ]
+  "counts": {
+    "subFests": 1,
+    "programmes": 45,
+    "programmesTotal": 120,
+    "programmesPublished": 45,
+    "programmesRemainingToPublish": 75,
+    "candidates": 350,
+    "galleryImages": 48,
+    "news": 6,
+    "downloads": 4
+  }
 }
 ```
 
 ---
 
-## വ്യക്തിഗത ടോപ്പർമാർ (Toppers)
+## ടോപ്പർ കാറ്റഗറികൾ (Placeholders)
 
-കലാപ്രതിഭ, കലാതിലകം, കാറ്റഗറി ചാമ്പ്യന്മാർ തുടങ്ങിയ ടോപ്പർമാരുടെ വിവരങ്ങൾ ലഭിക്കാൻ:
+ഫെസ്റ്റിവലിൽ നിർവ്വചിച്ചിട്ടുള്ള ടോപ്പർ അവാർഡുകളുടെ ലിസ്റ്റ് (ഉദാ: കലാപ്രതിഭ, കലാതിലകം, ജനറൽ ചാമ്പ്യൻഷിപ്പ്) അറിയാൻ:
+
+```http
+GET /public-api/v1/topper-placeholders
+```
+
+### Query Parameters
+
+| Parameter | Type | നിർബന്ധമാണോ | വിവരണം |
+| :--- | :--- | :--- | :--- |
+| `subFestSlug` | `string` | നിർബന്ധം* | സബ് ഫെസ്റ്റ് സ്ലഗ് (*`subFestId` നൽകിയിട്ടില്ലെങ്കിൽ). |
+| `subFestId` | `UUID` | നിർബന്ധം* | സബ് ഫെസ്റ്റ് സിസ്റ്റം ഐഡി. |
+| `isPublished` | `boolean` | അല്ല | പബ്ലിഷ് ചെയ്തവ മാത്രം കാണിക്കാൻ (`true`). |
+| `entityType` | `string` | അല്ല | ടാർഗെറ്റ് എന്റിറ്റി: `CANDIDATE` അല്ലെങ്കിൽ `TEAM`. |
+| `scopeType` | `string` | അല്ല | സ്കോപ്പ്: `GLOBAL`, `CATEGORY`, `SECTION`, `TEAM`. |
+| `page` | `integer` | അല്ല | പേജ് നമ്പർ (ഡിഫോൾട്ട്: `1`). |
+| `limit` | `integer` | അല്ല | പരമാവധി എണ്ണം (ഡിഫോൾട്ട്: `20`, പരമാവധി: `20`). |
+
+### ഉദാഹരണം
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/topper-placeholders?subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Response ഉദാഹരണം
+
+```json
+{
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
+  "data": [
+    {
+      "id": "cb8edb2d-9d63-40e5-b082-516d7cbce961",
+      "label": "Overall Individual Champion",
+      "entityType": "CANDIDATE",
+      "scopeType": "GLOBAL",
+      "rankingBasis": "TOTAL_POINTS",
+      "displayTopN": 5,
+      "displayOrder": 1,
+      "isPublished": true,
+      "lastComputedAt": "2026-09-08T10:00:00.000Z"
+    },
+    {
+      "id": "ebbf941d-5df6-42c5-8586-ad4c5adb75d1",
+      "label": "Overall Team Champion",
+      "entityType": "TEAM",
+      "scopeType": "GLOBAL",
+      "rankingBasis": "TOTAL_POINTS",
+      "displayTopN": 5,
+      "displayOrder": 2,
+      "isPublished": true,
+      "lastComputedAt": "2026-09-08T10:00:00.000Z"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 20,
+    "total": 2,
+    "totalPages": 1
+  }
+}
+```
+
+---
+
+## ടോപ്പർ റാങ്കിംഗ് ലിസ്റ്റ് (Topper Entries)
+
+ഒരു പ്രത്യേക ടോപ്പർ അവാർഡിലേക്ക് (Placeholder) നിലവിൽ ഒന്നാമതോ തുടർന്നുള്ള സ്ഥാനങ്ങളിലോ ഉള്ള പ്രതിഭകളുടെയോ ടീമുകളുടെയോ പോയിന്റ് നില ലഭിക്കാൻ:
 
 ```http
 GET /public-api/v1/toppers
@@ -82,33 +152,68 @@ GET /public-api/v1/toppers
 
 ### Query Parameters
 
-| Parameter | Type | വിവരണം |
-| :--- | :--- | :--- |
-| `subFestSlug` | `string` | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
-| `topperPlaceholderId` | `UUID` | നിർദ്ദിഷ്ട ടൈറ്റിൽ ഐഡി. |
-| `page` | `integer` | പേജ് നമ്പർ. |
-| `limit` | `integer` | പരമാവധി എണ്ണം (`20`). |
+| Parameter | Type | നിർബന്ധമാണോ | വിവരണം |
+| :--- | :--- | :--- | :--- |
+| `topperPlaceholderId` | `UUID` | നിർബന്ധം | **നിർബന്ധം.** ടോപ്പർ പ്ലേസ്‌ഹോൾഡറിന്റെ UUID. |
+| `subFestSlug` | `string` | അല്ല | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
+| `subFestId` | `UUID` | അല്ല | സബ് ഫെസ്റ്റ് ഐഡി. |
+| `page` | `integer` | അല്ല | പേജ് നമ്പർ (ഡിഫോൾട്ട്: `1`). |
+| `limit` | `integer` | അല്ല | ഓരോ പേജിലെയും എണ്ണം (ഡിഫോൾട്ട്: `20`, പരമാവധി: `20`). |
+
+### ഉദാഹരണം
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/toppers?topperPlaceholderId=cb8edb2d-9d63-40e5-b082-516d7cbce961&subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
 
 ### Response ഉദാഹരണം
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
+  "placeholder": {
+    "id": "cb8edb2d-9d63-40e5-b082-516d7cbce961",
+    "label": "Overall Individual Champion",
+    "entityType": "CANDIDATE",
+    "scopeType": "GLOBAL",
+    "displayTopN": 5
+  },
   "data": [
     {
-      "id": "top-01",
+      "id": "a7b9c764-e979-48b1-85cf-2863492a4bd2",
       "rank": 1,
       "points": 35,
+      "programCount": 4,
+      "lastResultDate": "2026-09-08T11:30:00.000Z",
+      "groupLabel": null,
       "candidate": {
+        "id": "daeb31eb-347f-4d33-bcc3-873eb1aad0ea",
         "name": "Aisha Rahman",
         "chestNo": "104",
-        "avatarUrl": "https://assets.festie.app/avatars/aisha.jpg",
+        "avatar": "https://files.festie.app/files/demo/avatars/aisha.png",
+        "category": {
+          "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
+          "name": "Senior"
+        },
         "team": {
-          "name": "Red House"
+          "id": "aac0a05a-9d89-45a7-a756-e12e527f6321",
+          "name": "Ruby Phoenix",
+          "displayName": "Ruby Phoenix",
+          "colorCode": "#EF4444",
+          "logoUrl": "https://files.festie.app/files/demo/ruby.png"
         }
       },
-      "placeholder": {
-        "name": "കലാപ്രതിഭ (Overall Individual Champion)"
-      }
+      "team": null,
+      "section": null
     }
   ],
   "meta": {
@@ -122,11 +227,175 @@ GET /public-api/v1/toppers
 
 ---
 
-## ടോപ്പർ കാറ്റഗറികൾ (Placeholders)
+## പേജ് ടോപ്പർമാർ (Page Toppers)
 
-സിസ്റ്റത്തിൽ സെറ്റ് ചെയ്തിട്ടുള്ള ടോപ്പർ കാറ്റഗറികൾ കാണാൻ:
+ഒരു സബ് ഫെസ്റ്റിവലിലെ അല്ലെങ്കിൽ ഒരു പ്രത്യേക വെബ്‌സൈറ്റ് പേജിലെ എല്ലാ ടോപ്പർമാരുടെയും പോയിന്റ് നില ഒരൊറ്റ കോളിൽ ലഭ്യമാക്കാൻ:
 
 ```http
-GET /public-api/v1/topper-placeholders
+GET /public-api/v1/page-toppers
 ```
 
+### Query Parameters
+
+| Parameter | Type | നിർബന്ധമാണോ | വിവരണം |
+| :--- | :--- | :--- | :--- |
+| `subFestSlug` | `string` | നിർബന്ധം* | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
+| `subFestId` | `UUID` | നിർബന്ധം* | സബ് ഫെസ്റ്റ് ഐഡി. |
+| `pageSlug` | `string` | അല്ല | വെബ് പേജ് സ്ലഗ് ഫിൽട്ടർ. |
+| `placeholderId` | `UUID` | അല്ല | പ്രത്യേക പ്ലേസ്‌ഹോൾഡർ ഐഡി. |
+| `scopeType` | `string` | അല്ല | സ്കോപ്പ്: `GLOBAL`, `CATEGORY`, `SECTION`, `TEAM`. |
+
+### ഉദാഹരണം
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/page-toppers?subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Response ഉദാഹരണം
+
+```json
+{
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
+  "page": null,
+  "toppers": [
+    {
+      "placeholder": {
+        "id": "ebbf941d-5df6-42c5-8586-ad4c5adb75d1",
+        "label": "Overall Team Champion",
+        "entityType": "TEAM",
+        "scopeType": "GLOBAL",
+        "displayTopN": 5
+      },
+      "entries": [
+        {
+          "id": "85ce10a6-034e-4da3-9e19-ef0ce656b23e",
+          "rank": 1,
+          "points": 245,
+          "programCount": 28,
+          "candidate": null,
+          "team": {
+            "id": "aac0a05a-9d89-45a7-a756-e12e527f6321",
+            "name": "Ruby Phoenix",
+            "displayName": "Ruby Phoenix",
+            "colorCode": "#EF4444",
+            "logoUrl": "https://files.festie.app/files/demo/ruby.png"
+          }
+        },
+        {
+          "id": "f622795f-5e36-433e-b4f8-c3b83610b696",
+          "rank": 2,
+          "points": 220,
+          "programCount": 26,
+          "candidate": null,
+          "team": {
+            "id": "96190757-caeb-4975-a5df-c3c56ea06573",
+            "name": "Sapphire Dragons",
+            "displayName": "Sapphire Dragons",
+            "colorCode": "#3B82F6",
+            "logoUrl": "https://files.festie.app/files/demo/sapphire.png"
+          }
+        }
+      ]
+    },
+    {
+      "placeholder": {
+        "id": "cb8edb2d-9d63-40e5-b082-516d7cbce961",
+        "label": "Overall Individual Champion",
+        "entityType": "CANDIDATE",
+        "scopeType": "GLOBAL",
+        "displayTopN": 5
+      },
+      "entries": [
+        {
+          "id": "a7b9c764-e979-48b1-85cf-2863492a4bd2",
+          "rank": 1,
+          "points": 35,
+          "programCount": 4,
+          "candidate": {
+            "id": "daeb31eb-347f-4d33-bcc3-873eb1aad0ea",
+            "name": "Aisha Rahman",
+            "chestNo": "104",
+            "avatar": "https://files.festie.app/files/demo/avatars/aisha.png",
+            "category": {
+              "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
+              "name": "Senior"
+            },
+            "team": {
+              "id": "aac0a05a-9d89-45a7-a756-e12e527f6321",
+              "name": "Ruby Phoenix",
+              "displayName": "Ruby Phoenix",
+              "colorCode": "#EF4444"
+            }
+          },
+          "team": null
+        }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+## ടോപ്പർ പേജുകൾ (Topper Pages)
+
+ടോപ്പർ പ്ലേസ്‌ഹോൾഡറുകൾ നൽകിയിട്ടുള്ള വെബ്‌സൈറ്റ് പേജ് ഘടനകൾ ലഭിക്കാൻ:
+
+```http
+GET /public-api/v1/topper-pages
+```
+
+### Query Parameters
+
+| Parameter | Type | നിർബന്ധമാണോ | വിവരണം |
+| :--- | :--- | :--- | :--- |
+| `subFestSlug` | `string` | അല്ല | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
+| `subFestId` | `UUID` | അല്ല | സബ് ഫെസ്റ്റ് ഐഡി. |
+
+### Response ഉദാഹരണം
+
+```json
+{
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
+  "pages": [
+    {
+      "id": "b182bc26-0cd7-44cb-adaa-337b77c35a00",
+      "title": "Leaderboards",
+      "slug": "leaderboard",
+      "displayOrder": 1,
+      "subFest": {
+        "id": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+        "name": "Spring Arts 2026",
+        "slug": "arts-2026"
+      },
+      "placeholders": [
+        {
+          "id": "ebbf941d-5df6-42c5-8586-ad4c5adb75d1",
+          "label": "Overall Team Champion",
+          "entityType": "TEAM",
+          "displayTopN": 5,
+          "isPublished": true,
+          "displayOrder": 1
+        }
+      ]
+    }
+  ]
+}
+```

@@ -42,29 +42,47 @@ curl -X GET "https://api.festie.app/public-api/v1/programmes?subFestSlug=arts-20
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "data": [
     {
-      "id": "2d3e4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a",
-      "programCode": "LIT-01",
-      "programType": "SINGLE",
+      "id": "7cd5001f-7c38-4beb-bef4-1cfee131fcc2",
       "status": "RESULTS_PUBLISHED",
+      "publishedAt": "2026-09-08T11:00:00.000Z",
+      "subFest": {
+        "id": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+        "name": "Spring Arts 2026",
+        "slug": "arts-2026"
+      },
       "program": {
+        "id": "d83b746e-eddb-4637-aa02-4261a471fc51",
+        "code": "LIT-01",
         "name": "English Elocution",
-        "description": "Topic given 10 minutes prior"
+        "description": "Topic given 10 minutes prior",
+        "programType": "SINGLE"
       },
       "category": {
-        "id": "cat-senior",
+        "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
         "name": "Senior"
       },
-      "schedule": {
-        "id": "sch-01",
-        "scheduledAt": "2026-09-04T09:30:00.000Z",
+      "nextSchedule": {
+        "id": "a2866381-4145-497d-ab90-5c44d95d82aa",
+        "scheduledAt": "2026-09-08T09:30:00.000Z",
+        "durationMinutes": 120,
         "venue": {
-          "id": "ven-01",
-          "name": "Main Auditorium",
-          "code": "AUD-1"
+          "id": "761d61eb-2489-4a0d-9e6c-723e0af1c891",
+          "name": "Main Auditorium"
         }
-      }
+      },
+      "resultCount": 3,
+      "registrationCount": 18
     }
   ],
   "meta": {
@@ -97,8 +115,56 @@ GET /public-api/v1/programme-detail
 ### Example Request
 
 ```bash
-curl -X GET "https://api.festie.app/public-api/v1/programme-detail?subFestProgramId=2d3e4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a" \
+curl -X GET "https://api.festie.app/public-api/v1/programme-detail?subFestProgramId=7cd5001f-7c38-4beb-bef4-1cfee131fcc2" \
   -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Example Response
+
+```json
+{
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
+  "programme": {
+    "id": "7cd5001f-7c38-4beb-bef4-1cfee131fcc2",
+    "status": "RESULTS_PUBLISHED",
+    "publishedAt": "2026-09-08T11:00:00.000Z",
+    "subFest": {
+      "id": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+      "name": "Spring Arts 2026",
+      "slug": "arts-2026"
+    },
+    "program": {
+      "id": "d83b746e-eddb-4637-aa02-4261a471fc51",
+      "code": "LIT-01",
+      "name": "English Elocution",
+      "description": "Topic given 10 minutes prior",
+      "programType": "SINGLE"
+    },
+    "category": {
+      "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
+      "name": "Senior"
+    },
+    "nextSchedule": {
+      "id": "a2866381-4145-497d-ab90-5c44d95d82aa",
+      "scheduledAt": "2026-09-08T09:30:00.000Z",
+      "durationMinutes": 120,
+      "venue": {
+        "id": "761d61eb-2489-4a0d-9e6c-723e0af1c891",
+        "name": "Main Auditorium"
+      }
+    },
+    "resultCount": 3,
+    "registrationCount": 18
+  }
+}
 ```
 
 ---
@@ -127,7 +193,7 @@ GET /public-api/v1/schedules
 ### Example Request
 
 ```bash
-curl -X GET "https://api.festie.app/public-api/v1/schedules?subFestSlug=arts-2026&scheduledAtFrom=2026-09-04T00:00:00.000Z" \
+curl -X GET "https://api.festie.app/public-api/v1/schedules?subFestSlug=arts-2026&scheduledAtFrom=2026-09-08T00:00:00.000Z" \
   -H "X-API-Key: YOUR_API_KEY"
 ```
 
@@ -135,22 +201,42 @@ curl -X GET "https://api.festie.app/public-api/v1/schedules?subFestSlug=arts-202
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "data": [
     {
-      "id": "sch-01",
-      "scheduledAt": "2026-09-04T09:30:00.000Z",
-      "venue": {
-        "id": "ven-01",
-        "name": "Stage 1 - Tagore Hall",
-        "code": "STG-1"
+      "id": "eab1dcc2-6025-4fb9-a33a-c41b3e72f585",
+      "scheduledAt": "2026-09-08T14:30:00.000Z",
+      "subFest": {
+        "id": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+        "name": "Spring Arts 2026",
+        "slug": "arts-2026",
+        "timeZone": "Asia/Kolkata"
       },
       "subFestProgram": {
-        "id": "2d3e4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a",
-        "programCode": "LIT-01",
+        "id": "794339fe-d515-49eb-82fe-e211e837a2be",
         "status": "SCHEDULED",
         "program": {
-          "name": "English Elocution"
+          "id": "8048f308-c3f9-494b-8e7f-dca6ceffb8b1",
+          "code": "DAN-01",
+          "name": "Classical Dance",
+          "description": null
+        },
+        "category": {
+          "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
+          "name": "Senior"
         }
+      },
+      "venue": {
+        "id": "761d61eb-2489-4a0d-9e6c-723e0af1c891",
+        "name": "Main Auditorium"
       }
     }
   ],
@@ -162,4 +248,3 @@ curl -X GET "https://api.festie.app/public-api/v1/schedules?subFestSlug=arts-202
   }
 }
 ```
-

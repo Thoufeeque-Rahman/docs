@@ -23,7 +23,7 @@ GET /public-api/v1/candidates
 | `categoryIds` | `string` | Comma-separated list of category UUIDs. |
 | `teamIds` | `string` | Comma-separated list of team UUIDs. |
 | `gender` | `string` | Filter by gender: `MALE`, `FEMALE`, `OTHER`. |
-| `chestNoPattern` | `string` | Filter by chest number prefix or pattern (e.g. `J-10*`). |
+| `chestNoPattern` | `string` | Filter by chest number prefix or pattern (e.g. `10*`). |
 | `admNoPattern` | `string` | Filter by student admission number pattern. |
 | `hasAvatar` | `boolean` | Filter candidates who have uploaded profile photos. |
 | `hasRegistration` | `boolean` | Filter candidates registered for at least one programme. |
@@ -41,26 +41,49 @@ curl -X GET "https://api.festie.app/public-api/v1/candidates?subFestSlug=arts-20
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "data": [
     {
-      "id": "1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
-      "chestNo": "104",
-      "admissionNo": "ADM-2024-089",
-      "candidate": {
-        "id": "cand-01",
-        "name": "Aisha Rahman",
-        "gender": "FEMALE",
-        "avatarUrl": "https://assets.festie.app/avatars/aisha.jpg"
+      "id": "f92df06f-f989-45d6-ae69-20422d0f9504",
+      "subFest": {
+        "id": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+        "name": "Spring Arts 2026",
+        "slug": "arts-2026"
       },
       "category": {
-        "id": "c1f3a241-1122-4a0e-897b-cf10972b2571",
+        "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
         "name": "Senior"
       },
       "team": {
-        "id": "8e371309-80b6-4074-a69c-f090d8102a24",
-        "name": "Red House",
-        "displayName": "Ruby Phoenix"
-      }
+        "id": "aac0a05a-9d89-45a7-a756-e12e527f6321",
+        "name": "Ruby Phoenix",
+        "displayName": "Ruby Phoenix",
+        "colorCode": "#EF4444"
+      },
+      "sections": [],
+      "candidate": {
+        "id": "daeb31eb-347f-4d33-bcc3-873eb1aad0ea",
+        "chestNo": "104",
+        "name": "Aisha Rahman",
+        "gender": "FEMALE",
+        "avatarUrl": "https://files.festie.app/files/demo/avatars/aisha.png"
+      },
+      "points": {
+        "points": 25,
+        "totalPoints": 25,
+        "publishedPoints": 25,
+        "publishedPrograms": 3,
+        "publishedPercentage": 100
+      },
+      "registrationCount": 4
     }
   ],
   "meta": {
@@ -76,7 +99,7 @@ curl -X GET "https://api.festie.app/public-api/v1/candidates?subFestSlug=arts-20
 
 ## Get Candidate Detail
 
-Retrieve comprehensive biographical and enrolment details for a specific candidate.
+Retrieve comprehensive biographical, team, category, and point details for a specific candidate.
 
 ```http
 GET /public-api/v1/candidate-detail
@@ -93,15 +116,65 @@ GET /public-api/v1/candidate-detail
 ### Example Request
 
 ```bash
-curl -X GET "https://api.festie.app/public-api/v1/candidate-detail?subFestCandidateId=1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d" \
+curl -X GET "https://api.festie.app/public-api/v1/candidate-detail?subFestCandidateId=f92df06f-f989-45d6-ae69-20422d0f9504" \
   -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Example Response
+
+```json
+{
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
+  "candidate": {
+    "id": "f92df06f-f989-45d6-ae69-20422d0f9504",
+    "subFest": {
+      "id": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+      "name": "Spring Arts 2026",
+      "slug": "arts-2026"
+    },
+    "category": {
+      "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
+      "name": "Senior"
+    },
+    "team": {
+      "id": "aac0a05a-9d89-45a7-a756-e12e527f6321",
+      "name": "Ruby Phoenix",
+      "displayName": "Ruby Phoenix",
+      "colorCode": "#EF4444"
+    },
+    "sections": [],
+    "candidate": {
+      "id": "daeb31eb-347f-4d33-bcc3-873eb1aad0ea",
+      "chestNo": "104",
+      "name": "Aisha Rahman",
+      "gender": "FEMALE",
+      "avatarUrl": "https://files.festie.app/files/demo/avatars/aisha.png"
+    },
+    "points": {
+      "points": 25,
+      "totalPoints": 25,
+      "publishedPoints": 25,
+      "publishedPrograms": 3,
+      "publishedPercentage": 100
+    },
+    "registrationCount": 4
+  }
+}
 ```
 
 ---
 
 ## Get Candidate Registrations
 
-List all programmes that a candidate is currently registered to participate in.
+List all programmes that a candidate is currently registered to participate in (individual and group events).
 
 ```http
 GET /public-api/v1/candidate-registrations
@@ -119,17 +192,43 @@ GET /public-api/v1/candidate-registrations
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "data": [
     {
-      "id": "reg-991",
-      "program": {
-        "id": "prog-101",
-        "name": "Classical Dance",
-        "programCode": "DAN-01",
-        "status": "SCHEDULED"
+      "type": "INDIVIDUAL",
+      "id": "62253742-2dcd-481f-a274-4732d9260f7e",
+      "topic": null,
+      "topicStatus": "APPROVED",
+      "checkedIn": true,
+      "registeredAt": "2026-09-01T10:00:00.000Z",
+      "team": {
+        "id": "aac0a05a-9d89-45a7-a756-e12e527f6321",
+        "name": "Ruby Phoenix",
+        "displayName": "Ruby Phoenix",
+        "colorCode": "#EF4444"
       },
-      "registrationType": "SINGLE",
-      "registeredAt": "2026-09-01T10:00:00.000Z"
+      "programme": {
+        "id": "7cd5001f-7c38-4beb-bef4-1cfee131fcc2",
+        "program": {
+          "id": "d83b746e-eddb-4637-aa02-4261a471fc51",
+          "code": "LIT-01",
+          "name": "English Elocution",
+          "programType": "SINGLE"
+        },
+        "category": {
+          "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
+          "name": "Senior"
+        }
+      },
+      "result": null
     }
   ],
   "meta": {
@@ -170,33 +269,67 @@ curl -X GET "https://api.festie.app/public-api/v1/candidate-result?chestNo=104&s
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "candidate": {
-    "name": "Aisha Rahman",
-    "chestNo": "104",
-    "team": {
-      "name": "Red House"
+    "id": "f92df06f-f989-45d6-ae69-20422d0f9504",
+    "subFest": {
+      "id": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+      "name": "Spring Arts 2026",
+      "slug": "arts-2026"
     },
     "category": {
+      "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
       "name": "Senior"
+    },
+    "team": {
+      "id": "aac0a05a-9d89-45a7-a756-e12e527f6321",
+      "name": "Ruby Phoenix",
+      "displayName": "Ruby Phoenix",
+      "colorCode": "#EF4444"
+    },
+    "candidate": {
+      "id": "daeb31eb-347f-4d33-bcc3-873eb1aad0ea",
+      "chestNo": "104",
+      "name": "Aisha Rahman",
+      "gender": "FEMALE",
+      "avatarUrl": "https://files.festie.app/files/demo/avatars/aisha.png"
+    },
+    "points": {
+      "points": 25,
+      "totalPoints": 25,
+      "publishedPoints": 25,
+      "publishedPrograms": 3,
+      "publishedPercentage": 100
     }
   },
-  "totalPoints": 15,
   "results": [
     {
-      "programmeName": "English Elocution",
-      "programCode": "ENG-01",
+      "id": "c9600806-bbdc-4388-8d36-836f6ef1ccc8",
+      "participantName": "Aisha Rahman",
+      "participantType": "INDIVIDUAL",
       "position": "FIRST",
       "grade": "A",
-      "points": 10
-    },
-    {
-      "programmeName": "Extempore",
-      "programCode": "ENG-03",
-      "position": "SECOND",
-      "grade": "A",
-      "points": 5
+      "totalPoints": 10,
+      "positionPoints": 10,
+      "gradePoints": 0,
+      "publishedAt": "2026-09-08T11:00:00.000Z",
+      "programme": {
+        "id": "7cd5001f-7c38-4beb-bef4-1cfee131fcc2",
+        "program": {
+          "id": "d83b746e-eddb-4637-aa02-4261a471fc51",
+          "code": "LIT-01",
+          "name": "English Elocution"
+        }
+      }
     }
   ]
 }
 ```
-

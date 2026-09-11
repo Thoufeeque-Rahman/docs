@@ -36,18 +36,31 @@ curl -X GET "https://api.festie.app/public-api/v1/categories?subFestSlug=arts-20
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "data": [
     {
-      "id": "c1f3a241-1122-4a0e-897b-cf10972b2571",
+      "id": "c3545d8f-84bf-449e-aa22-dd6754b6cff5",
       "name": "Junior",
       "description": "Grade 5 to Grade 7",
-      "displayOrder": 1
+      "displayOrder": 1,
+      "candidateCount": 42,
+      "programmeCount": 15
     },
     {
-      "id": "d2f4b352-2233-4b1f-908c-df21083c3682",
+      "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
       "name": "Senior",
       "description": "Grade 8 to Grade 10",
-      "displayOrder": 2
+      "displayOrder": 2,
+      "candidateCount": 58,
+      "programmeCount": 20
     }
   ],
   "meta": {
@@ -94,28 +107,41 @@ curl -X GET "https://api.festie.app/public-api/v1/teams?subFestSlug=arts-2026" \
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "data": [
     {
-      "id": "8e371309-80b6-4074-a69c-f090d8102a24",
+      "id": "aac0a05a-9d89-45a7-a756-e12e527f6321",
       "name": "Red House",
       "displayName": "Ruby Phoenix",
+      "motto": "Rise and Shine",
       "colorCode": "#EF4444",
       "displayOrder": 1,
-      "logoUrl": "https://assets.festie.app/logos/red-house.png",
-      "_count": {
-        "subFestCandidates": 42
-      }
+      "level": null,
+      "parentTeam": null,
+      "publicName": "Ruby Phoenix",
+      "logoUrl": "https://files.festie.app/files/demo/ruby.png",
+      "candidateCount": 42
     },
     {
-      "id": "9f482410-91c7-5185-b7ad-0101e9213b35",
+      "id": "96190757-caeb-4975-a5df-c3c56ea06573",
       "name": "Blue House",
       "displayName": "Sapphire Dragons",
+      "motto": "Fly Higher",
       "colorCode": "#3B82F6",
       "displayOrder": 2,
-      "logoUrl": "https://assets.festie.app/logos/blue-house.png",
-      "_count": {
-        "subFestCandidates": 39
-      }
+      "level": null,
+      "parentTeam": null,
+      "publicName": "Sapphire Dragons",
+      "logoUrl": "https://files.festie.app/files/demo/sapphire.png",
+      "candidateCount": 39
     }
   ],
   "meta": {
@@ -126,4 +152,3 @@ curl -X GET "https://api.festie.app/public-api/v1/teams?subFestSlug=arts-2026" \
   }
 }
 ```
-

@@ -1,0 +1,280 @@
+---
+title: "തത്സമയ വാൾ ഡിസ്‌പ്ലേകൾ (Live Wall)"
+description: "സ്റ്റേജ് എൽ.ഇ.ഡി വാളുകൾ, പ്രൊജക്ടറുകൾ, ഡിജിറ്റൽ സ്ക്രീനുകൾ എന്നിവയിലേക്ക് ലൈവ് പോയിന്റ് നിലയും റിസൾട്ടുകളും നൽകാൻ."
+---
+
+ഫെസ്റ്റിവൽ നടക്കുന്ന ഓഡിറ്റോറിയങ്ങളിലെ വലിയ പ്രൊജക്ടറുകൾ, സ്റ്റേജിലെ LED വാളുകൾ, പ്രധാന കവാടങ്ങളിലെ സ്ക്രീനുകൾ എന്നിവ നിയന്ത്രിക്കാനുള്ള തത്സമയ ഡാറ്റ Festie നൽകുന്നു. ഫെസ്റ്റിവലിലെ സമഗ്ര വിവരങ്ങൾ, ടീം പോയിന്റ് നില, മത്സര വിജയികൾ, വ്യക്തിഗത ചാമ്പ്യന്മാർ, സ്റ്റേജ് ടൈംടേബിളുകൾ, ഫോട്ടോ ഗ്യാലറി എന്നിവ ഒരൊറ്റ കണക്ഷനിലൂടെ വാളിൽ ലഭ്യമാക്കാം.
+
+<Warning>
+  **സെർവർ-സൈഡ് കാളിംഗ് പോളിസി (Server-Side Policy)**
+
+  മറ്റ് Festie ഡെവലപ്പർ API-കളെപ്പോലെ, **ബ്രൗസർ HTML-ൽ നിന്നോ ക്ലയന്റ്-സൈഡ് `<script>` ടാഗുകളിൽ നിന്നോ നേരിട്ട് ഈ API കാൾ ചെയ്യാൻ പാടില്ല.** ഇത് നിങ്ങളുടെ `X-API-Key` പരസ്യപ്പെടാൻ ഇടയാക്കും.
+  എപ്പോഴും നിങ്ങളുടെ സ്വന്തം സെർവർ വഴിയോ (Node.js, Next.js Server Route, Python തുടങ്ങിയവ) അല്ലെങ്കിൽ സ്ക്രീൻ കൺട്രോളർ ബാക്കെൻഡ് വഴിയോ മാത്രം API കാൾ ചെയ്യുക.
+</Warning>
+
+---
+
+## സംയോജിത വാൾ ഡാറ്റ API (Consolidated Wall API)
+
+സ്റ്റേജ് വാൾ ഡിസ്പ്ലേയ്ക്ക് ആവശ്യമായ എല്ലാ ലൈവ് ഡാറ്റയും ഒരൊറ്റ നെറ്റ്‌വർക്ക് റിക്വസ്റ്റിൽ ലഭ്യമാക്കുന്ന എൻഡ്പോയിന്റ്:
+
+```http
+GET /public-api/v1/wall
+```
+
+### Query Parameters
+
+| Parameter | Type | നിർബന്ധമാണോ | വിവരണം |
+| :--- | :--- | :--- | :--- |
+| `subFestSlug` | `string` | അല്ല* | സബ് ഫെസ്റ്റ് സ്ലഗ് (ഉദാ: `arts-2026`). |
+| `subFestId` | `UUID` | അല്ല* | സബ് ഫെസ്റ്റ് സിസ്റ്റം ഐഡി. |
+
+*ഒരു പ്രത്യേക സബ് ഫെസ്റ്റിവൽ ടാർഗെറ്റ് ചെയ്യാൻ `subFestSlug` നൽകുന്നത് നല്ലതാണ്.
+
+### ഉദാഹരണം
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/wall?subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Response ഉദാഹരണം
+
+```json
+{
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
+  "festival": {
+    "id": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "name": "Spring Festival 2026",
+    "motto": "Igniting Talents",
+    "subdomain": "springfest",
+    "customDomain": null,
+    "description": "വാർഷിക കലാ-സാംസ്കാരിക മത്സരങ്ങൾ",
+    "website": "https://springfest.example.com",
+    "country": "IN",
+    "logoUrl": "https://files.festie.app/files/demo/logo.png"
+  },
+  "counts": {
+    "subFests": 1,
+    "programmes": 45,
+    "programmesTotal": 120,
+    "programmesPublished": 45,
+    "programmesRemainingToPublish": 75,
+    "candidates": 350,
+    "galleryImages": 48,
+    "news": 6,
+    "downloads": 4
+  },
+  "toppers": [
+    {
+      "placeholder": {
+        "id": "cb8edb2d-9d63-40e5-b082-516d7cbce961",
+        "label": "Overall Individual Champion (Kalaprathibha)",
+        "entityType": "CANDIDATE",
+        "scopeType": "GLOBAL",
+        "displayTopN": 5
+      },
+      "entries": [
+        {
+          "id": "a7b9c764-e979-48b1-85cf-2863492a4bd2",
+          "rank": 1,
+          "points": 35,
+          "programCount": 4,
+          "candidate": {
+            "id": "daeb31eb-347f-4d33-bcc3-873eb1aad0ea",
+            "name": "Aisha Rahman",
+            "chestNo": "104",
+            "avatar": "https://files.festie.app/files/demo/avatars/aisha.png",
+            "category": {
+              "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
+              "name": "Senior"
+            },
+            "team": {
+              "id": "aac0a05a-9d89-45a7-a756-e12e527f6321",
+              "name": "Ruby Phoenix",
+              "displayName": "Ruby Phoenix",
+              "colorCode": "#EF4444"
+            }
+          },
+          "team": null
+        }
+      ]
+    }
+  ],
+  "recentResults": [
+    {
+      "programme": {
+        "id": "7cd5001f-7c38-4beb-bef4-1cfee131fcc2",
+        "status": "RESULTS_PUBLISHED",
+        "publishedAt": "2026-09-08T11:00:00.000Z",
+        "subFest": {
+          "id": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+          "name": "Spring Arts 2026",
+          "slug": "arts-2026"
+        },
+        "program": {
+          "id": "d83b746e-eddb-4637-aa02-4261a471fc51",
+          "code": "LIT-01",
+          "name": "English Elocution",
+          "description": "Topic given 10 minutes prior",
+          "programType": "SINGLE"
+        },
+        "category": {
+          "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
+          "name": "Senior"
+        }
+      },
+      "results": [
+        {
+          "id": "c9600806-bbdc-4388-8d36-836f6ef1ccc8",
+          "participantName": "Aisha Rahman",
+          "participantType": "INDIVIDUAL",
+          "position": "FIRST",
+          "grade": "A",
+          "totalPoints": 10,
+          "positionPoints": 10,
+          "gradePoints": 0,
+          "candidate": {
+            "id": "daeb31eb-347f-4d33-bcc3-873eb1aad0ea",
+            "name": "Aisha Rahman",
+            "chestNo": "104",
+            "avatar": null
+          },
+          "team": {
+            "id": "aac0a05a-9d89-45a7-a756-e12e527f6321",
+            "name": "Ruby Phoenix",
+            "displayName": "Ruby Phoenix",
+            "colorCode": "#EF4444"
+          }
+        }
+      ]
+    }
+  ],
+  "schedules": [
+    {
+      "id": "eab1dcc2-6025-4fb9-a33a-c41b3e72f585",
+      "scheduledAt": "2026-09-08T14:30:00.000Z",
+      "venue": {
+        "id": "761d61eb-2489-4a0d-9e6c-723e0af1c891",
+        "name": "Stage 1 - Main Auditorium"
+      },
+      "subFestProgram": {
+        "id": "794339fe-d515-49eb-82fe-e211e837a2be",
+        "status": "SCHEDULED",
+        "program": {
+          "id": "8048f308-c3f9-494b-8e7f-dca6ceffb8b1",
+          "code": "DAN-01",
+          "name": "Classical Dance"
+        },
+        "category": {
+          "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
+          "name": "Senior"
+        }
+      }
+    }
+  ],
+  "gallery": [
+    {
+      "id": "00469a02-1794-4326-a285-3d4cbc578986",
+      "title": "Stage 1 Inauguration",
+      "imageUrl": "https://files.festie.app/files/demo/gallery/photo1.jpg",
+      "thumbnailUrl": "https://files.festie.app/files/demo/gallery/photo1_thumb.jpg",
+      "album": {
+        "id": "810453bd-59ab-4a75-9752-fb8c0c191bd0",
+        "name": "Day 1 Highlights"
+      }
+    }
+  ]
+}
+```
+
+---
+
+## വാൾ സെക്ഷനുകൾക്കായുള്ള പ്രത്യേക API-കൾ
+
+വാളിലെ ഓരോ ഭാഗവും വെവ്വേറെ പോൾ ചെയ്യാനോ കാഷെ ചെയ്യാനോ ആഗ്രഹിക്കുന്നുവെങ്കിൽ താഴെ പറയുന്ന പ്രത്യേക എൻഡ്പോയിന്റുകൾ ഉപയോഗിക്കാം:
+
+### 1. ടീം പോയിന്റ് നിലയും കൗണ്ടുകളും (Leaderboard)
+ടീമുകൾ നേടിയ ആകെ പോയിന്റുകൾ, സ്ഥാനങ്ങൾ, ഫെസ്റ്റിവൽ പുരോഗതി എന്നിവ അറിയാൻ:
+```http
+GET /public-api/v1/summary?subFestSlug=arts-2026
+```
+
+### 2. ലൈവ് റിസൾട്ട് ടിക്കർ (Rolling Results)
+ഏറ്റവും ഒടുവിൽ പ്രഖ്യാപിച്ച മത്സര വിജയികളെ (1st, 2nd, 3rd, ഗ്രേഡുകൾ) താഴെ ടിക്കറായോ പോപ്പ്-അപ്പായോ കാണിക്കാൻ:
+```http
+GET /public-api/v1/programme-results?subFestSlug=arts-2026&limit=10
+```
+
+### 3. ചാമ്പ്യന്മാരും ടോപ്പർമാരും (Individual Champions)
+കലാപ്രതിഭ, കലാതിലകം അല്ലെങ്കിൽ വിഭാഗം തിരിച്ചുള്ള ടോപ്പർമാരെ പ്രദർശിപ്പിക്കാൻ:
+```http
+GET /public-api/v1/toppers?subFestSlug=arts-2026
+GET /public-api/v1/page-toppers?subFestSlug=arts-2026
+```
+
+### 4. സ്റ്റേജ് ടൈംടേബിൾ (Schedules)
+ഇപ്പോൾ നടക്കുന്ന മത്സരങ്ങളും അടുത്തതായി ആരംഭിക്കുന്നവയും വേദി തിരിച്ച് അറിയാൻ:
+```http
+GET /public-api/v1/schedules?subFestSlug=arts-2026&scheduledAtFrom=2026-09-08T00:00:00.000Z
+```
+
+### 5. ഫോട്ടോ സ്ലൈഡ്‌ഷോ (Photo Gallery)
+ഇടവേളകളിലോ ഫലപ്രഖ്യാപനങ്ങളുടെ ഇടയിലോ കാണിക്കാനുള്ള ഹൈ-റെസല്യൂഷൻ ഫെസ്റ്റിവൽ ഫോട്ടോകൾ:
+```http
+GET /public-api/v1/gallery?subFestSlug=arts-2026&limit=20
+```
+
+---
+
+## റിയൽ-ടൈം സ്ക്രീൻ സ്ട്രീമിംഗ് (SSE)
+
+Festie സ്ക്രീൻ സ്റ്റുഡിയോ ഉപയോഗിക്കുന്ന വേദികൾക്കായി തത്സമയ അപ്‌ഡേറ്റുകൾ സ്ട്രീം ചെയ്യാൻ Server-Sent Events (SSE) ലഭ്യമാണ്:
+
+```http
+GET /screen/:screenId/stream
+```
+
+- തുടർച്ചയായി കണക്ഷൻ നിലനിർത്തുന്ന SSE സ്ട്രീം (`text/event-stream`).
+- അഡ്മിൻ കൺസോളിൽ നിന്ന് സ്റ്റേജ് ഓപ്പറേറ്റർ സീൻ മാറ്റുകയോ, സ്ക്രോളിംഗ് ടിക്കർ സന്ദേശങ്ങൾ നൽകുകയോ ചെയ്യുമ്പോൾ `screen-event` ഉടൻ ട്രിഗർ ചെയ്യപ്പെടുന്നു.
+- പ്രോക്സികൾ വഴി കണക്ഷൻ ഡ്രോപ്പ് ആവാതിരിക്കാൻ ഓരോ 25 സെക്കൻഡിലും `heartbeat` അയക്കുന്നു.
+
+```javascript Node.js / Server SSE ഉദാഹരണം
+const eventSource = new EventSource("https://api.festie.app/screen/YOUR_SCREEN_ID/stream");
+
+eventSource.addEventListener("screen-event", (event) => {
+  const payload = JSON.parse(event.data);
+  console.log("പുതിയ സ്ക്രീൻ ഇവന്റ്:", payload);
+});
+
+eventSource.addEventListener("heartbeat", () => {
+  // കണക്ഷൻ ലൈവ് ആണ്
+});
+```
+
+---
+
+## വാൾ ഡിസ്‌പ്ലേ മികച്ച രീതികൾ (Best Practices)
+
+<CardGroup cols={2}>
+  <Card title="പോളിംഗ് ഇടവേള (Polling Interval)" icon="clock">
+    `/public-api/v1/wall` എൻഡ്പോയിന്റ് **15 മുതൽ 30 സെക്കൻഡ്** കൂടുമ്പോൾ മാത്രം പോൾ ചെയ്യുക. ഇത് ക്വാട്ട പരിധി സുരക്ഷിതമായി നിലനിർത്തും.
+  </Card>
+  <Card title="സെർവർ കാഷിംഗ് (Server Caching)" icon="database">
+    ഒന്നിലധികം സ്ക്രീനുകൾ ഒരേസമയം പ്രവർത്തിക്കുമ്പോൾ നിങ്ങളുടെ ബാക്കെൻഡിൽ **10 മുതൽ 15 സെക്കൻഡ്** വരെ റെസ്‌പോൺസ് കാഷെ ചെയ്യുക.
+  </Card>
+  <Card title="സ്മൂത്ത് ട്രാൻസിഷൻ" icon="wand-magic-sparkles">
+    റിസൾട്ടുകൾ (30 സെക്കൻഡ്), പോയിന്റ് നില (20 സെക്കൻഡ്), ഫോട്ടോകൾ (15 സെക്കൻഡ്) എന്നിങ്ങനെ മാറിമാറി പ്രദർശിപ്പിക്കുന്നത് കൂടുതൽ ആകർഷകമാകും.
+  </Card>
+  <Card title="ഓഫ്‌ലൈൻ സുരക്ഷ (Offline Fallback)" icon="wifi">
+    ഇന്റർനെറ്റ് തടസ്സപ്പെട്ടാലും സ്ക്രീൻ ബ്ലാങ്ക് ആവാതിരിക്കാൻ ഏറ്റവും ഒടുവിൽ ലഭിച്ച ഡാറ്റ ലോക്കലായി സൂക്ഷിക്കുക.
+  </Card>
+</CardGroup>

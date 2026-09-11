@@ -153,21 +153,6 @@
             ]
           },
           {
-            "tab": "Reference",
-            "icon": "book-open",
-            "groups": [
-              {
-                "group": "Reference",
-                "pages": [
-                  "reference/roles-and-access",
-                  "reference/reports-list",
-                  "reference/app-route-map",
-                  "reference/glossary"
-                ]
-              }
-            ]
-          },
-          {
             "tab": "Developer API",
             "icon": "code",
             "groups": [
@@ -196,7 +181,8 @@
                 "group": "Results & Standings",
                 "pages": [
                   "api/results",
-                  "api/toppers-and-summary"
+                  "api/toppers-and-summary",
+                  "api/wall"
                 ]
               },
               {
@@ -324,21 +310,6 @@
             ]
           },
           {
-            "tab": "Reference",
-            "icon": "book-open",
-            "groups": [
-              {
-                "group": "Reference",
-                "pages": [
-                  "ml/reference/roles-and-access",
-                  "ml/reference/reports-list",
-                  "ml/reference/app-route-map",
-                  "ml/reference/glossary"
-                ]
-              }
-            ]
-          },
-          {
             "tab": "Developer API",
             "icon": "code",
             "groups": [
@@ -367,7 +338,8 @@
                 "group": "Results & Standings",
                 "pages": [
                   "ml/api/results",
-                  "ml/api/toppers-and-summary"
+                  "ml/api/toppers-and-summary",
+                  "ml/api/wall"
                 ]
               },
               {

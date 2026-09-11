@@ -48,11 +48,20 @@ const result = await response.json();
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "data": [
     {
-      "id": "e3b0c442-98fc-1c14-9af0-2a3b957977b2",
-      "name": "Sahityotsav 2026",
-      "slug": "sahityotsav-2026",
+      "id": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+      "name": "Spring Arts 2026",
+      "slug": "arts-2026",
       "timeZone": "Asia/Kolkata",
       "status": "ACTIVE",
       "level": {
@@ -92,7 +101,7 @@ GET /public-api/v1/filters
 ### Example Request
 
 ```bash
-curl -X GET "https://api.festie.app/public-api/v1/filters?subFestSlug=sahityotsav-2026" \
+curl -X GET "https://api.festie.app/public-api/v1/filters?subFestSlug=arts-2026" \
   -H "X-API-Key: YOUR_API_KEY"
 ```
 
@@ -100,45 +109,66 @@ curl -X GET "https://api.festie.app/public-api/v1/filters?subFestSlug=sahityotsa
 
 ```json
 {
-  "subFests": [
-    {
-      "id": "e3b0c442-98fc-1c14-9af0-2a3b957977b2",
-      "name": "Sahityotsav 2026",
-      "slug": "sahityotsav-2026",
-      "timeZone": "Asia/Kolkata",
-      "settings": {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
+  "filterData": {
+    "subFests": [
+      {
+        "id": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+        "name": "Spring Arts 2026",
+        "slug": "arts-2026",
+        "timeZone": "Asia/Kolkata",
         "teamsEnabled": true
       }
-    }
-  ],
-  "categories": [
-    {
-      "id": "c1f3a241-1122-4a0e-897b-cf10972b2571",
-      "name": "Junior",
-      "subFestId": "e3b0c442-98fc-1c14-9af0-2a3b957977b2"
-    },
-    {
-      "id": "d2f4b352-2233-4b1f-908c-df21083c3682",
-      "name": "Senior",
-      "subFestId": "e3b0c442-98fc-1c14-9af0-2a3b957977b2"
-    }
-  ],
-  "teams": [
-    {
-      "id": "8e371309-80b6-4074-a69c-f090d8102a24",
-      "name": "Red House",
-      "displayName": "Ruby Phoenix",
-      "subFestId": "e3b0c442-98fc-1c14-9af0-2a3b957977b2"
-    }
-  ],
-  "venues": [
-    {
-      "id": "4a15ef40-349c-48c1-8408-5452d001fe31",
-      "name": "Main Auditorium",
-      "code": "AUD-1"
-    }
-  ],
-  "selectedSubFestId": "e3b0c442-98fc-1c14-9af0-2a3b957977b2"
+    ],
+    "categories": [
+      {
+        "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
+        "name": "Senior",
+        "subFestId": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+        "subFestSlug": "arts-2026",
+        "subFestName": "Spring Arts 2026"
+      },
+      {
+        "id": "c3545d8f-84bf-449e-aa22-dd6754b6cff5",
+        "name": "Junior",
+        "subFestId": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+        "subFestSlug": "arts-2026",
+        "subFestName": "Spring Arts 2026"
+      }
+    ],
+    "teams": [
+      {
+        "id": "aac0a05a-9d89-45a7-a756-e12e527f6321",
+        "name": "Ruby Phoenix",
+        "subFestId": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+        "subFestSlug": "arts-2026",
+        "subFestName": "Spring Arts 2026"
+      },
+      {
+        "id": "96190757-caeb-4975-a5df-c3c56ea06573",
+        "name": "Sapphire Dragons",
+        "subFestId": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+        "subFestSlug": "arts-2026",
+        "subFestName": "Spring Arts 2026"
+      }
+    ],
+    "venues": [
+      {
+        "id": "761d61eb-2489-4a0d-9e6c-723e0af1c891",
+        "name": "Main Auditorium",
+        "subFestId": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+        "subFestSlug": "arts-2026",
+        "subFestName": "Spring Arts 2026"
+      }
+    ]
+  }
 }
 ```
-

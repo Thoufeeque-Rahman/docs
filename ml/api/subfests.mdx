@@ -1,13 +1,13 @@
 ---
-title: "SubFests & ഫിൽട്ടറുകൾ"
-description: "ഫെസ്റ്റിവലിലെ സബ് ഫെസ്റ്റുകൾ, ലെവലുകൾ, ആപ്പിലെ ഡ്രോപ്‌ഡൗൺ ഫിൽട്ടർ വിവരങ്ങൾ എന്നിവ എടുക്കുന്ന വിധം."
+title: "സബ് ഫെസ്റ്റിവലുകളും ഫിൽട്ടറുകളും (SubFests & Filters)"
+description: "സബ് ഫെസ്റ്റിവലുകൾ, തലങ്ങൾ, ഡ്രോപ്പ്ഡൗൺ ഫിൽട്ടർ ഓപ്ഷനുകൾ എന്നിവ ലഭിക്കാൻ."
 ---
 
-Festie-യിൽ ഒരു ഫെസ്റ്റിവലിന് കീഴിൽ ഒന്നിൽക്കൂടുതൽ സബ് ഫെസ്റ്റുകൾ (ഉദാ: ജൂനിയർ, സീനിയർ, ആർട്സ്, സ്പോർട്സ്) ഉണ്ടാകാം. ലഭ്യമായ സബ് ഫെസ്റ്റുകൾ കണ്ടെത്താനും, നിങ്ങളുടെ ആപ്പുകളിലെ ഡ്രോപ്ഡൗൺ ഫിൽട്ടറുകൾ സെറ്റ് ചെയ്യാനും ഈ API-കൾ ഉപയോഗിക്കാം.
+Festie-ൽ ഒരു ഫെസ്റ്റിവലിനെ വിവിധ സബ് ഫെസ്റ്റിവലുകളായി (ഉദാ: സീനിയേഴ്സ്, ജൂനിയേഴ്സ്, സാഹിത്യോത്സവ്) തരംതിരിക്കാം. ലഭ്യമായ സബ് ഫെസ്റ്റിവലുകളുടെ ലിസ്റ്റും സെർച്ച് ഡ്രോപ്പ്ഡൗണുകൾക്കുള്ള ഡാറ്റയും ലഭിക്കാൻ ഈ API-കൾ ഉപയോഗിക്കാം.
 
-## സബ് ഫെസ്റ്റുകളുടെ ലിസ്റ്റ്
+## സബ് ഫെസ്റ്റിവലുകളുടെ ലിസ്റ്റ് (List SubFests)
 
-നിങ്ങളുടെ ഫെസ്റ്റിവലിലുള്ള ആക്ടീവ് ആയ സബ് ഫെസ്റ്റുകളുടെ വിവരങ്ങൾ എടുക്കുക.
+നിങ്ങളുടെ ഫെസ്റ്റിവലിലുള്ള സജീവ സബ് ഫെസ്റ്റിവലുകൾ ലഭിക്കാൻ:
 
 ```http
 GET /public-api/v1/subfests
@@ -15,30 +15,53 @@ GET /public-api/v1/subfests
 
 ### Query Parameters
 
-| Parameter | Type | Default | വിവരണം |
+| Parameter | Type | ഡിഫോൾട്ട് | വിവരണം |
 | :--- | :--- | :--- | :--- |
-| `search` | `string` | — | പേരോ സ്ലഗ്ഗോ (slug) ഉപയോഗിച്ച് തിരയാൻ. |
-| `levelId` | `UUID` | — | നിർദ്ദിഷ്ട ലെവലിലുള്ള സബ് ഫെസ്റ്റുകൾ ഫിൽട്ടർ ചെയ്യാൻ. |
-| `status` | `string` | `ACTIVE` | സ്റ്റാറ്റസ് പ്രകാരം ഫിൽട്ടർ ചെയ്യാൻ. |
+| `search` | `string` | — | പേരോ സ്ലഗ്ഗോ വെച്ച് തിരയാൻ. |
+| `levelId` | `UUID` | — | പ്രത്യേക ഫെസ്റ്റിവൽ ലെവലിലുള്ളവ മാത്രം ലഭിക്കാൻ. |
+| `status` | `string` | `ACTIVE` | സ്റ്റാറ്റസ് ഫിൽട്ടർ (`ACTIVE`). |
 | `page` | `integer` | `1` | പേജ് നമ്പർ. |
-| `limit` | `integer` | `20` | ഒരു പേജിൽ പരമാവധി എത്രയെണ്ണം (പരമാവധി `20`). |
+| `limit` | `integer` | `20` | ഓരോ പേജിലെയും എണ്ണം (പരമാവധി `20`). |
+| `sortBy` | `string` | `name` | സോർട്ട് ചെയ്യേണ്ട ഫീൽഡ്: `name`, `slug`, `status`. |
+| `sortOrder` | `string` | `ASC` | ക്രമം: `ASC` അല്ലെങ്കിൽ `DESC`. |
 
 ### ഉദാഹരണം
 
-```bash
+<CodeGroup>
+```bash cURL
 curl -X GET "https://api.festie.app/public-api/v1/subfests?page=1&limit=10" \
   -H "X-API-Key: YOUR_API_KEY"
 ```
+
+```typescript TypeScript
+const response = await fetch(
+  "https://api.festie.app/public-api/v1/subfests?page=1&limit=10",
+  {
+    headers: { "X-API-Key": process.env.FESTIE_API_KEY! },
+  }
+);
+const result = await response.json();
+```
+</CodeGroup>
 
 ### Response ഉദാഹരണം
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "data": [
     {
-      "id": "e3b0c442-98fc-1c14-9af0-2a3b957977b2",
-      "name": "സാഹിത്യോത്സവ് 2026",
-      "slug": "sahityotsav-2026",
+      "id": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+      "name": "Spring Arts 2026",
+      "slug": "arts-2026",
       "timeZone": "Asia/Kolkata",
       "status": "ACTIVE",
       "level": {
@@ -60,9 +83,9 @@ curl -X GET "https://api.festie.app/public-api/v1/subfests?page=1&limit=10" \
 
 ---
 
-## Filter വിവരങ്ങൾ ലഭിക്കാൻ
+## ഫിൽട്ടർ മെറ്റാഡാറ്റ (Filter Metadata)
 
-നിങ്ങളുടെ ആപ്പിലോ വെബ്സൈറ്റിലോ കാറ്റഗറികൾ, ടീമുകൾ, വേദികൾ (venues) എന്നിവയുടെ ഡ്രോപ്ഡൗൺ ലിസ്റ്റ് ഉണ്ടാക്കാൻ ആവശ്യമായ വിവരങ്ങൾ ഒരൊറ്റ കോളിൽ ലഭിക്കാൻ ഇത് ഉപയോഗിക്കാം.
+നിങ്ങളുടെ ആപ്ലിക്കേഷനിലെ സെർച്ച് ബോക്സുകൾ, കാറ്റഗറി / ടീം / വേദി ഡ്രോപ്പ്ഡൗണുകൾ എന്നിവ തയ്യാറാക്കാൻ ആവശ്യമായ സമഗ്ര വിവരങ്ങൾ ലഭിക്കാൻ:
 
 ```http
 GET /public-api/v1/filters
@@ -72,13 +95,13 @@ GET /public-api/v1/filters
 
 | Parameter | Type | വിവരണം |
 | :--- | :--- | :--- |
-| `subFestId` | `UUID` | നിർദ്ദിഷ്ട സബ് ഫെസ്റ്റ് ഐഡി. |
-| `subFestSlug` | `string` | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
+| `subFestId` | `UUID` | *(ഐച്ഛികം)* നിർദ്ദിഷ്ട സബ് ഫെസ്റ്റ് ഐഡി. |
+| `subFestSlug` | `string` | *(ഐച്ഛികം)* സബ് ഫെസ്റ്റ് URL സ്ലഗ്. |
 
 ### ഉദാഹരണം
 
 ```bash
-curl -X GET "https://api.festie.app/public-api/v1/filters?subFestSlug=sahityotsav-2026" \
+curl -X GET "https://api.festie.app/public-api/v1/filters?subFestSlug=arts-2026" \
   -H "X-API-Key: YOUR_API_KEY"
 ```
 
@@ -86,45 +109,66 @@ curl -X GET "https://api.festie.app/public-api/v1/filters?subFestSlug=sahityotsa
 
 ```json
 {
-  "subFests": [
-    {
-      "id": "e3b0c442-98fc-1c14-9af0-2a3b957977b2",
-      "name": "സാഹിത്യോത്സവ് 2026",
-      "slug": "sahityotsav-2026",
-      "timeZone": "Asia/Kolkata",
-      "settings": {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
+  "filterData": {
+    "subFests": [
+      {
+        "id": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+        "name": "Spring Arts 2026",
+        "slug": "arts-2026",
+        "timeZone": "Asia/Kolkata",
         "teamsEnabled": true
       }
-    }
-  ],
-  "categories": [
-    {
-      "id": "c1f3a241-1122-4a0e-897b-cf10972b2571",
-      "name": "Junior",
-      "subFestId": "e3b0c442-98fc-1c14-9af0-2a3b957977b2"
-    },
-    {
-      "id": "d2f4b352-2233-4b1f-908c-df21083c3682",
-      "name": "Senior",
-      "subFestId": "e3b0c442-98fc-1c14-9af0-2a3b957977b2"
-    }
-  ],
-  "teams": [
-    {
-      "id": "8e371309-80b6-4074-a69c-f090d8102a24",
-      "name": "Red House",
-      "displayName": "Ruby Phoenix",
-      "subFestId": "e3b0c442-98fc-1c14-9af0-2a3b957977b2"
-    }
-  ],
-  "venues": [
-    {
-      "id": "4a15ef40-349c-48c1-8408-5452d001fe31",
-      "name": "Main Stage",
-      "code": "STG-1"
-    }
-  ],
-  "selectedSubFestId": "e3b0c442-98fc-1c14-9af0-2a3b957977b2"
+    ],
+    "categories": [
+      {
+        "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
+        "name": "Senior",
+        "subFestId": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+        "subFestSlug": "arts-2026",
+        "subFestName": "Spring Arts 2026"
+      },
+      {
+        "id": "c3545d8f-84bf-449e-aa22-dd6754b6cff5",
+        "name": "Junior",
+        "subFestId": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+        "subFestSlug": "arts-2026",
+        "subFestName": "Spring Arts 2026"
+      }
+    ],
+    "teams": [
+      {
+        "id": "aac0a05a-9d89-45a7-a756-e12e527f6321",
+        "name": "Ruby Phoenix",
+        "subFestId": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+        "subFestSlug": "arts-2026",
+        "subFestName": "Spring Arts 2026"
+      },
+      {
+        "id": "96190757-caeb-4975-a5df-c3c56ea06573",
+        "name": "Sapphire Dragons",
+        "subFestId": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+        "subFestSlug": "arts-2026",
+        "subFestName": "Spring Arts 2026"
+      }
+    ],
+    "venues": [
+      {
+        "id": "761d61eb-2489-4a0d-9e6c-723e0af1c891",
+        "name": "Main Auditorium",
+        "subFestId": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+        "subFestSlug": "arts-2026",
+        "subFestName": "Spring Arts 2026"
+      }
+    ]
+  }
 }
 ```
-

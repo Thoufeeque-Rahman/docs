@@ -1,13 +1,13 @@
 ---
-title: "വാർത്തകൾ, ഗ്യാലറി & ഫയലുകൾ"
-description: "ഫെസ്റ്റിവൽ വാർത്തകൾ, ഫോട്ടോ ഗ്യാലറി ആൽബങ്ങൾ, ഡൗൺലോഡ് ചെയ്യാവുന്ന ഫയലുകൾ എന്നിവ ലഭിക്കാൻ."
+title: "വാർത്തകളും ഗ്യാലറിയും ഡൗൺലോഡുകളും (Media & Downloads)"
+description: "ഫെസ്റ്റിവൽ വാർത്തകൾ, ഫോട്ടോ ആൽബങ്ങൾ, സർക്കുലറുകൾ എന്നിവ ലഭ്യമാക്കാൻ."
 ---
 
-ഫെസ്റ്റിവൽ അറിയിപ്പുകൾ, പ്രസ് റിലീസുകൾ, ഒഫീഷ്യൽ ഫോട്ടോകൾ, മത്സര നിയമാവലികൾ അല്ലെങ്കിൽ സർക്കുലറുകൾ എന്നിവ നിങ്ങളുടെ ആപ്പിൽ നേരിട്ട് ഉൾപ്പെടുത്താൻ ഈ API-കൾ ഉപയോഗിക്കാം.
+ഫെസ്റ്റിവലുമായി ബന്ധപ്പെട്ട ഔദ്യോഗിക പത്രക്കുറിപ്പുകൾ, സ്റ്റേജ് ഫോട്ടോകൾ, മത്സര നിയമാവലികൾ എന്നിവ ആപ്ലിക്കേഷനിലേക്ക് നേരിട്ട് നൽകാൻ Festie മീഡിയ API-കൾ സഹായിക്കുന്നു.
 
-## വാർത്തകളും അറിയിപ്പുകളും (News)
+## വാർത്തകളും അറിയിപ്പുകളും (List News)
 
-പബ്ലിഷ് ചെയ്ത വാർത്തകൾ ലഭിക്കാൻ:
+പബ്ലിഷ് ചെയ്ത ഫെസ്റ്റിവൽ വാർത്തകളും ബുള്ളറ്റിനുകളും അറിയാൻ:
 
 ```http
 GET /public-api/v1/news
@@ -17,11 +17,11 @@ GET /public-api/v1/news
 
 | Parameter | Type | വിവരണം |
 | :--- | :--- | :--- |
-| `search` | `string` | വാർത്താ തലക്കെട്ടോ ഉള്ളടക്കമോ തിരയാൻ. |
-| `tags` | `string` | ടാഗുകൾ (കോമ ഇട്ട് നൽകാം). |
-| `hasThumbnail` | `boolean` | തമ്പ്‌നെയിൽ ഉള്ള വാർത്തകൾ മാത്രം. |
+| `search` | `string` | വാർത്താ തലക്കെട്ടിലോ സംഗ്രഹത്തിലോ തിരയാൻ. |
+| `tags` | `string` | ടാഗുകൾ (കോമ നൽകി വേർതിരിച്ചത്). |
+| `hasThumbnail` | `boolean` | തംബ്‌നെയിൽ ഫോട്ടോ ഉള്ളവ മാത്രം. |
 | `page` | `integer` | പേജ് നമ്പർ. |
-| `limit` | `integer` | പരമാവധി എണ്ണം (`20`). |
+| `limit` | `integer` | ഓരോ പേജിലെയും എണ്ണം (പരമാവധി `20`). |
 
 ### ഉദാഹരണം
 
@@ -34,15 +34,24 @@ curl -X GET "https://api.festie.app/public-api/v1/news?page=1&limit=5" \
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "data": [
     {
-      "id": "7c1b5204-631d-400a-85d1-d24296ce3001",
-      "title": "ഉദ്ഘാടന ചടങ്ങുകൾ സമാപിച്ചു",
-      "slug": "inaugural-ceremony-highlights",
-      "snippet": "വർണ്ണാഭമായ പരിപാടികളോടെ കലോത്സവത്തിന് തിരിതെളിഞ്ഞു...",
-      "thumbnailUrl": "https://assets.festie.app/news/inauguration-thumb.jpg",
-      "publishedAt": "2026-09-03T10:00:00.000Z",
-      "tags": ["Official", "Opening"]
+      "id": "631d702b-4fed-4579-a80b-b23a7e38c46a",
+      "title": "സ്പ്രിംഗ് ഫെസ്റ്റ് 2026-ന് വർണ്ണാഭമായ തുടക്കം",
+      "summary": "പ്രമുഖ വ്യക്തികളുടെ സാന്നിധ്യത്തിൽ സാംസ്കാരിക ഘോഷയാത്രയോടെ ഫെസ്റ്റിവലിന് തുടക്കമായി.",
+      "publishedAt": "2026-09-08T09:00:00.000Z",
+      "tags": ["Opening", "Official"],
+      "thumbnailUrl": "https://files.festie.app/files/demo/news/inauguration_thumb.jpg",
+      "featureImageUrl": "https://files.festie.app/files/demo/news/inauguration.jpg"
     }
   ],
   "meta": {
@@ -56,19 +65,57 @@ curl -X GET "https://api.festie.app/public-api/v1/news?page=1&limit=5" \
 
 ---
 
-## വാർത്തയുടെ മുഴുവൻ വിവരങ്ങൾ (News Detail)
+## വാർത്താ വിശദാംശങ്ങൾ (Get News Detail)
 
-ഒരു പ്രത്യേക വാർത്തയുടെ മുഴുവൻ ഉള്ളടക്കം ഐഡി ഉപയോഗിച്ച് എടുക്കാൻ:
+ഒരു വാർത്തയുടെ പൂർണ്ണമായ വിവരങ്ങളും ലേഖന രൂപവും (HTML) ലഭിക്കാൻ:
 
 ```http
 GET /public-api/v1/news/:newsId
 ```
 
+### ഉദാഹരണം
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/news/631d702b-4fed-4579-a80b-b23a7e38c46a" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Response ഉദാഹരണം
+
+```json
+{
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
+  "news": {
+    "id": "631d702b-4fed-4579-a80b-b23a7e38c46a",
+    "title": "സ്പ്രിംഗ് ഫെസ്റ്റ് 2026-ന് വർണ്ണാഭമായ തുടക്കം",
+    "summary": "പ്രമുഖ വ്യക്തികളുടെ സാന്നിധ്യത്തിൽ സാംസ്കാരിക ഘോഷയാത്രയോടെ ഫെസ്റ്റിവലിന് തുടക്കമായി.",
+    "contentHtml": "<p>വിദ്യാർത്ഥി പ്രതിഭകളുടെ സർഗ്ഗാത്മക കഴിവുകൾ മാറ്റുരയ്ക്കുന്ന മത്സരങ്ങൾക്ക് തുടക്കമായി...</p>",
+    "publishedAt": "2026-09-08T09:00:00.000Z",
+    "tags": ["Opening", "Official"],
+    "subFest": {
+      "id": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+      "name": "Spring Arts 2026",
+      "slug": "arts-2026"
+    },
+    "thumbnailUrl": "https://files.festie.app/files/demo/news/inauguration_thumb.jpg",
+    "featureImageUrl": "https://files.festie.app/files/demo/news/inauguration.jpg"
+  }
+}
+```
+
 ---
 
-## ഫോട്ടോ ഗ്യാലറി (Gallery)
+## ഫോട്ടോ ഗ്യാലറി (Photo Gallery)
 
-ഫെസ്റ്റിവൽ ഫോട്ടോകളും ആൽബങ്ങളും ലഭിക്കാൻ:
+ഫെസ്റ്റിവൽ ഫോട്ടോകളും ആൽബങ്ങളും ലഭ്യമാക്കാൻ:
 
 ```http
 GET /public-api/v1/gallery
@@ -78,41 +125,73 @@ GET /public-api/v1/gallery
 
 | Parameter | Type | വിവരണം |
 | :--- | :--- | :--- |
-| `albumId` | `UUID` | നിർദ്ദിഷ്ട ആൽബത്തിലെ ഫോട്ടോകൾ. |
-| `subFestProgramId` | `UUID` | ഒരു പ്രോഗ്രാമുമായി ബന്ധപ്പെട്ട ഫോട്ടോകൾ. |
-| `categoryId` | `UUID` | കാറ്റഗറി പ്രകാരം. |
-| `page` | `integer` | പേജ് നമ്പർ. |
-| `limit` | `integer` | പേജ് ലിമിറ്റ് (`20`). |
+| `albumId` | `UUID` | നിർദ്ദിഷ്ട ആൽബത്തിലെ ഫോട്ടോകൾ മാത്രം കാണാൻ. |
+| `subFestProgramId` | `UUID` | ഒരു മത്സരത്തിനിടയിൽ എടുത്ത ഫോട്ടോകൾ. |
+| `categoryId` | `UUID` | കാറ്റഗറി അടിസ്ഥാനത്തിൽ ഫിൽട്ടർ ചെയ്യാൻ. |
+| `page` | `integer` | പേജ് നമ്പർ (ഡിഫോൾട്ട്: `1`). |
+| `limit` | `integer` | ഓരോ പേജിലെയും എണ്ണം (പരമാവധി: `20`). |
+
+### ഉദാഹരണം
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/gallery?limit=10" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
 
 ### Response ഉദാഹരണം
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "data": [
     {
-      "id": "gal-01",
-      "title": "സ്റ്റേജ് 1 - നാടോടി നൃത്തം",
-      "imageUrl": "https://assets.festie.app/gallery/folk-dance-01.jpg",
+      "id": "00469a02-1794-4326-a285-3d4cbc578986",
+      "title": "സ്റ്റേജ് 1 നാടോടിനൃത്ത മത്സരങ്ങൾ",
+      "description": "ഒന്നാം ദിന സീനിയർ നാടോടിനൃത്ത വേദിയിൽ നിന്ന്",
+      "albumId": "810453bd-59ab-4a75-9752-fb8c0c191bd0",
+      "orderIndex": 1,
+      "imageUrl": "https://files.festie.app/files/demo/gallery/dance.jpg",
+      "thumbnailUrl": "https://files.festie.app/files/demo/gallery/dance_thumb.jpg",
       "album": {
-        "id": "alb-01",
-        "name": "ഒന്നാം ദിന ചിത്രങ്ങൾ"
+        "id": "810453bd-59ab-4a75-9752-fb8c0c191bd0",
+        "name": "Day 1 Highlights"
+      },
+      "category": {
+        "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
+        "name": "Senior"
       }
     }
   ],
   "meta": {
     "page": 1,
-    "limit": 20,
+    "limit": 10,
     "total": 1,
     "totalPages": 1
-  }
+  },
+  "galleryAlbums": [
+    {
+      "id": "810453bd-59ab-4a75-9752-fb8c0c191bd0",
+      "name": "Day 1 Highlights",
+      "description": "ഒന്നാം ദിനത്തിലെ പ്രധാന മുഹൂർത്തങ്ങൾ",
+      "coverImageUrl": "https://files.festie.app/files/demo/gallery/cover.jpg"
+    }
+  ]
 }
 ```
 
 ---
 
-## ഫയൽ ഡൗൺലോഡുകൾ (Downloads)
+## പബ്ലിക് ഡൗൺലോഡുകൾ (Downloads)
 
-നിയമാവലി ബുക്ക്‌ലെറ്റ്, സ്കോറിംഗ് മാനുവലുകൾ, ഫോമുകൾ എന്നിവ ലഭിക്കാൻ:
+നിയമാവലികൾ, മാർഗ്ഗരേഖകൾ, ഫോമുകൾ തുടങ്ങിയ ഔദ്യോഗിക ഫയലുകൾ ഡൗൺലോഡ് ചെയ്യാൻ:
 
 ```http
 GET /public-api/v1/downloads
@@ -122,31 +201,49 @@ GET /public-api/v1/downloads
 
 | Parameter | Type | വിവരണം |
 | :--- | :--- | :--- |
-| `search` | `string` | ഫയലിന്റെ പേര് തിരയാൻ. |
-| `category` | `string` | ഫയൽ കാറ്റഗറി (ഉദാ: `Guidelines`). |
+| `search` | `string` | ഫയലിന്റെ പേരോ വിവരണമോ തിരയാൻ. |
+| `category` | `string` | ഫയൽ വിഭാഗം (ഉദാ: `Guidelines`, `Schedule`). |
 | `page` | `integer` | പേജ് നമ്പർ. |
-| `limit` | `integer` | പേജ് ലിമിറ്റ് (`20`). |
+| `limit` | `integer` | ഓരോ പേജിലെയും എണ്ണം (പരമാവധി `20`). |
+
+### ഉദാഹരണം
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/downloads?limit=10" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
 
 ### Response ഉദാഹരണം
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "data": [
     {
-      "id": "dl-01",
-      "title": "കലോത്സവ നിയമാവലി ബുക്ക്‌ലെറ്റ്",
+      "id": "470b6bef-8503-4411-b717-442d0a2daee7",
+      "title": "ഔദ്യോഗിക മത്സര നിയമാവലി ബുക്ക്‌ലെറ്റ്",
+      "description": "മത്സര നിയമങ്ങൾ, സമയപരിധി, ഗ്രേഡിംഗ് മാനദണ്ഡങ്ങൾ എന്നിവ",
       "category": "Guidelines",
-      "fileUrl": "https://assets.festie.app/downloads/rules-booklet.pdf",
+      "mimeType": "application/pdf",
       "fileSize": 1048576,
-      "mimeType": "application/pdf"
+      "fileType": "DOCUMENT",
+      "publishedAt": "2026-09-01T10:00:00.000Z",
+      "fileUrl": "https://files.festie.app/files/demo/downloads/rules.pdf"
     }
   ],
   "meta": {
     "page": 1,
-    "limit": 20,
+    "limit": 10,
     "total": 1,
     "totalPages": 1
   }
 }
 ```
-

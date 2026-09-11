@@ -1,13 +1,13 @@
 ---
-title: "Categories & ടീമുകൾ"
-description: "മത്സര വിഭാഗങ്ങൾ (Categories), പങ്കെടുക്കുന്ന ടീമുകൾ, ടീം കളറുകൾ എന്നിവ ലഭിക്കാനുള്ള API-കൾ."
+title: "വിഭാഗങ്ങളും ടീമുകളും (Categories & Teams)"
+description: "മത്സര കാറ്റഗറികൾ, പ്രായപരിധി വിഭാഗങ്ങൾ, പങ്കെടുക്കുന്ന ടീമുകൾ എന്നിവ ലഭിക്കാൻ."
 ---
 
-കുട്ടികളെ പ്രായത്തിനെയോ ക്ലാസിനെയോ അടിസ്ഥാനമാക്കി തരംതിരിക്കുന്നതിനാണ് Categories (ഉദാ: Sub Junior, Junior, Senior) ഉപയോഗിക്കുന്നത്. മത്സരങ്ങളിൽ പങ്കെടുക്കുന്ന ഹൗസുകൾ, ഗ്രൂപ്പുകൾ, ഡിപ്പാർട്ട്‌മെന്റുകൾ എന്നിവയാണ് Teams.
+മത്സരാർത്ഥികളെ പ്രായം അല്ലെങ്കിൽ ക്ലാസ് അടിസ്ഥാനമാക്കി തിരിച്ചിട്ടുള്ള ഗ്രൂപ്പുകളാണ് കാറ്റഗറികൾ (ഉദാ: സബ് ജൂനിയർ, ജൂനിയർ, ജനറൽ). പങ്കെടുക്കുന്ന ഹൗസുകൾ, ക്ലബ്ബുകൾ അല്ലെങ്കിൽ സ്ഥാപനങ്ങളെയാണ് ടീമുകൾ പ്രതിനിധീകരിക്കുന്നത്.
 
-## കാറ്റഗറികളുടെ ലിസ്റ്റ്
+## കാറ്റഗറികളുടെ ലിസ്റ്റ് (List Categories)
 
-ഒരു സബ് ഫെസ്റ്റിലുള്ള മുഴുവൻ കാറ്റഗറികളും ലഭിക്കാൻ:
+ഒരു സബ് ഫെസ്റ്റിവലിലുള്ള കാറ്റഗറികൾ അറിയാൻ:
 
 ```http
 GET /public-api/v1/categories
@@ -17,11 +17,13 @@ GET /public-api/v1/categories
 
 | Parameter | Type | നിർബന്ധമാണോ | വിവരണം |
 | :--- | :--- | :--- | :--- |
-| `subFestId` | `UUID` | നിർബന്ധം* | സബ് ഫെസ്റ്റ് ഐഡി (*slug നൽകിയിട്ടില്ലെങ്കിൽ). |
-| `subFestSlug` | `string` | നിർബന്ധം* | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
+| `subFestId` | `UUID` | അല്ല* | സബ് ഫെസ്റ്റ് ഐഡി (*`subFestSlug` നൽകിയിട്ടില്ലെങ്കിൽ). |
+| `subFestSlug` | `string` | അല്ല* | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
 | `search` | `string` | അല്ല | പേര് തിരയാൻ. |
 | `page` | `integer` | അല്ല | പേജ് നമ്പർ (ഡിഫോൾട്ട്: `1`). |
-| `limit` | `integer` | അല്ല | ഒരു പേജിൽ എത്രയെണ്ണം (പരമാവധി: `20`). |
+| `limit` | `integer` | അല്ല | ഓരോ പേജിലെയും എണ്ണം (ഡിഫോൾട്ട്: `20`, പരമാവധി: `20`). |
+| `sortBy` | `string` | അല്ല | ക്രമപ്പെടുത്തേണ്ട ഫീൽഡ്: `displayOrder`, `name`. |
+| `sortOrder` | `string` | അല്ല | ക്രമം: `ASC` അല്ലെങ്കിൽ `DESC`. |
 
 ### ഉദാഹരണം
 
@@ -34,18 +36,31 @@ curl -X GET "https://api.festie.app/public-api/v1/categories?subFestSlug=arts-20
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "data": [
     {
-      "id": "c1f3a241-1122-4a0e-897b-cf10972b2571",
+      "id": "c3545d8f-84bf-449e-aa22-dd6754b6cff5",
       "name": "Junior",
-      "description": "5 മുതൽ 7 വരെ ക്ലാസുകൾ",
-      "displayOrder": 1
+      "description": "Grade 5 to Grade 7",
+      "displayOrder": 1,
+      "candidateCount": 42,
+      "programmeCount": 15
     },
     {
-      "id": "d2f4b352-2233-4b1f-908c-df21083c3682",
+      "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
       "name": "Senior",
-      "description": "8 മുതൽ 10 വരെ ക്ലാസുകൾ",
-      "displayOrder": 2
+      "description": "Grade 8 to Grade 10",
+      "displayOrder": 2,
+      "candidateCount": 58,
+      "programmeCount": 20
     }
   ],
   "meta": {
@@ -59,9 +74,9 @@ curl -X GET "https://api.festie.app/public-api/v1/categories?subFestSlug=arts-20
 
 ---
 
-## ടീമുകളുടെ ലിസ്റ്റ്
+## ടീമുകളുടെ ലിസ്റ്റ് (List Teams)
 
-ഫെസ്റ്റിവലിൽ പങ്കെടുക്കുന്ന ടീമുകൾ, അവരുടെ കളർ കോഡുകൾ, കുട്ടികളുടെ എണ്ണം എന്നിവ അറിയാൻ:
+ഫെസ്റ്റിവലിൽ പങ്കെടുക്കുന്ന ഹൗസുകൾ അല്ലെങ്കിൽ ടീമുകൾ അറിയാൻ:
 
 ```http
 GET /public-api/v1/teams
@@ -69,15 +84,17 @@ GET /public-api/v1/teams
 
 ### Query Parameters
 
-| Parameter | Type | വിവരണം |
-| :--- | :--- | :--- |
-| `subFestSlug` | `string` | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
-| `subFestId` | `UUID` | സബ് ഫെസ്റ്റ് ഐഡി. |
-| `search` | `string` | ടീമിന്റെ പേര് തിരയാൻ. |
-| `colorCode` | `string` | കളർ കോഡ് പ്രകാരം ഫിൽട്ടർ ചെയ്യാൻ (ഉദാ: `#EF4444`). |
-| `hasCandidates` | `boolean` | കുട്ടികൾ രജിസ്റ്റർ ചെയ്തിട്ടുള്ള ടീമുകൾ മാത്രം കാണിക്കാൻ. |
-| `page` | `integer` | പേജ് നമ്പർ. |
-| `limit` | `integer` | പേജ് ലിമിറ്റ് (പരമാവധി `20`). |
+| Parameter | Type | നിർബന്ധമാണോ | വിവരണം |
+| :--- | :--- | :--- | :--- |
+| `subFestId` | `UUID` | അല്ല* | സബ് ഫെസ്റ്റ് ഐഡി. |
+| `subFestSlug` | `string` | അല്ല* | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
+| `search` | `string` | അല്ല | ടീമിന്റെ പേര് തിരയാൻ. |
+| `colorCode` | `string` | അല്ല | ടീം കളർ കോഡ് ഫിൽട്ടർ (ഉദാ: `#EF4444`). |
+| `hasCandidates` | `boolean` | അല്ല | മത്സരാർത്ഥികളുള്ള ടീമുകൾ മാത്രം കാണിക്കാൻ (`true` അല്ലെങ്കിൽ `false`). |
+| `page` | `integer` | അല്ല | പേജ് നമ്പർ (ഡിഫോൾട്ട്: `1`). |
+| `limit` | `integer` | അല്ല | ഓരോ പേജിലെയും എണ്ണം (പരമാവധി `20`). |
+| `sortBy` | `string` | അല്ല | ക്രമപ്പെടുത്തേണ്ട ഫീൽഡ്: `displayOrder`, `name`. |
+| `sortOrder` | `string` | അല്ല | ക്രമം: `ASC` അല്ലെങ്കിൽ `DESC`. |
 
 ### ഉദാഹരണം
 
@@ -90,25 +107,48 @@ curl -X GET "https://api.festie.app/public-api/v1/teams?subFestSlug=arts-2026" \
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "data": [
     {
-      "id": "8e371309-80b6-4074-a69c-f090d8102a24",
+      "id": "aac0a05a-9d89-45a7-a756-e12e527f6321",
       "name": "Red House",
       "displayName": "Ruby Phoenix",
+      "motto": "Rise and Shine",
       "colorCode": "#EF4444",
       "displayOrder": 1,
-      "logoUrl": "https://assets.festie.app/logos/red-house.png",
-      "_count": {
-        "subFestCandidates": 42
-      }
+      "level": null,
+      "parentTeam": null,
+      "publicName": "Ruby Phoenix",
+      "logoUrl": "https://files.festie.app/files/demo/ruby.png",
+      "candidateCount": 42
+    },
+    {
+      "id": "96190757-caeb-4975-a5df-c3c56ea06573",
+      "name": "Blue House",
+      "displayName": "Sapphire Dragons",
+      "motto": "Fly Higher",
+      "colorCode": "#3B82F6",
+      "displayOrder": 2,
+      "level": null,
+      "parentTeam": null,
+      "publicName": "Sapphire Dragons",
+      "logoUrl": "https://files.festie.app/files/demo/sapphire.png",
+      "candidateCount": 39
     }
   ],
   "meta": {
     "page": 1,
     "limit": 20,
-    "total": 1,
+    "total": 2,
     "totalPages": 1
   }
 }
 ```
-

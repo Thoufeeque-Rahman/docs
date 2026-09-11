@@ -1,13 +1,13 @@
 ---
 title: "Summary & Toppers"
-description: "Fetch overall festival leaderboards, team point totals, counts, and individual champions."
+description: "Fetch overall festival metadata, counts, statistics, and individual or team topper standings."
 ---
 
-These endpoints provide high-level festival statistics, real-time team point leaderboards, and individual topper standings (such as Kalathilakam, Kalaprathibha, or category toppers).
+These endpoints provide high-level festival statistics and counts, configured topper award categories, and live leaderboard standings for individuals and teams (such as Kalaprathibha, Kalathilakam, Category champions, or Team champions).
 
-## Festival Summary & Team Leaderboard
+## Festival Summary & Statistics
 
-Retrieve an aggregated overview of the festival including live team scores, rank standings, and event counters.
+Retrieve global festival metadata and real-time aggregate counters for programmes, participants, galleries, news, and downloads.
 
 ```http
 GET /public-api/v1/summary
@@ -15,10 +15,10 @@ GET /public-api/v1/summary
 
 ### Query Parameters
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `subFestId` | `UUID` | Optional: limit summary to a specific sub-festival. |
-| `subFestSlug` | `string` | Optional: limit summary by sub-festival slug. |
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `subFestSlug` | `string` | No | Limit counts and context to a specific sub-festival slug. |
+| `subFestId` | `UUID` | No | Limit counts and context to a specific sub-festival ID. |
 
 ### Example Request
 
@@ -31,68 +31,66 @@ curl -X GET "https://api.festie.app/public-api/v1/summary?subFestSlug=arts-2026"
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "festival": {
-    "id": "fest-01",
-    "name": "State Arts Festival 2026",
+    "id": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "name": "Spring Festival 2026",
     "motto": "Igniting Talents",
-    "subdomain": "statearts2026"
+    "subdomain": "springfest",
+    "customDomain": null,
+    "description": "Annual Inter-School Arts & Cultural Festival",
+    "website": "https://springfest.example.com",
+    "country": "IN",
+    "logoUrl": "https://files.festie.app/files/demo/logo.png"
   },
-  "stats": {
-    "subFestCount": 1,
-    "totalProgrammes": 64,
-    "publishedProgrammes": 28,
-    "candidateCount": 450,
-    "galleryImageCount": 120,
-    "newsCount": 8
-  },
-  "teams": [
-    {
-      "rank": 1,
-      "team": {
-        "id": "8e371309-80b6-4074-a69c-f090d8102a24",
-        "name": "Red House",
-        "displayName": "Ruby Phoenix",
-        "colorCode": "#EF4444"
-      },
-      "totalPoints": 245
-    },
-    {
-      "rank": 2,
-      "team": {
-        "id": "9f482410-91c7-5185-b7ad-0101e9213b35",
-        "name": "Blue House",
-        "displayName": "Sapphire Dragons",
-        "colorCode": "#3B82F6"
-      },
-      "totalPoints": 220
-    }
-  ]
+  "counts": {
+    "subFests": 1,
+    "programmes": 45,
+    "programmesTotal": 120,
+    "programmesPublished": 45,
+    "programmesRemainingToPublish": 75,
+    "candidates": 350,
+    "galleryImages": 48,
+    "news": 6,
+    "downloads": 4
+  }
 }
 ```
 
 ---
 
-## Get Topper Entries
+## List Topper Placeholders
 
-Retrieve top-performing candidates or teams assigned to title placeholders (e.g. Festival Champion, Best Actor, Category Toppers).
+Topper placeholders represent the award categories configured in your festival (e.g., Overall Individual Champion, Junior Category Champion, Overall House Trophy). Query this endpoint to discover available placeholder IDs.
 
 ```http
-GET /public-api/v1/toppers
+GET /public-api/v1/topper-placeholders
 ```
 
 ### Query Parameters
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `topperPlaceholderId` | `UUID` | Filter entries by specific title placeholder. |
-| `subFestSlug` | `string` | Sub-festival slug. |
-| `page` | `integer` | Page number. |
-| `limit` | `integer` | Items per page (max: `20`). |
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `subFestSlug` | `string` | Required* | Sub-festival slug (*required if no `subFestId`). |
+| `subFestId` | `UUID` | Required* | Sub-festival UUID. |
+| `isPublished` | `boolean` | No | Filter by published status (`true` by default). |
+| `entityType` | `string` | No | Filter by target entity: `CANDIDATE` or `TEAM`. |
+| `scopeType` | `string` | No | Scope type: `GLOBAL`, `CATEGORY`, `SECTION`, `TEAM`. |
+| `page` | `integer` | No | Pagination page number (default: `1`). |
+| `limit` | `integer` | No | Items per page (default: `20`, max: `20`). |
 
 ### Example Request
 
 ```bash
-curl -X GET "https://api.festie.app/public-api/v1/toppers?subFestSlug=arts-2026" \
+curl -X GET "https://api.festie.app/public-api/v1/topper-placeholders?subFestSlug=arts-2026" \
   -H "X-API-Key: YOUR_API_KEY"
 ```
 
@@ -100,22 +98,122 @@ curl -X GET "https://api.festie.app/public-api/v1/toppers?subFestSlug=arts-2026"
 
 ```json
 {
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
   "data": [
     {
-      "id": "top-01",
+      "id": "cb8edb2d-9d63-40e5-b082-516d7cbce961",
+      "label": "Overall Individual Champion",
+      "entityType": "CANDIDATE",
+      "scopeType": "GLOBAL",
+      "rankingBasis": "TOTAL_POINTS",
+      "displayTopN": 5,
+      "displayOrder": 1,
+      "isPublished": true,
+      "lastComputedAt": "2026-09-08T10:00:00.000Z"
+    },
+    {
+      "id": "ebbf941d-5df6-42c5-8586-ad4c5adb75d1",
+      "label": "Overall Team Champion",
+      "entityType": "TEAM",
+      "scopeType": "GLOBAL",
+      "rankingBasis": "TOTAL_POINTS",
+      "displayTopN": 5,
+      "displayOrder": 2,
+      "isPublished": true,
+      "lastComputedAt": "2026-09-08T10:00:00.000Z"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 20,
+    "total": 2,
+    "totalPages": 1
+  }
+}
+```
+
+---
+
+## Get Topper Entries
+
+Retrieve the computed rankings and awarded points for candidates or teams assigned to a specific topper placeholder.
+
+```http
+GET /public-api/v1/toppers
+```
+
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `topperPlaceholderId` | `UUID` | Yes | **Required.** The UUID of the topper placeholder to fetch rankings for. |
+| `subFestSlug` | `string` | No | Sub-festival slug. |
+| `subFestId` | `UUID` | No | Sub-festival identifier. |
+| `page` | `integer` | No | Pagination page number (default: `1`). |
+| `limit` | `integer` | No | Items per page (default: `20`, max: `20`). |
+
+### Example Request
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/toppers?topperPlaceholderId=cb8edb2d-9d63-40e5-b082-516d7cbce961&subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Example Response (Candidate Topper)
+
+```json
+{
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
+  "placeholder": {
+    "id": "cb8edb2d-9d63-40e5-b082-516d7cbce961",
+    "label": "Overall Individual Champion",
+    "entityType": "CANDIDATE",
+    "scopeType": "GLOBAL",
+    "displayTopN": 5
+  },
+  "data": [
+    {
+      "id": "a7b9c764-e979-48b1-85cf-2863492a4bd2",
       "rank": 1,
       "points": 35,
+      "programCount": 4,
+      "lastResultDate": "2026-09-08T11:30:00.000Z",
+      "groupLabel": null,
       "candidate": {
+        "id": "daeb31eb-347f-4d33-bcc3-873eb1aad0ea",
         "name": "Aisha Rahman",
         "chestNo": "104",
-        "avatarUrl": "https://assets.festie.app/avatars/aisha.jpg",
+        "avatar": "https://files.festie.app/files/demo/avatars/aisha.png",
+        "category": {
+          "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
+          "name": "Senior"
+        },
         "team": {
-          "name": "Red House"
+          "id": "aac0a05a-9d89-45a7-a756-e12e527f6321",
+          "name": "Ruby Phoenix",
+          "displayName": "Ruby Phoenix",
+          "colorCode": "#EF4444",
+          "logoUrl": "https://files.festie.app/files/demo/ruby.png"
         }
       },
-      "placeholder": {
-        "name": "Kalaprathibha (Overall Individual Champion)"
-      }
+      "team": null,
+      "section": null
     }
   ],
   "meta": {
@@ -129,32 +227,175 @@ curl -X GET "https://api.festie.app/public-api/v1/toppers?subFestSlug=arts-2026"
 
 ---
 
-## List Topper Placeholders
+## Page Toppers (Aggregated Leaderboard)
 
-Query the configured topper award titles and categories.
+Retrieve all topper placeholders and their active ranking entries configured for a subfest or website page. This is the primary endpoint used by website leaderboards and stage walls to display multiple standings in one call.
 
 ```http
-GET /public-api/v1/topper-placeholders
+GET /public-api/v1/page-toppers
 ```
 
 ### Query Parameters
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `isPublished` | `boolean` | Filter published titles (`true`). |
-| `entityType` | `string` | Target entity: `CANDIDATE` or `TEAM`. |
-| `scopeType` | `string` | Title scope: `FESTIVAL`, `SUBFEST`, or `CATEGORY`. |
-| `page` | `integer` | Page number. |
-| `limit` | `integer` | Items per page (max: `20`). |
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `subFestSlug` | `string` | Optional* | Sub-festival slug. |
+| `subFestId` | `UUID` | Optional* | Sub-festival UUID. |
+| `pageSlug` | `string` | No | Optional website page slug to filter placeholders assigned to that page. |
+| `placeholderId` | `UUID` | No | Optional placeholder ID filter. |
+| `scopeType` | `string` | No | Optional scope type filter: `GLOBAL`, `CATEGORY`, `SECTION`, `TEAM`. |
+
+### Example Request
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/page-toppers?subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
+
+### Example Response
+
+```json
+{
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
+  "page": null,
+  "toppers": [
+    {
+      "placeholder": {
+        "id": "ebbf941d-5df6-42c5-8586-ad4c5adb75d1",
+        "label": "Overall Team Champion",
+        "entityType": "TEAM",
+        "scopeType": "GLOBAL",
+        "displayTopN": 5
+      },
+      "entries": [
+        {
+          "id": "85ce10a6-034e-4da3-9e19-ef0ce656b23e",
+          "rank": 1,
+          "points": 245,
+          "programCount": 28,
+          "candidate": null,
+          "team": {
+            "id": "aac0a05a-9d89-45a7-a756-e12e527f6321",
+            "name": "Ruby Phoenix",
+            "displayName": "Ruby Phoenix",
+            "colorCode": "#EF4444",
+            "logoUrl": "https://files.festie.app/files/demo/ruby.png"
+          }
+        },
+        {
+          "id": "f622795f-5e36-433e-b4f8-c3b83610b696",
+          "rank": 2,
+          "points": 220,
+          "programCount": 26,
+          "candidate": null,
+          "team": {
+            "id": "96190757-caeb-4975-a5df-c3c56ea06573",
+            "name": "Sapphire Dragons",
+            "displayName": "Sapphire Dragons",
+            "colorCode": "#3B82F6",
+            "logoUrl": "https://files.festie.app/files/demo/sapphire.png"
+          }
+        }
+      ]
+    },
+    {
+      "placeholder": {
+        "id": "cb8edb2d-9d63-40e5-b082-516d7cbce961",
+        "label": "Overall Individual Champion",
+        "entityType": "CANDIDATE",
+        "scopeType": "GLOBAL",
+        "displayTopN": 5
+      },
+      "entries": [
+        {
+          "id": "a7b9c764-e979-48b1-85cf-2863492a4bd2",
+          "rank": 1,
+          "points": 35,
+          "programCount": 4,
+          "candidate": {
+            "id": "daeb31eb-347f-4d33-bcc3-873eb1aad0ea",
+            "name": "Aisha Rahman",
+            "chestNo": "104",
+            "avatar": "https://files.festie.app/files/demo/avatars/aisha.png",
+            "category": {
+              "id": "317723a4-06a9-43cf-82f0-5a9a4c736864",
+              "name": "Senior"
+            },
+            "team": {
+              "id": "aac0a05a-9d89-45a7-a756-e12e527f6321",
+              "name": "Ruby Phoenix",
+              "displayName": "Ruby Phoenix",
+              "colorCode": "#EF4444"
+            }
+          },
+          "team": null
+        }
+      ]
+    }
+  ]
+}
+```
 
 ---
 
-## Page Toppers
+## Topper Pages
 
-Retrieve topper data configured for specific website layouts or custom display pages:
+Retrieve website page structures that contain attached topper placeholders.
 
 ```http
 GET /public-api/v1/topper-pages
-GET /public-api/v1/page-toppers
 ```
 
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `subFestSlug` | `string` | No | Sub-festival slug. |
+| `subFestId` | `UUID` | No | Sub-festival identifier. |
+
+### Example Response
+
+```json
+{
+  "context": {
+    "festivalId": "db0e7419-8d01-4481-83c9-d997cc481a9c",
+    "host": "springfest.festie.app",
+    "subdomain": "springfest",
+    "currentDomain": "springfest.festie.app",
+    "primaryDomain": "springfest.festie.app",
+    "resolvedByCustomDomain": false,
+    "shouldRedirectToPrimary": false
+  },
+  "pages": [
+    {
+      "id": "b182bc26-0cd7-44cb-adaa-337b77c35a00",
+      "title": "Leaderboards",
+      "slug": "leaderboard",
+      "displayOrder": 1,
+      "subFest": {
+        "id": "5a9da3b1-f7a5-4d54-b2a4-6c014d4b411a",
+        "name": "Spring Arts 2026",
+        "slug": "arts-2026"
+      },
+      "placeholders": [
+        {
+          "id": "ebbf941d-5df6-42c5-8586-ad4c5adb75d1",
+          "label": "Overall Team Champion",
+          "entityType": "TEAM",
+          "displayTopN": 5,
+          "isPublished": true,
+          "displayOrder": 1
+        }
+      ]
+    }
+  ]
+}
+```
