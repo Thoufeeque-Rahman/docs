@@ -153,21 +153,6 @@
             ]
           },
           {
-            "tab": "Reference",
-            "icon": "book-open",
-            "groups": [
-              {
-                "group": "Reference",
-                "pages": [
-                  "reference/roles-and-access",
-                  "reference/reports-list",
-                  "reference/app-route-map",
-                  "reference/glossary"
-                ]
-              }
-            ]
-          },
-          {
             "tab": "Developer API",
             "icon": "code",
             "groups": [
@@ -320,21 +305,6 @@
                   "ml/media/templates",
                   "ml/media/public-website",
                   "ml/media/gallery-and-downloads"
-                ]
-              }
-            ]
-          },
-          {
-            "tab": "Reference",
-            "icon": "book-open",
-            "groups": [
-              {
-                "group": "Reference",
-                "pages": [
-                  "ml/reference/roles-and-access",
-                  "ml/reference/reports-list",
-                  "ml/reference/app-route-map",
-                  "ml/reference/glossary"
                 ]
               }
             ]
