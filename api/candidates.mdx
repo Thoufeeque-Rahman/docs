@@ -109,14 +109,14 @@ GET /public-api/v1/candidate-detail
 
 | Parameter | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| `subFestCandidateId` | `UUID` | Yes | The unique SubFest Candidate identifier. |
+| `chestNo` | `string` | Yes | The participant's assigned chest number (e.g. `104`). |
 | `subFestId` | `UUID` | Optional | Sub-festival identifier. |
 | `subFestSlug` | `string` | Optional | Sub-festival URL slug. |
 
 ### Example Request
 
 ```bash
-curl -X GET "https://api.festie.app/public-api/v1/candidate-detail?subFestCandidateId=f92df06f-f989-45d6-ae69-20422d0f9504" \
+curl -X GET "https://api.festie.app/public-api/v1/candidate-detail?chestNo=104&subFestSlug=arts-2026" \
   -H "X-API-Key: YOUR_API_KEY"
 ```
 
@@ -184,9 +184,18 @@ GET /public-api/v1/candidate-registrations
 
 | Parameter | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| `subFestCandidateId` | `UUID` | Yes | SubFest candidate identifier. |
+| `chestNo` | `string` | Yes | The participant's assigned chest number (e.g. `104`). |
+| `subFestId` | `UUID` | Optional | Sub-festival identifier. |
+| `subFestSlug` | `string` | Optional | Sub-festival URL slug. |
 | `page` | `integer` | No | Pagination page (default: `1`). |
 | `limit` | `integer` | No | Items per page (max: `20`). |
+
+### Example Request
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/candidate-registrations?chestNo=104&subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
 
 ### Example Response
 
@@ -244,7 +253,7 @@ GET /public-api/v1/candidate-registrations
 
 ## Get Candidate Results
 
-Look up a candidate's published scorecards, awarded positions, grades, and total contributed points using their chest number or candidate ID.
+Look up a candidate's published scorecards, awarded positions, grades, and total contributed points using their chest number.
 
 ```http
 GET /public-api/v1/candidate-result
@@ -252,11 +261,11 @@ GET /public-api/v1/candidate-result
 
 ### Query Parameters
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| `chestNo` | `string` | The participant's assigned chest number (e.g. `104`). |
-| `subFestCandidateId` | `UUID` | Alternative: look up by candidate UUID. |
-| `subFestSlug` | `string` | *(Recommended)* Sub-festival slug. |
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `chestNo` | `string` | Yes | The participant's assigned chest number (e.g. `104`). |
+| `subFestId` | `UUID` | Optional | Sub-festival identifier. |
+| `subFestSlug` | `string` | Optional | Sub-festival URL slug. |
 
 ### Example Request
 

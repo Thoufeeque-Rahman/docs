@@ -108,14 +108,14 @@ GET /public-api/v1/programme-detail
 
 | Parameter | Type | നിർബന്ധമാണോ | വിവരണം |
 | :--- | :--- | :--- | :--- |
-| `subFestProgramId` | `UUID` | നിർബന്ധം | SubFest Programme ഐഡി. |
+| `programCode` | `string` | നിർബന്ധം | മത്സരത്തിന്റെ കോഡ് (ഉദാ: `LIT-01`). |
 | `subFestId` | `UUID` | അല്ല | സബ് ഫെസ്റ്റ് ഐഡി. |
 | `subFestSlug` | `string` | അല്ല | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
 
 ### ഉദാഹരണം
 
 ```bash
-curl -X GET "https://api.festie.app/public-api/v1/programme-detail?subFestProgramId=7cd5001f-7c38-4beb-bef4-1cfee131fcc2" \
+curl -X GET "https://api.festie.app/public-api/v1/programme-detail?programCode=LIT-01&subFestSlug=arts-2026" \
   -H "X-API-Key: YOUR_API_KEY"
 ```
 
@@ -184,7 +184,8 @@ GET /public-api/v1/schedules
 | `subFestId` | `UUID` | സബ് ഫെസ്റ്റ് ഐഡി (*സ്ലഗ് ഇല്ലെങ്കിൽ നിർബന്ധം). |
 | `subFestSlug` | `string` | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
 | `venueId` | `UUID` | നിർദ്ദിഷ്ട വേദി ഫിൽട്ടർ. |
-| `subFestProgramId` | `UUID` | ഒരു പ്രോഗ്രാമിന്റെ ഷെഡ്യൂൾ മാത്രം കാണാൻ. |
+| `programCode` | `string` | മത്സരത്തിന്റെ കോഡ് (ഉദാ: `LIT-01`) നൽകി ഫിൽട്ടർ ചെയ്യാൻ. |
+| `subFestProgramId` | `UUID` | പ്രോഗ്രാം സിസ്റ്റം ഐഡി വഴി ഫിൽട്ടർ ചെയ്യാൻ. |
 | `scheduledAtFrom` | `ISO Date` | ഈ സമയത്തിന് ശേഷം ആരംഭിക്കുന്നവ. |
 | `scheduledAtTo` | `ISO Date` | ഈ സമയത്തിന് മുൻപ് ആരംഭിക്കുന്നവ. |
 | `page` | `integer` | പേജ് നമ്പർ (ഡിഫോൾട്ട്: `1`). |
