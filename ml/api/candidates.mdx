@@ -109,14 +109,14 @@ GET /public-api/v1/candidate-detail
 
 | Parameter | Type | നിർബന്ധമാണോ | വിവരണം |
 | :--- | :--- | :--- | :--- |
-| `subFestCandidateId` | `UUID` | നിർബന്ധം | SubFest Candidate ഐഡി. |
+| `chestNo` | `string` | നിർബന്ധം | മത്സരാർത്ഥിയുടെ ചെസ്റ്റ് നമ്പർ (ഉദാ: `104`). |
 | `subFestId` | `UUID` | അല്ല | സബ് ഫെസ്റ്റ് ഐഡി. |
 | `subFestSlug` | `string` | അല്ല | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
 
 ### ഉദാഹരണം
 
 ```bash
-curl -X GET "https://api.festie.app/public-api/v1/candidate-detail?subFestCandidateId=f92df06f-f989-45d6-ae69-20422d0f9504" \
+curl -X GET "https://api.festie.app/public-api/v1/candidate-detail?chestNo=104&subFestSlug=arts-2026" \
   -H "X-API-Key: YOUR_API_KEY"
 ```
 
@@ -184,9 +184,18 @@ GET /public-api/v1/candidate-registrations
 
 | Parameter | Type | നിർബന്ധമാണോ | വിവരണം |
 | :--- | :--- | :--- | :--- |
-| `subFestCandidateId` | `UUID` | നിർബന്ധം | SubFest Candidate ഐഡി. |
+| `chestNo` | `string` | നിർബന്ധം | മത്സരാർത്ഥിയുടെ ചെസ്റ്റ് നമ്പർ (ഉദാ: `104`). |
+| `subFestId` | `UUID` | അല്ല | സബ് ഫെസ്റ്റ് ഐഡി. |
+| `subFestSlug` | `string` | അല്ല | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
 | `page` | `integer` | അല്ല | പേജ് നമ്പർ (ഡിഫോൾട്ട്: `1`). |
 | `limit` | `integer` | അല്ല | പരമാവധി എണ്ണം (ഡിഫോൾട്ട്: `20`). |
+
+### ഉദാഹരണം
+
+```bash
+curl -X GET "https://api.festie.app/public-api/v1/candidate-registrations?chestNo=104&subFestSlug=arts-2026" \
+  -H "X-API-Key: YOUR_API_KEY"
+```
 
 ### Response ഉദാഹരണം
 
@@ -244,7 +253,7 @@ GET /public-api/v1/candidate-registrations
 
 ## ഫലങ്ങളും പോയിന്റുകളും (Candidate Results)
 
-ചെസ്റ്റ് നമ്പർ അല്ലെങ്കിൽ ഐഡി നൽകി മത്സരാർത്ഥി നേടിയ സ്ഥാനങ്ങൾ (1st, 2nd, 3rd), ഗ്രേഡുകൾ (A, B), ആകെ പോയിന്റുകൾ എന്നിവ പരിശോധിക്കാൻ:
+ചെസ്റ്റ് നമ്പർ നൽകി മത്സരാർത്ഥി നേടിയ സ്ഥാനങ്ങൾ (1st, 2nd, 3rd), ഗ്രേഡുകൾ (A, B), ആകെ പോയിന്റുകൾ എന്നിവ പരിശോധിക്കാൻ:
 
 ```http
 GET /public-api/v1/candidate-result
@@ -252,11 +261,11 @@ GET /public-api/v1/candidate-result
 
 ### Query Parameters
 
-| Parameter | Type | വിവരണം |
-| :--- | :--- | :--- |
-| `chestNo` | `string` | മത്സരാർത്ഥിയുടെ ചെസ്റ്റ് നമ്പർ (ഉദാ: `104`). |
-| `subFestCandidateId` | `UUID` | കാൻഡിഡേറ്റ് സിസ്റ്റം ഐഡി. |
-| `subFestSlug` | `string` | *(ശുപാർശ ചെയ്യുന്നത്)* സബ് ഫെസ്റ്റ് സ്ലഗ്. |
+| Parameter | Type | നിർബന്ധമാണോ | വിവരണം |
+| :--- | :--- | :--- | :--- |
+| `chestNo` | `string` | നിർബന്ധം | മത്സരാർത്ഥിയുടെ ചെസ്റ്റ് നമ്പർ (ഉദാ: `104`). |
+| `subFestId` | `UUID` | അല്ല | സബ് ഫെസ്റ്റ് ഐഡി. |
+| `subFestSlug` | `string` | അല്ല | സബ് ഫെസ്റ്റ് സ്ലഗ്. |
 
 ### ഉദാഹരണം
 

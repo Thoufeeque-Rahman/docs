@@ -126,7 +126,8 @@ GET /public-api/v1/gallery
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
 | `albumId` | `UUID` | Filter photos belonging to a specific album. |
-| `subFestProgramId` | `UUID` | Filter photos captured during a specific programme. |
+| `programCode` | `string` | Filter photos captured during a specific programme code (e.g. `LIT-01`). |
+| `subFestProgramId` | `UUID` | Alternative: filter photos by SubFest Programme UUID. |
 | `categoryId` | `UUID` | Filter photos by participant category. |
 | `page` | `integer` | Page number (default: `1`). |
 | `limit` | `integer` | Items per page (max: `20`). |

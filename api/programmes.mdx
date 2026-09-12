@@ -108,14 +108,14 @@ GET /public-api/v1/programme-detail
 
 | Parameter | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| `subFestProgramId` | `UUID` | Yes | Unique SubFest Programme identifier. |
+| `programCode` | `string` | Yes | Unique programme code (e.g. `LIT-01`). |
 | `subFestId` | `UUID` | Optional | Sub-festival identifier. |
 | `subFestSlug` | `string` | Optional | Sub-festival URL slug. |
 
 ### Example Request
 
 ```bash
-curl -X GET "https://api.festie.app/public-api/v1/programme-detail?subFestProgramId=7cd5001f-7c38-4beb-bef4-1cfee131fcc2" \
+curl -X GET "https://api.festie.app/public-api/v1/programme-detail?programCode=LIT-01&subFestSlug=arts-2026" \
   -H "X-API-Key: YOUR_API_KEY"
 ```
 
@@ -184,7 +184,8 @@ GET /public-api/v1/schedules
 | `subFestId` | `UUID` | *(Required if no slug)* Sub-festival identifier. |
 | `subFestSlug` | `string` | *(Required if no ID)* Sub-festival slug. |
 | `venueId` | `UUID` | Filter by specific stage or venue. |
-| `subFestProgramId` | `UUID` | Filter schedule for a specific programme. |
+| `programCode` | `string` | Filter schedule by unique programme code (e.g. `LIT-01`). |
+| `subFestProgramId` | `UUID` | Alternative: filter schedule for a specific programme UUID. |
 | `scheduledAtFrom` | `ISO Date` | Filter events starting on or after timestamp. |
 | `scheduledAtTo` | `ISO Date` | Filter events starting on or before timestamp. |
 | `page` | `integer` | Page number (default: `1`). |
