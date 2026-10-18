@@ -1,32 +1,36 @@
 ---
-title: "Sections"
-description: "Create classifications such as class, stream, or department and assign candidates."
+title: "Sub categories"
+description: "Create sets such as class or department, limit them to categories, and assign candidates."
 ---
 
-Sections let you group candidates beyond team and category. A festival can use sections for groupings such as Class 1, Class 2, or specific branches.
+Sub categories group candidates beyond team and main category. A set (for example `Class`) holds items (`1`, `2`, `3`). A candidate can be in one item per set.
 
 ## Prerequisites
 
 - Candidates are added or imported.
-- You know the classifications you want to track.
+- Categories exist if you want to limit a set to some of them.
 
-Open `Subfest > Candidate > Sections`.
+Open `Subfest > Candidate > Sub Categories`.
 
 <Steps>
-  <Step title="Create a classification">
-    Add a classification such as `Class`, `Stream`, or `Department`.
+  <Step title="Create a set">
+    Add a set such as `Class`, `Stream`, or `Department`.
   </Step>
-  <Step title="Add section values">
-    Add values such as `Class 1`, `Class 2`, or `Class 3`.
+  <Step title="Add items">
+    Add items such as `1`, `2`, `3`, or `Science`, `Maths`.
+  </Step>
+  <Step title="Choose categories">
+    Keep **All categories**, or pick the main categories the set applies to. Use **Scope** on a set to change this later.
   </Step>
   <Step title="Assign candidates">
-    Use **Add candidate** and select candidates for each section.
-  </Step>
-  <Step title="Repeat for other sections">
-    Add candidates to each class, stream, or department as needed.
+    Assign from the candidate form, the bulk **Add to sub category** action, or by chest number.
   </Step>
 </Steps>
 
 <Note>
-  Sections are useful for filtering reports and understanding participation by class or department.
+  If you narrow a set's categories, assignments of candidates in the removed categories are cleared. You see the count first. Changing a candidate's category also clears sub categories that no longer apply.
 </Note>
+
+## Filters
+
+Each set appears as its own filter, named after the set, with its items as options. Use them on candidates, registrations, schedules and reports.
